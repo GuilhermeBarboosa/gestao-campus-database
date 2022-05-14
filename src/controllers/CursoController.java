@@ -58,8 +58,7 @@ public class CursoController extends DefaultController {
                 ;
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Curso cursoDelete = cursoDAO.find(auxLoc);
-                if (cursoDelete != null) {
+                if (auxLoc != 0) {
                     cursoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {

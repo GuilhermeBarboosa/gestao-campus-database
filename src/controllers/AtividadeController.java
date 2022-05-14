@@ -7,6 +7,7 @@ package controllers;
 
 import dao.AtividadeDAO;
 import dao.ServidorDAO;
+import java.util.List;
 import model.Atividade;
 import view.AtividadeView;
 
@@ -18,44 +19,47 @@ public class AtividadeController extends DefaultController {
 
     private final AtividadeView atividadeView = new AtividadeView();
 
-    public void menu(AtividadeDAO atividadeDAO, ServidorDAO servidorDAO) {
+    public void menu(AtividadeDAO atividadeDAO, ServidorDAO servidorDAO) throws Exception {
         System.out.println("ATIVIDADE");
-        Atividade[] atVet = atividadeDAO.getAll();
         opcCrud = GUI.menu();
+
+        List<String> servidorVet = servidorDAO.readId();
+
+        List<String> vetResultId = atividadeDAO.readId();
+        List<String> vetResult = atividadeDAO.read();
         switch (opcCrud) {
             case 1:
-                Atividade at = atividadeView.criarAtividade(servidorDAO);
-                atividadeDAO.setAtividade(at);
-                servidorAux = servidorDAO.getId(at.getServidor().getId());
-                servidorDAO.aumentarHoras(servidorAux.getId(), at.getHorasSemanais());
+                Atividade at = atividadeView.criarAtividade(servidorVet);
+                if (at != null) {
+                    atividadeDAO.create(at);
+                } else {
+                    GUI.error();
+                }
                 break;
             case 2:
-                atividadeView.mostrarTodasAtividades(atVet);
+                atividadeView.mostrarAtividades(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Atividade atAlt = atividadeDAO.getId(auxLoc);
-                servidorAux = servidorDAO.getId(atAlt.getServidor().getId());
-                servidorDAO.removerHoras(servidorAux.getId(), atAlt.getHorasSemanais());
+                Atividade atAlt = atividadeDAO.find(auxLoc);
+
                 if (atAlt != null) {
-                    atAlt = atividadeView.modifAtividade(atAlt, servidorDAO);
+                    atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
                     atividadeDAO.update(atAlt);
-                    servidorAux = servidorDAO.getId(atAlt.getServidor().getId());
-                    servidorDAO.aumentarHoras(servidorAux.getId(), atAlt.getHorasSemanais());
+
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                atividadeView.mostrarTodasAtividades(atVet);
+                atividadeView.mostrarAtividades(vetResult);
                 break;
             case 4:
-                atividadeView.mostrarTodasAtividades(atVet);
+                atividadeView.mostrarAtividades(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Atividade atDelete = atividadeDAO.getId(auxLoc);
-                if (atDelete != null) {
-                    atividadeDAO.delete(atDelete);
+                if (auxLoc != 0) {
+                    atividadeDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

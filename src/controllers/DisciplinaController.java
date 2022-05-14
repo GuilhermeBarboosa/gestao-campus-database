@@ -57,8 +57,7 @@ public class DisciplinaController extends DefaultController {
                 disciplinaView.mostrarTodasDisciplinas(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Disciplina discDelete = disciplinaDAO.find(auxLoc);
-                if (discDelete != null) {
+                if (auxLoc != 0) {
                     disciplinaDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
