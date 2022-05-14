@@ -26,7 +26,7 @@ public class ServidorController extends DefaultController {
     public void menu(ServidorDAO servDAO, CampusDAO campusDAO) throws Exception {
         opcCrud = GUI.menu();
 
-        List<String> campusVet = campusDAO.read();
+        List<String> campusVet = campusDAO.readId();
         
         List<String> vetResultId = servDAO.readId();
         List<String> vetResult = servDAO.read();
@@ -37,7 +37,7 @@ public class ServidorController extends DefaultController {
                 servDAO.create(servidor);
                 break;
             case 2:
-                servV.mostrarIdServidores(vetResultId);
+                servV.mostrarServidores(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 Servidor servAlt = servDAO.find(auxLoc);
@@ -53,7 +53,7 @@ public class ServidorController extends DefaultController {
                 servV.mostrarServidores(vetResult);
                 break;
             case 4:
-                servV.mostrarIdServidores(vetResultId);
+                servV.mostrarServidores(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 if (auxLoc != 0) {

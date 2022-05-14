@@ -17,8 +17,8 @@ public class Curso {
     private int id_campus;
     private String nome;
     private String estado;
-    private LocalDate anoInicio;
-    private LocalDate anoTermino;
+    private int anoInicio;
+    private int anoTermino;
     private LocalDate dtCriacao;
     private LocalDate dtModificacao;
 
@@ -54,22 +54,22 @@ public class Curso {
         this.estado = estado;
     }
 
-    public LocalDate getAnoInicio() {
+    public int getAnoInicio() {
         return anoInicio;
     }
 
-    public void setAnoInicio(LocalDate anoInicio) {
+    public void setAnoInicio(int anoInicio) {
         this.anoInicio = anoInicio;
     }
 
-    public LocalDate getAnoTermino() {
+    public int getAnoTermino() {
         return anoTermino;
     }
 
-    public void setAnoTermino(LocalDate anoTermino) {
+    public void setAnoTermino(int anoTermino) {
         this.anoTermino = anoTermino;
     }
-
+  
     public LocalDate getDtCriacao() {
         return dtCriacao;
     }

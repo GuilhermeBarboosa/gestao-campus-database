@@ -68,15 +68,13 @@ public class CampusView {
     }
 
     /////////////////////////////////////////////////////
-    public void mostrarTodosCampos(List<String> vetCampus) {
-       for (int i = 0; i < vetCampus.size(); i++) {
-              System.out.println(vetCampus.get(i));
-        }
-    }
-
-    public void mostrarIdCampus(List<String> vetCampus) {
-        for (int i = 0; i < vetCampus.size(); i++) {
-              System.out.println(vetCampus.get(i));
+    public void mostrarTodosCampos(List<String> vetResult) {
+       if (vetResult.size() == 0) {
+            System.out.println("Não há campus cadastrados");
+        } else {
+            for (String string : vetResult) {
+                System.out.println(string);
+            }
         }
     }
 

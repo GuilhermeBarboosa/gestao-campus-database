@@ -35,7 +35,7 @@ public class CampusController extends DefaultController {
                 campusDAO.create(campus);
                 break;
             case 2:
-                campusView.mostrarIdCampus(vetResultId);
+                campusView.mostrarTodosCampos(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 Campus CampusAlt = campusDAO.find(auxLoc);
@@ -50,7 +50,7 @@ public class CampusController extends DefaultController {
                 campusView.mostrarTodosCampos(vetResult);
                 break;
             case 4:
-                campusView.mostrarIdCampus(vetResultId);
+                campusView.mostrarTodosCampos(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 campusDAO.delete(auxLoc);

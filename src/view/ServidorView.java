@@ -47,8 +47,9 @@ public class ServidorView {
         System.out.println("Perfil(1-ADM | 2-COMUM) : ");
         serv.setPerfil(Integer.parseInt(ler.nextLine()));
 
-        System.out.println("Id: " + campusVet.get(0));
-        System.out.println("Nome: " + campusVet.get(1));
+        for (String string : campusVet) {
+            System.out.println(string);
+        }
 
         System.out.println("Insira o ID: ");
         serv.setId_campus(Integer.parseInt(ler.nextLine()));
@@ -82,16 +83,13 @@ public class ServidorView {
         return servAlt;
     }
 
-    public void mostrarIdServidores(List<String> vetResult) {
-        for (int i = 0; i < vetResult.size(); i++) {
-           System.out.println(vetResult.get(i));
-        }
-
-    }
-
     public void mostrarServidores(List<String> vetResult) {
-        for (int i = 0; i < vetResult.size(); i++) {
-            System.out.println(vetResult.get(i));
+        if (vetResult.size() == 0) {
+            System.out.println("Não há servidores cadastrados");
+        } else {
+            for (String string : vetResult) {
+                System.out.println(string);
+            }
         }
     }
 

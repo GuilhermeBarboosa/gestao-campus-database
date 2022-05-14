@@ -7,6 +7,7 @@ package controllers;
 
 import dao.CampusDAO;
 import dao.CursoDAO;
+import java.util.List;
 import java.util.Scanner;
 import model.Curso;
 import view.CursoView;
@@ -16,41 +17,45 @@ import view.Gui;
  *
  * @author Aluno
  */
-public class CursoController extends DefaultController{
-    
+public class CursoController extends DefaultController {
+
     private final CursoView cursoView = new CursoView();
 
-    public void menu(CursoDAO cursoDAO, CampusDAO campusDAO) {
+    public void menu(CursoDAO cursoDAO, CampusDAO campusDAO) throws Exception {
         System.out.println("CURSO");
-        Curso[] cursoVet = cursoDAO.getAll();
         opcCrud = GUI.menu();
+        List<String> campusVet = campusDAO.readId();
+
+        List<String> vetResultId = cursoDAO.readId();
+        List<String> vetResult = cursoDAO.read();
         switch (opcCrud) {
             case 1:
-                Curso curso = cursoView.criarCurso(campusDAO);
-                cursoDAO.setCurso(curso);
+                Curso curso = cursoView.criarCurso(campusVet);
+                cursoDAO.create(curso);
                 break;
             case 2:
-                cursoView.mostrarTodosCursos(cursoVet, campusDAO);
+                cursoView.mostrarCurso(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Curso cursoAlt = cursoDAO.getId(auxLoc);
+                Curso cursoAlt = cursoDAO.find(auxLoc);
                 if (cursoAlt != null) {
-                    cursoDAO.update(cursoView.modifCurso(cursoAlt, campusDAO));
+                    cursoDAO.update(cursoView.modifCurso(cursoAlt, campusVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                cursoView.mostrarTodosCursos(cursoVet, campusDAO);
+                cursoView.mostrarCurso(vetResult);
                 break;
             case 4:
-                cursoView.mostrarTodosCursos(cursoVet, campusDAO);
+                cursoView.mostrarCurso(vetResultId);
+                ;
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Curso cursoDelete = cursoDAO.getId(auxLoc);
+                Curso cursoDelete = cursoDAO.find(auxLoc);
                 if (cursoDelete != null) {
-                    cursoDAO.delete(cursoDelete);
+                    cursoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

@@ -7,9 +7,11 @@ package dao;
 
 import com.mysql.jdbc.PreparedStatement;
 import factory.ConnectionFactory;
+import static factory.ConnectionFactory.createConnectionToMySql;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLClientInfoException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,11 +75,10 @@ public class CampusDAO {
         
         Connection conn = null;
         PreparedStatement pstm = null;
-
         ResultSet rset = null;
 
         try {
-            conn = ConnectionFactory.createConnectionToMySql();
+            conn = ConnectionFactory.createConnectionToMySql();;;
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -116,17 +117,19 @@ public class CampusDAO {
     }
 
     public List<String> readId() throws Exception {
-        String sql = "SELECT * FROM campus as c";
+        String sql = "SELECT * FROM campus";
 
         List<String> vetResult = new ArrayList<>();
         
         Connection conn = null;
+        
         PreparedStatement pstm = null;
 
         ResultSet rset = null;
 
+        
         try {
-            conn = ConnectionFactory.createConnectionToMySql();
+            conn = (Connection) createConnectionToMySql();
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -141,8 +144,8 @@ public class CampusDAO {
                         + "=========================" + "\n");
             }
      
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLClientInfoException e) {
+            System.err.println(e);
         } finally {
             if (rset != null) {
                 rset.close();
