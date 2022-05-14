@@ -10,7 +10,6 @@ import dao.DisciplinaDAO;
 import java.util.List;
 import model.Disciplina;
 import view.DisciplinaView;
-import view.Gui;
 
 /**
  *

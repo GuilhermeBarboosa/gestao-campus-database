@@ -7,14 +7,9 @@ package controllers;
 
 import dao.CampusDAO;
 import dao.ServidorDAO;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import model.Campus;
 import model.Servidor;
 import view.ServidorView;
-import view.Gui;
-
 /**
  *
  * @author Aluno
