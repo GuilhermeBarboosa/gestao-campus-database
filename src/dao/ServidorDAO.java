@@ -41,7 +41,7 @@ public class ServidorDAO {
             pstm.setString(6, servidor.getSenha());
             pstm.setInt(7, servidor.getPerfil());
             pstm.setDouble(8, servidor.getHorasTotais());
-            Date date = Date.valueOf(LocalDate.now());
+            Date date = Date.valueOf(servidor.getDtCriacao());
             pstm.setDate(9, date);
 
             pstm.execute();
@@ -175,7 +175,7 @@ public class ServidorDAO {
             pstm.setInt(7, altServidor.getPerfil());
             pstm.setDouble(8, altServidor.getHorasTotais());
 
-            Date date = Date.valueOf(LocalDate.now());
+            Date date = Date.valueOf(altServidor.getDtModificacao());
             pstm.setDate(9, date);
 
             pstm.setInt(10, altServidor.getId());

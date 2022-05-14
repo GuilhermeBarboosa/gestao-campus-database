@@ -17,7 +17,7 @@ public class Disciplina {
     private String nome;
     private int id_curso;
     private double cargaHoraria;
-    private String periodo;
+    private int periodo;
     private LocalDate dtCriacao;
     private LocalDate dtModificacao;
 
@@ -53,11 +53,11 @@ public class Disciplina {
         this.cargaHoraria = CargaHoraria;
     }
 
-    public String getPeriodo() {
+    public int getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(String periodo) {
+    public void setPeriodo(int periodo) {
         this.periodo = periodo;
     }
 

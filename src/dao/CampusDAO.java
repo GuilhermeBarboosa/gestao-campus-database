@@ -47,7 +47,7 @@ public class CampusDAO {
             pstm.setString(7, camp.getRua());
             pstm.setString(8, camp.getCep());
 
-            date = Date.valueOf(LocalDate.now());
+            date = Date.valueOf(camp.getDtCriacao());
             pstm.setDate(9, date);
 
             pstm.execute();
@@ -186,7 +186,7 @@ public class CampusDAO {
             pstm.setString(7, altCampus.getRua());
             pstm.setString(8, altCampus.getCep());
 
-            date = Date.valueOf(LocalDate.now());
+            date = Date.valueOf(altCampus.getDtModificacao());
             pstm.setDate(9, date);
 
             pstm.setInt(10, altCampus.getId());

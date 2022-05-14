@@ -246,10 +246,12 @@ public class CursoDAO {
                 LocalDate dataAtualizada = date.toLocalDate();
                 curso.setDtCriacao(dataAtualizada);
 
-                date = rset.getDate("cadastrado");
-                dataAtualizada = date.toLocalDate();
-                curso.setDtModificacao(dataAtualizada);
-                
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    curso.setDtModificacao(dataAtualizada);
+                }
+
                 return curso;
 
             }

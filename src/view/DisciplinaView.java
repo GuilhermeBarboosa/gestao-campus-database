@@ -8,6 +8,7 @@ package view;
 import dao.CursoDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 import model.Curso;
 import model.Disciplina;
@@ -20,105 +21,61 @@ public class DisciplinaView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
+    int id = 0;
 
-    public Disciplina criarDisciplina(CursoDAO cursoDAO) {
-        String cursoRead = "";
+    public Disciplina criarDisciplina(List<String> cursoVet) {
+
         Disciplina disc = new Disciplina();
+
+        disc.setId(id);
+        id++;
+
         System.out.println("Nome: ");
         disc.setNome(ler.nextLine());
         System.out.println("Carga Horaria: ");
         disc.setCargaHoraria(Double.parseDouble(ler.nextLine()));
         System.out.println("Periodo: ");
-        disc.setPeriodo(ler.nextLine());
-        
-        Curso[] cursoAll = cursoDAO.getAll();
-        for (Curso curso : cursoAll) {
-            if (curso != null) {
-                cursoRead += "ID: " + curso.getId() + " - NOME: " + curso.getNome() + "\n";
-            }
+        disc.setPeriodo(Integer.parseInt(ler.nextLine()));
+
+        for (String string : cursoVet) {
+            System.out.println(string);
         }
-        
-        System.out.println(cursoRead);  
         System.out.println("Escolha pelo id um curso:");
-        Curso cursoAux = cursoDAO.getId(Integer.parseInt(ler.nextLine()));
-        
-        disc.setCurso(cursoAux);
+        disc.setId_curso(Integer.parseInt(ler.nextLine()));
 
         disc.setDtCriacao(LocalDate.now());
         return disc;
     }
 
-    public Disciplina modifDisciplina(Disciplina discAlt, CursoDAO cursoDAO) {
-        String cursoRead = "";
+    public Disciplina modifDisciplina(Disciplina discAlt, List<String> cursoVet) {
+
         System.out.println("Nome: ");
         discAlt.setNome(ler.nextLine());
         System.out.println("Carga Horaria: ");
         discAlt.setCargaHoraria(Double.parseDouble(ler.nextLine()));
         System.out.println("Periodo: ");
-        discAlt.setPeriodo(ler.nextLine());
-     
-        Curso[] cursoAll = cursoDAO.getAll();
-        for (Curso curso : cursoAll) {
-            if (curso != null) {
-                cursoRead += "ID: " + curso.getId() + " - NOME: " + curso.getNome() + "\n";
-            }
+        discAlt.setPeriodo(Integer.parseInt(ler.nextLine()));
+
+        for (String string : cursoVet) {
+            System.out.println(string);
         }
-        System.out.println(cursoRead);  
         System.out.println("Escolha pelo id um curso:");
-        Curso cursoAux = cursoDAO.getId(Integer.parseInt(ler.nextLine()));
-        
-        discAlt.setCurso(cursoAux);
+
+        discAlt.setId_curso(Integer.parseInt(ler.nextLine()));
 
         discAlt.setDtModificacao(LocalDate.now());
+
         return discAlt;
     }
 
-    public void mostrarTodasDisciplinas(Disciplina[] disc, CursoDAO cursoDAO) {
-        boolean aux = false;
-        String stringResponse = "";
-        for (int i = 0; i < disc.length; i++) {
-            if (disc[i] != null) {
-                aux = true;
-            }
-        }
-
-        if (aux) {
-            for (int i = 0; i < disc.length; i++) {
-                if (disc[i] != null) {
-                    System.out.println(disc[i].toString());
-                }
-            }
-            System.out.println(stringResponse);
+    public void mostrarTodasDisciplinas(List<String> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há disciplinas cadastrados");
         } else {
-            System.out.println("Não ha disciplina cadastradas.");
+            for (String string : vetResult) {
+                System.out.println(string);
+            }
         }
-    }
-
-    public Disciplina setAleatorio1() {
-        CursoDAO cursoDAO = new CursoDAO();
-        Curso cursoAux = cursoDAO.getId(1);
-        
-        
-        Disciplina disc = new Disciplina();
-        disc.setNome("Algoritmo");
-        disc.setCargaHoraria(4);
-        disc.setPeriodo("Semestral");
-        disc.setCurso(cursoAux);
-        disc.setDtCriacao(LocalDate.now());
-        return disc;
-    }
-
-    public Disciplina setAleatorio2() {
-        CursoDAO cursoDAO = new CursoDAO();
-        Curso cursoAux = cursoDAO.getId(0);
-        
-        Disciplina disc = new Disciplina();
-        disc.setNome("Estrutura de Dados");
-        disc.setCargaHoraria(5);
-        disc.setPeriodo("Semestral");
-        disc.setCurso(cursoAux);
-        disc.setDtCriacao(LocalDate.now());
-        return disc;
     }
 
 }

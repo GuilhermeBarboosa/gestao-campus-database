@@ -7,6 +7,7 @@ package controllers;
 
 import dao.CursoDAO;
 import dao.DisciplinaDAO;
+import java.util.List;
 import model.Disciplina;
 import view.DisciplinaView;
 import view.Gui;
@@ -19,37 +20,43 @@ public class DisciplinaController extends DefaultController {
     
     private final DisciplinaView disciplinaView = new DisciplinaView();
 
-    public void menu(DisciplinaDAO disciplinaDAO, CursoDAO cursoDAO ) {
+    public void menu(DisciplinaDAO disciplinaDAO, CursoDAO cursoDAO ) throws Exception {
         System.out.println("DISCIPLINA");
-        Disciplina[] discVet = disciplinaDAO.getAll();
+        
+        List<String> cursoVet = cursoDAO.readId();
+        
+        
+        List<String> vetResultId = disciplinaDAO.readId();
+        List<String> vetResult = disciplinaDAO.read();
+        
         opcCrud = GUI.menu();
         switch (opcCrud) {
             case 1:
-                Disciplina disc = disciplinaView.criarDisciplina(cursoDAO);
-                disciplinaDAO.setDisciplina(disc);
+                Disciplina disc = disciplinaView.criarDisciplina(cursoVet);
+                disciplinaDAO.create(disc);
                 break;
             case 2:
-                disciplinaView.mostrarTodasDisciplinas(discVet, cursoDAO);
+                disciplinaView.mostrarTodasDisciplinas(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Disciplina discAlt = disciplinaDAO.getId(auxLoc);
+                Disciplina discAlt = disciplinaDAO.find(auxLoc);
                 if (discAlt != null) {
-                    disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoDAO));
+                    disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                disciplinaView.mostrarTodasDisciplinas(discVet, cursoDAO);
+                disciplinaView.mostrarTodasDisciplinas(vetResult);
                 break;
             case 4:
-                disciplinaView.mostrarTodasDisciplinas(discVet, cursoDAO);
+                disciplinaView.mostrarTodasDisciplinas(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Disciplina discDelete = disciplinaDAO.getId(auxLoc);
+                Disciplina discDelete = disciplinaDAO.find(auxLoc);
                 if (discDelete != null) {
-                    disciplinaDAO.delete(discDelete);
+                    disciplinaDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

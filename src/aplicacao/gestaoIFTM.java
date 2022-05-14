@@ -49,7 +49,7 @@ public class gestaoIFTM {
     private  CampusController campusController = new CampusController();
     private  ServidorController servidorController = new ServidorController();
     private  CursoController cursoController = new CursoController();
-//    private  DisciplinaController disciplinaController = new DisciplinaController();
+    private  DisciplinaController disciplinaController = new DisciplinaController();
 //    private  OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
 //    private  OrientacaoController oreintacaoController = new OrientacaoController();
 //    private  AtividadeController atividadeController = new AtividadeController();
@@ -64,7 +64,7 @@ public class gestaoIFTM {
     private  CampusDAO campusDAO = new CampusDAO();
     private  ServidorDAO servidorDAO = new ServidorDAO();
     private  CursoDAO cursoDAO = new CursoDAO();
-//    private  DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private  DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 //    private  OfertaDAO ofertaDAO = new OfertaDAO();
 //    private  OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
 //    private  AtividadeDAO atividadeDAO = new AtividadeDAO();
@@ -131,9 +131,9 @@ public class gestaoIFTM {
                 case 3:
                     cursoController.menu(cursoDAO, campusDAO);
                     break;
-//                case 4:
-//                    disciplinaController.menu(disciplinaDAO, cursoDAO);
-//                    break;
+                case 4:
+                    disciplinaController.menu(disciplinaDAO, cursoDAO);
+                    break;
 //                case 5:
 //                    ofertaDisciplinaController.menu(ofertaDAO, disciplinaDAO, servidorDAO, cursoDAO, atividadeDAO);
 //                    break;
