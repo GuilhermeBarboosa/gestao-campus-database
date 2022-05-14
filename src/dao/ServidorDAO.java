@@ -23,7 +23,7 @@ import model.Servidor;
 public class ServidorDAO {
 
     public void create(Servidor servidor) throws Exception {
-        String sql = "INSERT INTO servidor (campus, nome, email, cargo, login, senha, perfil, horas_totais, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO servidores (nome, campus, email, cargo, login, senha, perfil, horas_totais, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -33,8 +33,9 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, servidor.getId_campus());
-            pstm.setString(2, servidor.getNome());
+            
+            pstm.setString(1, servidor.getNome());
+            pstm.setInt(2, servidor.getId_campus());
             pstm.setString(3, servidor.getEmail());
             pstm.setString(4, servidor.getCargo());
             pstm.setString(5, servidor.getLogin());
@@ -64,7 +65,7 @@ public class ServidorDAO {
 
     public List<String> read() throws Exception {
 
-        String sql = "SELECT *, c.nome FROM servidor AS s INNER JOIN campus c ON c.id = s.campus";
+        String sql = "SELECT *, c.nome FROM servidores AS s INNER JOIN campus c ON c.id = s.campus";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -83,7 +84,7 @@ public class ServidorDAO {
             while (rset.next()) {
 
                 vetResult.add( "Id: \t" + rset.getString(1) + "\n"
-                        + "Nome: \t" + rset.getString(3) + "\n"
+                        + "Nome: \t" + rset.getString(2) + "\n"
                         + "Campus: \t" + rset.getString(13) + "\n"
                         + "Email: \t" + rset.getString(4) + "\n"
                         + "Cargo: \t" + rset.getString(5) + "\n"
@@ -113,7 +114,7 @@ public class ServidorDAO {
     
     public List<String> readId() throws Exception {
 
-        String sql = "SELECT *, c.nome FROM servidor AS s INNER JOIN campus c ON c.id = s.campus";
+        String sql = "SELECT *, c.nome FROM servidores AS s INNER JOIN campus c ON c.id = s.campus";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -133,8 +134,8 @@ public class ServidorDAO {
 
                 vetResult.add("=========================\n"
                         + "Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(3) + "\n"
-                        + "Campus: " + rset.getString(12) + "\n"
+                        + "Nome: " + rset.getString(2) + "\n"
+                        + "Campus: " + rset.getString(13) + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {
@@ -154,7 +155,7 @@ public class ServidorDAO {
     }
 
     public void update(Servidor altServidor) throws Exception {;
-        String sql = "UPDATE servidor SET campus=?, nome=?, email=?, "
+        String sql = "UPDATE servidores SET nome=?, campus=?, email=?, "
                 + "cargo=?, login=?, senha=?, perfil=?, horas_totais=?, modificado=?"
                 + "where id = ?";
 
@@ -166,8 +167,9 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altServidor.getId_campus());
-            pstm.setString(2, altServidor.getNome());
+            
+            pstm.setString(1, altServidor.getNome());
+            pstm.setInt(2, altServidor.getId_campus());
             pstm.setString(3, altServidor.getEmail());
             pstm.setString(4, altServidor.getCargo());
             pstm.setString(5, altServidor.getLogin());
@@ -195,7 +197,7 @@ public class ServidorDAO {
     }
 
     public void delete(int idServidor) throws Exception {
-        String sql = "DELETE FROM servidor WHERE id = ?";
+        String sql = "DELETE FROM servidores WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -221,7 +223,7 @@ public class ServidorDAO {
     }
 
     public Servidor find(int idServidor) throws Exception {
-        String sql = "SELECT * FROM servidor WHERE id = '" + idServidor + "'";
+        String sql = "SELECT * FROM servidores WHERE id = '" + idServidor + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -240,8 +242,8 @@ public class ServidorDAO {
                 Servidor servidor = new Servidor();
 
                 servidor.setId(rset.getInt("id"));
-                servidor.setId_campus(rset.getInt("campus"));
                 servidor.setNome(rset.getString("nome"));
+                servidor.setId_campus(rset.getInt("campus"));
                 servidor.setEmail(rset.getString("email"));
                 servidor.setCargo(rset.getString("cargo"));
                 servidor.setLogin(rset.getString("login"));

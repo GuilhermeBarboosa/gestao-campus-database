@@ -32,7 +32,11 @@ public class CampusController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Campus campus = campusView.criarCampus();
-                campusDAO.create(campus);
+                if (campus != null) {
+                    campusDAO.create(campus);
+                } else {
+                    GUI.error();
+                }
                 break;
             case 2:
                 campusView.mostrarTodosCampos(vetResultId);
@@ -54,7 +58,7 @@ public class CampusController extends DefaultController {
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 campusDAO.delete(auxLoc);
-                if (auxLoc != 0) { 
+                if (auxLoc != 0) {
                     GUI.sucess();
                 } else {
                     GUI.error();

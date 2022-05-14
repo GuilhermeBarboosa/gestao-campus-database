@@ -81,7 +81,7 @@ public class Gui {
     }
 
     public void error() {
-        System.out.println("OCORREU ERRO NESTA OPERAÇÃO");
+        System.err.println("OCORREU ERRO NESTA OPERAÇÃO");
     }
 
     public void printID() {

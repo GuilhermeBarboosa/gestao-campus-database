@@ -22,7 +22,7 @@ import model.Disciplina;
 public class DisciplinaDAO {
 
     public void create(Disciplina disc) throws Exception {
-        String sql = "INSERT INTO disciplina (nome_disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO disciplinas (disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -59,7 +59,7 @@ public class DisciplinaDAO {
 
     public List<String> read() throws Exception {
 
-        String sql = "SELECT *, c.nome_curso FROM disciplina as d INNER JOIN curso AS c ON d.curso = c.id;";
+        String sql = "SELECT *, c.curso FROM disciplinas as d INNER JOIN cursos AS c ON d.curso = c.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class DisciplinaDAO {
 
                 vetResult.add("Id: \t" + rset.getString(1) + "\n"
                         + "Disciplina: \t" + rset.getString(2) + "\n"
-                        + "Curso: \t" + rset.getString(10) + "\n"
+                        + "Curso: \t" + rset.getString(9) + "\n"
                         + "Carga Horaria: \t" + rset.getString(4) + "\n"
                         + "Periodo: \t" + rset.getString(5) + "\n"
                         + "Cadstrado: \t" + rset.getString(6) + "\n"
@@ -104,7 +104,7 @@ public class DisciplinaDAO {
 
     public List<String> readId() throws Exception {
 
-        String sql = "SELECT *, c.nome_curso FROM disciplina as d INNER JOIN curso AS c ON d.curso = c.id;";
+        String sql = "SELECT *, c.curso FROM disciplinas as d INNER JOIN cursos AS c ON d.curso = c.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -125,7 +125,7 @@ public class DisciplinaDAO {
                 vetResult.add("=========================\n"
                         + "Id: " + rset.getString(1) + "\n"
                         + "Nome: " + rset.getString(2) + "\n"
-                        + "Campus: " + rset.getString(10) + "\n"
+                        + "Campus: " + rset.getString(9) + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {
@@ -145,7 +145,7 @@ public class DisciplinaDAO {
     }
 
     public void update(Disciplina altDisciplina) throws Exception {
-        String sql = "UPDATE disciplina SET nome_disciplina=?, curso=?, carga_horaria=?, "
+        String sql = "UPDATE disciplinas SET disciplina=?, curso=?, carga_horaria=?, "
                 + "periodo=?, modificado=?"
                 + "where id = ?";
 
@@ -182,7 +182,7 @@ public class DisciplinaDAO {
     }
 
     public void delete(int idDisciplina) throws Exception {
-        String sql = "DELETE FROM disciplina WHERE id = ?";
+        String sql = "DELETE FROM disciplinas WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -208,7 +208,7 @@ public class DisciplinaDAO {
     }
 
     public Disciplina find(int idDisciplina) throws Exception {
-        String sql = "SELECT * FROM disciplina WHERE id = '" + idDisciplina + "'";
+        String sql = "SELECT * FROM disciplinas WHERE id = '" + idDisciplina + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -227,7 +227,7 @@ public class DisciplinaDAO {
                 Disciplina disciplina = new Disciplina();
 
                 disciplina.setId(rset.getInt("id"));
-                disciplina.setNome(rset.getString("nome_disciplina"));
+                disciplina.setNome(rset.getString("disciplina"));
                 disciplina.setId_curso(rset.getInt("curso"));
                 disciplina.setCargaHoraria(rset.getDouble("carga_horaria"));
                 disciplina.setPeriodo(rset.getInt("periodo"));

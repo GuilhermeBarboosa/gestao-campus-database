@@ -25,62 +25,86 @@ public class ServidorView {
     static int id = 1;
 
     public Servidor criarServ(List<String> campusVet) {
+        try {
+            Servidor serv = new Servidor();
+            serv.setId(id);
+            id++;
+            System.out.println("Nome: ");
+            serv.setNome(ler.nextLine());
+            System.out.println("Email: ");
+            serv.setEmail(ler.nextLine());
+            System.out.println("Cargo: (1-TAE | 2-PBTT)");
+            int aux = Integer.parseInt(ler.nextLine());
+            if (aux == 1) {
+                serv.setCargo("tae");
+            } else {
+                serv.setCargo("pbtt");
+            }
+            System.out.println("Login: ");
+            serv.setLogin(ler.nextLine());
+            System.out.println("Senha: ");
+            serv.setSenha(ler.nextLine());
+            System.out.println("Perfil(1-ADM | 2-COMUM) : ");
+            serv.setPerfil(Integer.parseInt(ler.nextLine()));
 
-        Servidor serv = new Servidor();
-        serv.setId(id);
-        id++;
-        System.out.println("Nome: ");
-        serv.setNome(ler.nextLine());
-        System.out.println("Email: ");
-        serv.setEmail(ler.nextLine());
-        System.out.println("Cargo: (1-TAE | 2-PBTT)");
-        int aux = Integer.parseInt(ler.nextLine());
-        if (aux == 1) {
-            serv.setCargo("tae");
-        } else {
-            serv.setCargo("pbtt");
+            if (campusVet.size() == 0) {
+                System.out.println("Nenhum campus cadastrado...");
+                return null;
+            } else {
+                for (String string : campusVet) {
+                    System.out.println(string);
+                }
+            }
+
+            System.out.println("Insira o ID: ");
+            serv.setId_campus(Integer.parseInt(ler.nextLine()));
+
+            serv.setDtCriacao(LocalDate.now());
+            return serv;
+        } catch (Exception e) {
+            return null;
         }
-        System.out.println("Login: ");
-        serv.setLogin(ler.nextLine());
-        System.out.println("Senha: ");
-        serv.setSenha(ler.nextLine());
-        System.out.println("Perfil(1-ADM | 2-COMUM) : ");
-        serv.setPerfil(Integer.parseInt(ler.nextLine()));
 
-        for (String string : campusVet) {
-            System.out.println(string);
-        }
-
-        System.out.println("Insira o ID: ");
-        serv.setId_campus(Integer.parseInt(ler.nextLine()));
-
-        serv.setDtCriacao(LocalDate.now());
-        return serv;
     }
 
     public Servidor modifServ(Servidor servAlt, List<String> campusVet) {
+        try {
+            System.out.println("Nome: ");
+            servAlt.setNome(ler.nextLine());
+            System.out.println("Email: ");
+            servAlt.setEmail(ler.nextLine());
+            System.out.println("Cargo: (1-TAE | 2-PBTT)");
+            int aux = Integer.parseInt(ler.nextLine());
+            if (aux == 1) {
+                servAlt.setCargo("tae");
+            } else {
+                servAlt.setCargo("pbtt");
+            }
+            System.out.println("Login: ");
+            servAlt.setLogin(ler.nextLine());
+            System.out.println("Senha: ");
+            servAlt.setSenha(ler.nextLine());
+            System.out.println("Perfil(1-ADM | 2-COMUM : ");
+            servAlt.setPerfil(Integer.parseInt(ler.nextLine()));
 
-        System.out.println("Nome: ");
-        servAlt.setNome(ler.nextLine());
-        System.out.println("Email: ");
-        servAlt.setEmail(ler.nextLine());
-        System.out.println("Cargo: ");
-        servAlt.setCargo(ler.nextLine());
-        System.out.println("Login: ");
-        servAlt.setLogin(ler.nextLine());
-        System.out.println("Senha: ");
-        servAlt.setSenha(ler.nextLine());
-        System.out.println("Perfil(1-ADM | 2-COMUM : ");
-        servAlt.setPerfil(Integer.parseInt(ler.nextLine()));
-        
-        System.out.println("Id: " + campusVet.get(0));
-        System.out.println("Nome: " + campusVet.get(1));
-        
-        System.out.println("Insira o ID: ");
-        servAlt.setId_campus(Integer.parseInt(ler.nextLine()));
+            if (campusVet.size() == 0) {
+                System.out.println("Nenhum campus cadastrado...");
+                return null;
+            } else {
+                for (String string : campusVet) {
+                    System.out.println(string);
+                }
+            }
 
-        servAlt.setDtModificacao(LocalDate.now());
-        return servAlt;
+            System.out.println("Insira o ID: ");
+            servAlt.setId_campus(Integer.parseInt(ler.nextLine()));
+
+            servAlt.setDtModificacao(LocalDate.now());
+            return servAlt;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     public void mostrarServidores(List<String> vetResult) {

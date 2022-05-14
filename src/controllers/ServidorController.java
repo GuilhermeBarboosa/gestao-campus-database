@@ -29,7 +29,12 @@ public class ServidorController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Servidor servidor = servV.criarServ(campusVet);
-                servDAO.create(servidor);
+                if(servidor != null){
+                     servDAO.create(servidor);
+                }else{
+                    GUI.error();
+                }
+               
                 break;
             case 2:
                 servV.mostrarServidores(vetResultId);

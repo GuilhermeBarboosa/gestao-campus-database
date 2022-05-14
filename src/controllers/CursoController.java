@@ -31,7 +31,12 @@ public class CursoController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Curso curso = cursoView.criarCurso(campusVet);
-                cursoDAO.create(curso);
+                if(curso != null){
+                    cursoDAO.create(curso);
+                }else{
+                   GUI.error();
+                }
+                
                 break;
             case 2:
                 cursoView.mostrarCurso(vetResultId);

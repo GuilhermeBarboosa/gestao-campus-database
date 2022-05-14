@@ -26,7 +26,7 @@ import view.CursoView;
 public class CursoDAO {
 
     public void create(Curso curso) throws Exception {
-        String sql = "INSERT INTO curso(campus, nome_curso, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO cursos(curso, campus, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -37,8 +37,8 @@ public class CursoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, curso.getId_campus());
-            pstm.setString(2, curso.getNome());
+            pstm.setString(1, curso.getNome());
+            pstm.setInt(2, curso.getId_campus());
             pstm.setString(3, curso.getEstado());
             pstm.setInt(4, curso.getAnoInicio());
             pstm.setInt(5, curso.getAnoTermino());
@@ -65,7 +65,7 @@ public class CursoDAO {
     }
 
     public List<String> read() throws Exception {
-        String sql = "SELECT *, cam.nome FROM curso as c INNER JOIN campus AS cam ON c.campus = cam.id;";
+        String sql = "SELECT *, cam.nome FROM cursos as c INNER JOIN campus AS cam ON c.campus = cam.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class CursoDAO {
             while (rset.next()) {
 
                 vetResult.add("Id: \t\t" + rset.getString(1) + "\n"
-                        + "Nome do Curso: \t\t" + rset.getString(3) + "\n"
+                        + "Nome do Curso: \t\t" + rset.getString(2) + "\n"
                         + "Campus: \t\t" + rset.getString(10) + "\n"
                         + "Estado: \t" + rset.getString(4) + "\n"
                         + "Ano de inicio: \t" + rset.getString(5) + "\n"
@@ -110,7 +110,7 @@ public class CursoDAO {
     }
 
     public List<String> readId() throws Exception {
-        String sql = "SELECT *, cam.nome FROM curso as c INNER JOIN campus AS cam ON c.campus = cam.id;";
+        String sql = "SELECT *, cam.nome FROM cursos as c INNER JOIN campus AS cam ON c.campus = cam.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -128,7 +128,7 @@ public class CursoDAO {
             while (rset.next()) {
 
                 vetResult.add("Id: \t\t" + rset.getString(1) + "\n"
-                        + "Nome do Curso: \t\t" + rset.getString(3) + "\n"
+                        + "Nome do Curso: \t\t" + rset.getString(2) + "\n"
                         + "Campus: \t\t" + rset.getString(10) + "\n"
                         + "----------------------------------------------------------");
             }
@@ -150,7 +150,7 @@ public class CursoDAO {
     }
 
     public void update(Curso altCurso) throws Exception {;
-        String sql = "UPDATE curso SET campus=?, nome_curso=?, estado=?, "
+        String sql = "UPDATE cursos SET curso=?, campus=?, estado=?, "
                 + "ano_inicio=?, ano_termino=?, cadastrado=?, modificado=?"
                 + "where id = ?";
 
@@ -162,8 +162,8 @@ public class CursoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altCurso.getId_campus());
-            pstm.setString(2, altCurso.getNome());
+            pstm.setString(1, altCurso.getNome());
+            pstm.setInt(2, altCurso.getId_campus());
             pstm.setString(3, altCurso.getEstado());
 
             pstm.setInt(4, altCurso.getAnoInicio());
@@ -191,7 +191,7 @@ public class CursoDAO {
     }
 
     public void delete(int idCurso) throws Exception {
-        String sql = "DELETE FROM curso WHERE id = ?";
+        String sql = "DELETE FROM cursos WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -217,7 +217,7 @@ public class CursoDAO {
     }
 
     public Curso find(int idCurso) throws Exception {
-        String sql = "SELECT * FROM curso WHERE id = '" + idCurso + "'";
+        String sql = "SELECT * FROM cursos WHERE id = '" + idCurso + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -236,8 +236,8 @@ public class CursoDAO {
                 Curso curso = new Curso();
 
                 curso.setId(rset.getInt("id"));
-                curso.setId_campus(rset.getInt("campus"));
                 curso.setNome(rset.getString("nome_curso"));
+                curso.setId_campus(rset.getInt("campus"));
                 curso.setEstado(rset.getString("estado"));
                 curso.setAnoInicio(rset.getInt("ano_inicio"));
                 curso.setAnoTermino(rset.getInt("ano_termino"));

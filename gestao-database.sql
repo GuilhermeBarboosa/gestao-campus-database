@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 14-Maio-2022 às 13:44
+-- Tempo de geração: 14-Maio-2022 às 14:23
 -- Versão do servidor: 8.0.29
 -- versão do PHP: 7.4.26
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `curso` varchar(160) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `campus` int NOT NULL,
-  `estado` int NOT NULL,
+  `estado` varchar(10) NOT NULL,
   `ano_inicio` year NOT NULL,
   `ano_termino` year NOT NULL,
   `cadastrado` date NOT NULL,

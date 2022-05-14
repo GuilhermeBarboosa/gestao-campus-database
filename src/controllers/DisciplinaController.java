@@ -16,23 +16,27 @@ import view.DisciplinaView;
  * @author Aluno
  */
 public class DisciplinaController extends DefaultController {
-    
+
     private final DisciplinaView disciplinaView = new DisciplinaView();
 
-    public void menu(DisciplinaDAO disciplinaDAO, CursoDAO cursoDAO ) throws Exception {
+    public void menu(DisciplinaDAO disciplinaDAO, CursoDAO cursoDAO) throws Exception {
         System.out.println("DISCIPLINA");
-        
+
         List<String> cursoVet = cursoDAO.readId();
-        
-        
+
         List<String> vetResultId = disciplinaDAO.readId();
         List<String> vetResult = disciplinaDAO.read();
-        
+
         opcCrud = GUI.menu();
         switch (opcCrud) {
             case 1:
                 Disciplina disc = disciplinaView.criarDisciplina(cursoVet);
-                disciplinaDAO.create(disc);
+                if (disc != null) {
+                    disciplinaDAO.create(disc);
+                } else {
+                    GUI.error();
+                }
+
                 break;
             case 2:
                 disciplinaView.mostrarTodasDisciplinas(vetResultId);
