@@ -7,6 +7,7 @@ package controllers;
 
 import dao.OrientacaoDAO;
 import dao.ServidorDAO;
+import java.util.List;
 import model.Orientacao;
 import view.OrientacaoView;
 
@@ -14,48 +15,49 @@ import view.OrientacaoView;
  *
  * @author Aluno
  */
-public class OrientacaoController extends DefaultController{
-    
+public class OrientacaoController extends DefaultController {
+
     private final OrientacaoView orientacaoView = new OrientacaoView();
-    
-    public void menu(ServidorDAO servidorDAO, OrientacaoDAO orientacaoDAO) {
+
+    public void menu(ServidorDAO servidorDAO, OrientacaoDAO orientacaoDAO) throws Exception {
         System.out.println("ORIENTAÇÃO");
-        Orientacao[] orVet = orientacaoDAO.getAll();
         opcCrud = GUI.menu();
+
+        List<String> servidorVet = servidorDAO.readId();
+
+        List<String> vetResultId = orientacaoDAO.readId();
+        List<String> vetResult = orientacaoDAO.read();
+
         switch (opcCrud) {
             case 1:
-                Orientacao or = orientacaoView.criarOrientacao(servidorDAO);
-                orientacaoDAO.setOrientacao(or);
-                servidorAux = servidorDAO.getId(or.getServidor().getId());
-                servidorDAO.aumentarHoras(servidorAux.getId(), or.getHorasSemanais());
+                Orientacao or = orientacaoView.criarOrientacao(servidorVet);
+                if (or != null) {
+                    orientacaoDAO.create(or);
+                } else {
+                    GUI.error();
+                }
                 break;
             case 2:
-                orientacaoView.mostrarTodasOrientacoes(orVet, servidorDAO);
+                orientacaoView.mostrarTodasOrientacoes(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Orientacao orAlt = orientacaoDAO.getId(auxLoc);
-                servidorAux = servidorDAO.getId(orAlt.getServidor().getId());
-                servidorDAO.removerHoras(servidorAux.getId(), orAlt.getHorasSemanais());
+                Orientacao orAlt = orientacaoDAO.find(auxLoc);
                 if (orAlt != null) {
-                    orAlt = orientacaoView.modifOrientacao(orAlt, servidorDAO);
-                    orientacaoDAO.update(orAlt);
-                    servidorAux = servidorDAO.getId(orAlt.getServidor().getId());
-                    servidorDAO.aumentarHoras(servidorAux.getId(), orAlt.getHorasSemanais());
+                    orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                orientacaoView.mostrarTodasOrientacoes(orVet, servidorDAO);
+                orientacaoView.mostrarTodasOrientacoes(vetResult);
                 break;
             case 4:
-                orientacaoView.mostrarTodasOrientacoes(orVet, servidorDAO);
+                orientacaoView.mostrarTodasOrientacoes(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Orientacao orDelete = orientacaoDAO.getId(auxLoc);
-                if (orDelete != null) {
-                    orientacaoDAO.delete(orDelete);
+                if (auxLoc != 0) {
+                    orientacaoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();
