@@ -5,7 +5,16 @@
  */
 package dao;
 
+import com.mysql.jdbc.PreparedStatement;
+import factory.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import model.Comissao;
+import model.Servidor;
 import model.Vinculo;
 import view.VinculoView;
 
@@ -14,83 +23,275 @@ import view.VinculoView;
  * @author Gui
  */
 public class VinculoDAO {
-     private int id = 0;
 
-    private Vinculo[] vinculos = new Vinculo[50];
+    public void create(Vinculo vinculo) throws Exception {
+        String sql = "INSERT INTO vinculos (servidor, comissao, papel, dt_entrada, dt_saida, cadastrado) VALUES (?,?,?,?,?,?)";
 
-    private VinculoView vincV = new VinculoView();
+        Connection conn = null;
+        PreparedStatement pstm = null;
 
-    public VinculoDAO() {
-            this.setVinculo(vincV.setAleatorio1());
-            this.setVinculo(vincV.setAleatorio2());
-    }
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
 
-    public void setVinculo(Vinculo vinc) {
-        for (int i = 0; i < vinculos.length; i++) {
-            if (vinculos[i] == null) {
-                vinc.setId(id);
-                vinculos[i] = vinc;
-                id++;
-                return;
-            }
-        }
-    }
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-    public Vinculo getId(int auxLoc) {
-        boolean aux = false;
-        for (int i = 0; i < vinculos.length; i++) {
-            if (vinculos[i] != null) {
-                aux = true;
-            }
-        }
-        if (aux) {
-            for (int i = 0; i < vinculos.length; i++) {
-                if (vinculos[i].getId() == auxLoc) {
-                    return vinculos[i];
+            pstm.setInt(1, vinculo.getId_servidor());
+            pstm.setInt(2, vinculo.getId_comissao());
+            pstm.setString(3, vinculo.getPapel());
+
+            Date date = Date.valueOf(vinculo.getDtEntrada());
+            pstm.setDate(4, date);
+
+            date = Date.valueOf(vinculo.getDtSaida());
+            pstm.setDate(5, date);
+
+            date = Date.valueOf(vinculo.getDtCriacao());
+            pstm.setDate(6, date);
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+                if (pstm != null) {
+                    pstm.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+    }
 
+    public List<String> read() throws Exception {
+
+        String sql = "SELECT *, s.nome FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
+
+        List<String> vetResult = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("Id: \t" + rset.getString(1) + "\n"
+                        + "Servidor: \t" + rset.getString(10) + "\n"
+                        + "Comissao: \t" + rset.getString(21) + "\n"
+                        + "Papel: \t" + rset.getString(4) + "\n"
+                        + "Data de entrada: \t" + rset.getString(5) + "\n"
+                        + "Data de saida: \t" + rset.getString(6) + "\n"
+                        + "Cadastrado: \t" + rset.getString(7) + "\n"
+                        + "Modificado: \t" + rset.getString(8) + "\n"
+                        + "--------------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
+    }
+
+    public List<String> readId() throws Exception {
+
+        String sql = "SELECT *, s.nome FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
+
+        List<String> vetResult = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("=========================\n"
+                        + "Id: " + rset.getString(1) + "\n"
+                        + "Servidor: " + rset.getString(10) + "\n"
+                        + "Comissao: " + rset.getString(21) + "\n"
+                        + "=========================" + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
+    }
+
+    public void update(Vinculo altVinculo) throws Exception {;
+        String sql = "UPDATE vinculos SET servidor=?, comissao=?, papel=?, "
+                + "dt_entrada=?, dt_saida=?, modificado=?"
+                + "where id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, altVinculo.getId_servidor());
+            pstm.setInt(2, altVinculo.getId_comissao());
+            pstm.setString(3, altVinculo.getPapel());
+
+            Date date = Date.valueOf(altVinculo.getDtEntrada());
+            pstm.setDate(4, date);
+
+            date = Date.valueOf(altVinculo.getDtSaida());
+            pstm.setDate(5, date);
+
+            date = Date.valueOf(altVinculo.getDtModificacao());
+            pstm.setDate(6, date);
+
+            pstm.setInt(7, altVinculo.getId());
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public void delete(int idVinculo) throws Exception {
+        String sql = "DELETE FROM vinculos WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, idVinculo);
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public Vinculo find(int idVinculo) throws Exception {
+        String sql = "SELECT * FROM vinculos WHERE id = '" + idVinculo + "'";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                Vinculo vinculo = new Vinculo();
+
+                vinculo.setId(rset.getInt("id"));
+                vinculo.setId_servidor(rset.getInt("servidor"));
+                vinculo.setId_comissao(rset.getInt("comissao"));
+                vinculo.setPapel(rset.getString("papel"));
+
+                Date date = rset.getDate("dt_entrada");
+                LocalDate dataAtualizada = date.toLocalDate();
+                vinculo.setDtEntrada(dataAtualizada);
+
+                date = rset.getDate("dt_saida");
+                dataAtualizada = date.toLocalDate();
+                vinculo.setDtSaida(dataAtualizada);
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                vinculo.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    vinculo.setDtModificacao(dataAtualizada);
+                }
+                return vinculo;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
         return null;
     }
 
-    public void update(Vinculo vinculo) {
-        this.vinculos[vinculo.getId()] = vinculo;
-    }
-
-    public Vinculo[] getAll() {
-        return vinculos;
-    }
-
-    public void delete(Vinculo vincDelete) {
-        vinculos[vincDelete.getId()] = null;
-    }
-
-    public Vinculo[] findVinculo(int idServ) {
-        Vinculo[] vetVinculo = new Vinculo[10];
-        int cont = 0;
-        for (Vinculo vinculo : vinculos) {
-            if (vinculo != null) {
-                if (vinculo.getServidor().getId() == idServ) {
-                    vetVinculo[cont] = vinculo;
-                    cont++;
-                }
-            }
-        }
-        return vetVinculo;
-    }
-    
-    
-    public void encerrarVinculos(Comissao comAux) {
-        
-        for (int i = 0; i < vinculos.length; i++) {
-            if(vinculos[i] != null){
-                if (vinculos[i].getId() == comAux.getId()) {
-                    vinculos[i] = null;
-                    return;
-                }
-            }
-            
-        }
-    }
+//    public void encerrarVinculos(Comissao comAux) {
+//        
+//        for (int i = 0; i < vinculos.length; i++) {
+//            if(vinculos[i] != null){
+//                if (vinculos[i].getId() == comAux.getId()) {
+//                    vinculos[i] = null;
+//                    return;
+//                }
+//            }
+//            
+//        }
+//    }
 }

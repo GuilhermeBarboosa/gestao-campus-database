@@ -53,7 +53,7 @@ public class gestaoIFTM {
     private OrientacaoController orientacaoController = new OrientacaoController();
     private AtividadeController atividadeController = new AtividadeController();
     private ComissaoController comissaoController = new ComissaoController();
-//    private  VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
+    private  VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
 //    private  UserComumController userComController = new UserComumController();
 //    private  ReuniaoController reuniaoController = new ReuniaoController();
 //    private  ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
@@ -68,7 +68,7 @@ public class gestaoIFTM {
     private OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
     private AtividadeDAO atividadeDAO = new AtividadeDAO();
     private ComissaoDAO comissaoDAO = new ComissaoDAO();
-//    private  VinculoDAO vinculoDAO = new VinculoDAO();
+    private  VinculoDAO vinculoDAO = new VinculoDAO();
 //    private  ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
 //    private  ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
 
@@ -145,9 +145,9 @@ public class gestaoIFTM {
                 case 8:
                     comissaoController.menu(comissaoDAO);
                     break;
-//                case 9:
-//                    vinculoServiComi.menu(vinculoDAO, servidorDAO, comissaoDAO);
-//                    break;
+                case 9:
+                    vinculoServiComi.menu(vinculoDAO, servidorDAO, comissaoDAO);
+                    break;
 //                case 10:
 //                    reuniaoController.menu(reuniaoDAO, servidorDAO, comissaoDAO);
 //                    break;

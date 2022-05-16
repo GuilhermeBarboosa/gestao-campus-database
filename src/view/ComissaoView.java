@@ -37,7 +37,7 @@ public class ComissaoView {
             com.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
             System.out.println("Data de termino: ");
             com.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Estado: ");
+            System.out.println("Estado: 1-Ativo 2-Inativo: ");
             int aux = Integer.parseInt(ler.nextLine());
             if (aux == 1) {
                 com.setEstado("Ativo");
