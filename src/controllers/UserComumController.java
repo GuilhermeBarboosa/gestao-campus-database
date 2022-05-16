@@ -16,6 +16,7 @@ import dao.ReuniaoDAO;
 import dao.ReuniaoPresenteDAO;
 import dao.ServidorDAO;
 import dao.VinculoDAO;
+import java.util.List;
 import model.Atividade;
 import model.Campus;
 import model.Comissao;
@@ -59,63 +60,63 @@ public class UserComumController extends DefaultController {
 
     public void menu(CampusDAO campusDAO, ServidorDAO servidorDAO, CursoDAO cursoDAO,
             DisciplinaDAO discDAO, OfertaDAO ofDAO, OrientacaoDAO orDAO, AtividadeDAO atDAO,
-            ComissaoDAO comDAO, VinculoDAO vincDAO, ReuniaoDAO reunDAO, ReuniaoPresenteDAO reunPresenteDAO) {
+            ComissaoDAO comDAO, VinculoDAO vincDAO, ReuniaoDAO reunDAO, ReuniaoPresenteDAO reunPresenteDAO) throws Exception {
         int op = 0;
         do {
             op = GUI.menuComum();
             switch (op) {
                 case 1:
-                    Campus[] responseCampus = campusDAO.read();
+                    List<String> responseCampus = campusDAO.read();
                     campV.mostrarTodosCampos(responseCampus);
                     break;
 
                 case 2:
-                    Servidor[] responseServidor = servidorDAO.getAll();
-                    serV.mostrarTodosServidores(responseServidor, campusDAO);
+                    List<String> responseServidor = servidorDAO.read();
+                    serV.mostrarServidores(responseServidor);
                     break;
 
                 case 3:
-                    Curso[] cursoVet = cursoDAO.getAll();
-                    cursoV.mostrarTodosCursos(cursoVet, campusDAO);
+                    List<String> responseCurso = cursoDAO.read();
+                    cursoV.mostrarCurso(responseCurso);
                     break;
 
                 case 4:
-                    Disciplina[] discVet = discDAO.getAll();
-                    discV.mostrarTodasDisciplinas(discVet, cursoDAO);
+                    List<String> responseDisciplina = discDAO.read();
+                    discV.mostrarTodasDisciplinas(responseDisciplina);
                     break;
 
                 case 5:
-                    Oferta[] ofVet = ofDAO.getAll();
-                    ofertaV.mostrarTodasOfertas(ofVet, servidorDAO, cursoDAO, discDAO);
+                    List<String> responseOferta = ofDAO.read();
+                    ofertaV.mostrarTodasOfertas(responseOferta);
                     break;
 
                 case 6:
-                    Orientacao[] orVet = orDAO.getAll();
-                    orientacaoV.mostrarTodasOrientacoes(orVet, servidorDAO);
+                    List<String> responseOrientacao = orDAO.read();
+                    orientacaoV.mostrarTodasOrientacoes(responseOrientacao);
                     break;
 
                 case 7:
-                    Atividade[] atVet = atDAO.getAll();
-                    atV.mostrarTodasAtividades(atVet);
+                    List<String> responseAtividade = atDAO.read();
+                    atV.mostrarAtividades(responseAtividade);
                     break;
 
                 case 8:
-                    Comissao[] comVet = comDAO.getAll();
-                    comV.mostrarTodosComissao(comVet);
+                    List<String> responseComissao = comDAO.read();
+                    comV.mostrarTodosComissao(responseComissao);
                     break;
 
                 case 9:
-                    Vinculo[] vincVet = vincDAO.getAll();
-                    vincV.mostrarTodosVinculos(vincVet, comDAO, servidorDAO);
+                    List<String> responseVinculo = comDAO.read();
+                    vincV.mostrarTodosVinculos(responseVinculo);
                     break;
 
                 case 10:
-                    Reuniao[] reunVet = reunDAO.getAll();
-                    reunV.mostrarTodosReunioes(reunVet, servidorDAO, comDAO);
+                    List<String> responseReuniao = comDAO.read();
+                    reunV.mostrarTodosReunioes(responseReuniao);
                     break;
                 case 11:
-                    ReuniaoPresente[] reunPresenteVet = reunPresenteDAO.getAll();
-                    reunPresenteV.mostrarTodosReunioesPresente(reunPresenteVet, servidorDAO, comDAO);
+                    List<String> responseReuniaoPresente = comDAO.read();
+                    reunPresenteV.mostrarTodosReunioesPresente(responseReuniaoPresente);
                     break;
             }
         } while (op != 12);

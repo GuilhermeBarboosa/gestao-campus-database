@@ -34,6 +34,7 @@ import dao.ReuniaoDAO;
 import dao.ReuniaoPresenteDAO;
 import dao.ServidorDAO;
 import dao.VinculoDAO;
+import java.sql.SQLException;
 
 import model.Servidor;
 
@@ -88,26 +89,23 @@ public class gestaoIFTM {
     }
 
     private void principal() throws Exception {
-
-        sistemaAdm();
-
-//        try {
-//            do {
-//                String[] loginSenha = GUI.login();
-//                servidorLogin = login(loginSenha[0], loginSenha[1]);
-//                if (servidorLogin != null) {
-//                    if (servidorLogin.getPerfil() == 1) {
-//                        sistemaAdm();
-//                    } else {
-//                        sistemaComum();
-//                    }
-//                } else {
-//                    System.out.println("Usuario não encontrado");
-//                }
-//            } while (servidorLogin == null);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        try {
+            do {
+                String[] loginSenha = GUI.login();
+                servidorLogin = login(loginSenha[0], loginSenha[1]);
+                if (servidorLogin != null) {
+                    if (servidorLogin.getPerfil() == 1) {
+                        sistemaAdm();
+                    } else {
+                        sistemaComum();
+                    }
+                } else {
+                    System.out.println("Usuario não encontrado");
+                }
+            } while (servidorLogin == null);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void sistemaComum() throws Exception {
@@ -154,7 +152,7 @@ public class gestaoIFTM {
                     break;
                 case 11:
                     reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
-//                    break;
+                    break;
 //                case 12:
 //                    relatorioController.gerarRelat(campusDAO, servidorDAO, cursoDAO,
 //                            disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
@@ -170,8 +168,8 @@ public class gestaoIFTM {
         principal();
     }
 
-//    public Servidor login(String login, String senha) {
-//        Servidor responseLogin = servidorDAO.login(login, senha);
-//        return responseLogin;
-//    }
+    public Servidor login(String login, String senha) throws SQLException {
+        Servidor responseLogin = servidorDAO.login(login, senha);
+        return responseLogin;
+    }
 }

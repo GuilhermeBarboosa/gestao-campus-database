@@ -10,6 +10,7 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,6 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            
             pstm.setString(1, servidor.getNome());
             pstm.setInt(2, servidor.getId_campus());
             pstm.setString(3, servidor.getEmail());
@@ -83,7 +83,7 @@ public class ServidorDAO {
 
             while (rset.next()) {
 
-                vetResult.add( "Id: \t" + rset.getString(1) + "\n"
+                vetResult.add("Id: \t" + rset.getString(1) + "\n"
                         + "Nome: \t" + rset.getString(2) + "\n"
                         + "Campus: \t" + rset.getString(13) + "\n"
                         + "Email: \t" + rset.getString(4) + "\n"
@@ -111,7 +111,7 @@ public class ServidorDAO {
         }
         return vetResult;
     }
-    
+
     public List<String> readId() throws Exception {
 
         String sql = "SELECT *, c.nome FROM servidores AS s INNER JOIN campus c ON c.id = s.campus";
@@ -167,7 +167,6 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            
             pstm.setString(1, altServidor.getNome());
             pstm.setInt(2, altServidor.getId_campus());
             pstm.setString(3, altServidor.getEmail());
@@ -262,6 +261,65 @@ public class ServidorDAO {
                 }
                 return servidor;
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+
+    public Servidor login(String login, String senha) throws SQLException {
+
+        String sql = "SELECT * FROM servidores AS s";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Servidor servidor = new Servidor();
+
+                servidor.setId(rset.getInt("id"));
+                servidor.setNome(rset.getString("nome"));
+                servidor.setId_campus(rset.getInt("campus"));
+                servidor.setEmail(rset.getString("email"));
+                servidor.setCargo(rset.getString("cargo"));
+                servidor.setLogin(rset.getString("login"));
+                servidor.setSenha(rset.getString("senha"));
+                servidor.setPerfil(rset.getInt("perfil"));
+                servidor.setHorasTotais(rset.getDouble("horas_totais"));
+
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                servidor.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    servidor.setDtModificacao(dataAtualizada);
+                }
+
+                if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
+                    return servidor;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
