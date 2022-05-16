@@ -5,7 +5,16 @@
  */
 package dao;
 
+import com.mysql.jdbc.PreparedStatement;
+import factory.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import model.Reuniao;
+import model.Servidor;
 import view.ReuniaoView;
 
 /**
@@ -13,59 +22,251 @@ import view.ReuniaoView;
  * @author Gui
  */
 public class ReuniaoDAO {
-    
-    private int id = 0;
 
-    private Reuniao[] reunioes = new Reuniao[100];
+    public void create(Reuniao reuniao) throws Exception {
+        String sql = "INSERT INTO reunioes (comissao, servidor_secre, conteudo_ata, dt_reuniao, cadastrado) VALUES (?,?,?,?,?)";
 
-    private ReuniaoView reuniaoV = new ReuniaoView();
+        Connection conn = null;
+        PreparedStatement pstm = null;
 
-    public ReuniaoDAO() {
-        this.setReuniao(reuniaoV.setAleatorio1());
-        this.setReuniao(reuniaoV.setAleatorio2());
-        this.setReuniao(reuniaoV.setAleatorio3());
-        this.setReuniao(reuniaoV.setAleatorio4());
-    }
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
 
-    public void setReuniao(Reuniao reuniao) {
-        for (int i = 0; i < reunioes.length; i++) {
-            if (reunioes[i] == null) {
-                reuniao.setId(id);
-              
-                reunioes[i] = reuniao;
-                  id++;
-                return;
-            }
-        }
-    }
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-    public Reuniao getId(int auxLoc) {
-        boolean aux = false;
-        for (int i = 0; i < reunioes.length; i++) {
-            if (reunioes[i] != null) {
-                aux = true;
-            }
-        }
-        if (aux) {
-            for (int i = 0; i < reunioes.length; i++) {
-                if (reunioes[i].getId() == auxLoc) {
-                    return reunioes[i];
+            pstm.setInt(1, reuniao.getId_comissao());
+            pstm.setInt(2, reuniao.getId_servidorSecre());
+            pstm.setString(3, reuniao.getConteudoAta());
+            
+            Date date = Date.valueOf(reuniao.getDtReuniao());
+            pstm.setDate(4, date);
+   
+            date = Date.valueOf(reuniao.getDtCriacao());
+            pstm.setDate(5, date);
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+                if (pstm != null) {
+                    pstm.close();
                 }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+    }
 
+    public List<String> read() throws Exception {
+
+        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id";
+
+        List<String> vetResult = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("Id: \t" + rset.getString(1) + "\n"
+                        + "Comissao: \t" + rset.getString(20) + "\n"
+                        + "Servidor: \t" + rset.getString(9) + "\n"
+                        + "Conteudo da ata: \t" + rset.getString(4) + "\n"
+                        + "Data da reunião: \t" + rset.getString(5) + "\n"      
+                        + "Cadastrado: \t" + rset.getString(10) + "\n"
+                        + "Modificado: \t" + rset.getString(11) + "\n"
+                        + "--------------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
+    }
+
+    public List<String> readId() throws Exception {
+
+        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id";
+
+        List<String> vetResult = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("=========================\n"
+                        + "Id: " + rset.getString(1) + "\n"
+                        + "Comissao: " + rset.getString(20) + "\n"
+                        + "Servidor: " + rset.getString(9) + "\n"
+                        + "=========================" + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
+    }
+
+    public void update(Reuniao altReuniao) throws Exception {;
+        String sql = "UPDATE reunioes SET comissao=?, servidor_secre=?, conteudo_ata=?, "
+                + "dt_reuniao=?, modificado=?"
+                + "where id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, altReuniao.getId_comissao());
+            pstm.setInt(2, altReuniao.getId_servidorSecre());
+            pstm.setString(3, altReuniao.getConteudoAta());
+            
+            Date date = Date.valueOf(altReuniao.getDtReuniao());
+            pstm.setDate(4, date);
+
+            date = Date.valueOf(altReuniao.getDtModificacao());
+            pstm.setDate(5, date);
+
+            pstm.setInt(6, altReuniao.getId());
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public void delete(int idReuniao) throws Exception {
+        String sql = "DELETE FROM reunioes WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, idReuniao);
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public Reuniao find(int idReuniao) throws Exception {
+        String sql = "SELECT * FROM reunioes WHERE id = '" + idReuniao + "'";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                Reuniao reuniao = new Reuniao();
+
+                reuniao.setId(rset.getInt("id"));
+                reuniao.setId_comissao(rset.getInt("comissao"));
+                reuniao.setId_servidorSecre(rset.getInt("servidor_secre"));
+                reuniao.setConteudoAta(rset.getString("conteudo_ata"));
+                
+                Date date = rset.getDate("dt_reuniao");
+                LocalDate dataAtualizada = date.toLocalDate();
+                reuniao.setDtReuniao(dataAtualizada);
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                reuniao.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    reuniao.setDtModificacao(dataAtualizada);
+                }
+                return reuniao;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
         return null;
-    }
-
-    public void update(Reuniao reuniao) {
-        this.reunioes[reuniao.getId()] = reuniao;
-    }
-
-    public Reuniao[] getAll() {
-        return reunioes;
-    }
-
-    public void delete(Reuniao reuniaoDelete) {
-        reunioes[reuniaoDelete.getId()] = null;
     }
 }

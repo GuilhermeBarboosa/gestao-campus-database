@@ -8,6 +8,7 @@ package controllers;
 import dao.ComissaoDAO;
 import dao.ReuniaoDAO;
 import dao.ServidorDAO;
+import java.util.List;
 import model.Reuniao;
 import view.ReuniaoView;
 
@@ -16,40 +17,48 @@ import view.ReuniaoView;
  * @author Aluno
  */
 public class ReuniaoController extends DefaultController {
-    
+
     private final ReuniaoView reuniaoView = new ReuniaoView();
 
-    public void menu(ReuniaoDAO reuniaoDAO, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) {
+    public void menu(ReuniaoDAO reuniaoDAO, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) throws Exception {
         System.out.println("REUNIÃO");
-        Reuniao[] reunVet = reuniaoDAO.getAll();
+
+        List<String> servidorVet = servidorDAO.readId();
+        List<String> comissaoVet = comissaoDAO.readId();
+
+        List<String> vetResultId = reuniaoDAO.readId();
+        List<String> vetResult = reuniaoDAO.read();
         opcCrud = GUI.menu();
         switch (opcCrud) {
             case 1:
-                Reuniao reuniao = reuniaoView.criarReuniao(servidorDAO, comissaoDAO);
-                reuniaoDAO.setReuniao(reuniao);
+                Reuniao reuniao = reuniaoView.criarReuniao(servidorVet, comissaoVet);
+                if (reuniao != null) {
+                    reuniaoDAO.create(reuniao);
+                } else {
+                    GUI.error();
+                }
                 break;
             case 2:
-                reuniaoView.mostrarTodosReunioes(reunVet, servidorDAO, comissaoDAO);
+                reuniaoView.mostrarTodosReunioes(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Reuniao reunAlt = reuniaoDAO.getId(auxLoc);
+                Reuniao reunAlt = reuniaoDAO.find(auxLoc);
                 if (reunAlt != null) {
-                    reuniaoDAO.update(reuniaoView.modifReuniao(reunAlt, servidorDAO, comissaoDAO));
+                    reuniaoDAO.update(reuniaoView.modifReuniao(reunAlt, servidorVet, comissaoVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                reuniaoView.mostrarTodosReunioes(reunVet, servidorDAO, comissaoDAO);
+                reuniaoView.mostrarTodosReunioes(vetResult);
                 break;
             case 4:
-                reuniaoView.mostrarTodosReunioes(reunVet, servidorDAO, comissaoDAO);
+                reuniaoView.mostrarTodosReunioes(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Reuniao reunDelete = reuniaoDAO.getId(auxLoc);
-                if (reunDelete != null) {
-                    reuniaoDAO.delete(reunDelete);
+                if (auxLoc != 0) {
+                    reuniaoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();
