@@ -38,10 +38,6 @@ import java.sql.SQLException;
 
 import model.Servidor;
 
-/**
- *
- * @author Gui
- */
 public class gestaoIFTM {
 
     private Scanner ler = new Scanner(System.in);
