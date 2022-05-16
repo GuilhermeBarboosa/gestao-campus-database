@@ -10,6 +10,7 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -282,16 +283,29 @@ public class VinculoDAO {
         return null;
     }
 
-//    public void encerrarVinculos(Comissao comAux) {
-//        
-//        for (int i = 0; i < vinculos.length; i++) {
-//            if(vinculos[i] != null){
-//                if (vinculos[i].getId() == comAux.getId()) {
-//                    vinculos[i] = null;
-//                    return;
-//                }
-//            }
-//            
-//        }
-//    }
+    public void encerrarVinculos(Comissao comAux) throws SQLException {
+       String sql = "DELETE FROM vinculos WHERE comissao = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, comAux.getId());
+
+            pstm.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
 }

@@ -8,6 +8,7 @@ package controllers;
 import dao.ComissaoDAO;
 import dao.ReuniaoPresenteDAO;
 import dao.ServidorDAO;
+import java.util.List;
 import model.ReuniaoPresente;
 import view.ReuniaoPresenteView;
 
@@ -16,40 +17,50 @@ import view.ReuniaoPresenteView;
  * @author Aluno
  */
 public class ReuniaoPresenteController extends DefaultController {
-    
+
     private final ReuniaoPresenteView reuniaoPresenteView = new ReuniaoPresenteView();
+
     public void menu(ReuniaoPresenteDAO reuniaoPresenteDAO, ServidorDAO servidorDAO,
-                     ComissaoDAO comissaoDAO) {
+            ComissaoDAO comissaoDAO) throws Exception {
         System.out.println("REUNIÃO E PRESENTES");
-        ReuniaoPresente[] reunPresenteVet = reuniaoPresenteDAO.getAll();
         opcCrud = GUI.menu();
+
+        List<String> servidorVet = servidorDAO.readId();
+        List<String> comissaoVet = comissaoDAO.readId();
+
+        List<String> vetResultId = reuniaoPresenteDAO.readId();
+        List<String> vetResult = reuniaoPresenteDAO.read();
+
         switch (opcCrud) {
             case 1:
-                ReuniaoPresente reuniaoPresente = reuniaoPresenteView.criarReuniaoPresente(servidorDAO, comissaoDAO);
-                reuniaoPresenteDAO.setReuniaoPresente(reuniaoPresente);
+                ReuniaoPresente reuniaoPresente = reuniaoPresenteView.criarReuniaoPresente(servidorVet, comissaoVet);
+                if (reuniaoPresente != null) {
+                    reuniaoPresenteDAO.create(reuniaoPresente);
+                } else {
+                    GUI.error();
+                }
                 break;
             case 2:
-                reuniaoPresenteView.mostrarTodosReunioesPresente(reunPresenteVet, servidorDAO, comissaoDAO);
+                reuniaoPresenteView.mostrarTodosReunioesPresente(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                ReuniaoPresente reunPresenteAlt = reuniaoPresenteDAO.getId(auxLoc);
+                ReuniaoPresente reunPresenteAlt = reuniaoPresenteDAO.find(auxLoc);
                 if (reunPresenteAlt != null) {
-                    reuniaoPresenteDAO.update(reuniaoPresenteView.modifReuniaoPresente(reunPresenteAlt, servidorDAO, comissaoDAO));
+                    reuniaoPresenteDAO.update(reuniaoPresenteView.modifReuniaoPresente(reunPresenteAlt, servidorVet, comissaoVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                reuniaoPresenteView.mostrarTodosReunioesPresente(reunPresenteVet, servidorDAO, comissaoDAO);
+                reuniaoPresenteView.mostrarTodosReunioesPresente(vetResult);
                 break;
             case 4:
-                reuniaoPresenteView.mostrarTodosReunioesPresente(reunPresenteVet, servidorDAO, comissaoDAO);
+                reuniaoPresenteView.mostrarTodosReunioesPresente(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                ReuniaoPresente reunPresenteDelete = reuniaoPresenteDAO.getId(auxLoc);
-                if (reunPresenteDelete != null) {
-                    reuniaoPresenteDAO.delete(reunPresenteDelete);
+                if (auxLoc != 0) {
+                    reuniaoPresenteDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

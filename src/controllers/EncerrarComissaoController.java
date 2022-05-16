@@ -7,6 +7,7 @@ package controllers;
 
 import dao.ComissaoDAO;
 import dao.VinculoDAO;
+import java.util.List;
 import model.Comissao;
 import view.ComissaoView;
 
@@ -18,18 +19,25 @@ public class EncerrarComissaoController extends DefaultController {
     
     private final ComissaoView comissaoView = new ComissaoView();
 
-    public void menu(ComissaoDAO comissaoDAO, VinculoDAO vinculoDAO) {
+    public void menu(ComissaoDAO comissaoDAO, VinculoDAO vinculoDAO) throws Exception {
         System.out.println("ENCERRAR COMISSAO");
-        Comissao[] vetCom = comissaoDAO.getAll();
-        comissaoView.mostrarTodosComissao(vetCom);
+        
+        List<String> vetResultId = comissaoDAO.readId();
+        
+        comissaoView.mostrarTodosComissao(vetResultId);
+        
         GUI.printID();
+        System.out.println("Insira a comissao que deseja encerrar");
         auxLoc = Integer.parseInt(ler.nextLine());
 
-        Comissao comAux = comissaoDAO.getId(auxLoc);
-        comAux = comissaoView.encerrarComissao(comAux);
+        Comissao comAux = comissaoDAO.find(auxLoc);
+        if(comAux != null){
+             comAux = comissaoView.encerrarComissao(comAux);
 
-        comissaoDAO.modificarEncerradomento(comAux);
+            comissaoDAO.modificarEncerradomento(comAux);
 
-        vinculoDAO.encerrarVinculos(comAux);
+            vinculoDAO.encerrarVinculos(comAux);
+        }
+       
     }
 }

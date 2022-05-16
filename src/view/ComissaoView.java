@@ -86,8 +86,8 @@ public class ComissaoView {
         }
     }
 
-//    public Comissao encerrarComissao(Comissao comAux) {
-//        comAux.setEstado("ENCERRADO");
-//        return comAux;
-//    }
+    public Comissao encerrarComissao(Comissao comAux) {
+        comAux.setEstado("ENCERRADO");
+        return comAux;
+    }
 }

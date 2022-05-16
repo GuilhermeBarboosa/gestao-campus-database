@@ -54,10 +54,10 @@ public class gestaoIFTM {
     private AtividadeController atividadeController = new AtividadeController();
     private ComissaoController comissaoController = new ComissaoController();
     private VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
-//    private  UserComumController userComController = new UserComumController();
+    private  UserComumController userComController = new UserComumController();
     private ReuniaoController reuniaoController = new ReuniaoController();
-//    private  ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
-//    private  EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
+    private  ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
+    private  EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
 //    private  RelatorioController relatorioController = new RelatorioController();
 
     private CampusDAO campusDAO = new CampusDAO();
@@ -70,7 +70,7 @@ public class gestaoIFTM {
     private ComissaoDAO comissaoDAO = new ComissaoDAO();
     private VinculoDAO vinculoDAO = new VinculoDAO();
     private ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
-//    private  ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
+    private  ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
 
     int opcCrud;
     boolean sair = false;
@@ -110,11 +110,11 @@ public class gestaoIFTM {
 //        }
     }
 
-    public void sistemaComum() {
-//        userComController.menu(campusDAO, servidorDAO, cursoDAO,
-//                disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
-//                comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
-//        principal();
+    public void sistemaComum() throws Exception {
+        userComController.menu(campusDAO, servidorDAO, cursoDAO,
+                disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
+                comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
+        principal();
     }
 
     public void sistemaAdm() throws Exception {
@@ -152,17 +152,17 @@ public class gestaoIFTM {
                 case 10:
                     reuniaoController.menu(reuniaoDAO, servidorDAO, comissaoDAO);
                     break;
-//                case 11:
-//                    reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
+                case 11:
+                    reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
 //                    break;
 //                case 12:
 //                    relatorioController.gerarRelat(campusDAO, servidorDAO, cursoDAO,
 //                            disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
 //                            comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
 //                    break;
-//                case 13:
-//                    encerrarComissaoController.menu(comissaoDAO, vinculoDAO);
-//                    break;
+                case 13:
+                    encerrarComissaoController.menu(comissaoDAO, vinculoDAO);
+                    break;
                 default:
                     System.out.println("SAINDO DO MENU...");
             }

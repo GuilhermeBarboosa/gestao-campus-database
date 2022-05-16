@@ -10,6 +10,7 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -283,13 +284,36 @@ public class ComissaoDAO {
         return null;
     }
 
-//    public void modificarEncerradomento(Comissao encerrarComissao) {
-//        for (Comissao comissao : comissoes) {
-//            if(comissao != null){
-//                if(comissao.getId() == encerrarComissao.getId()){
-//                    comissao = encerrarComissao;
-//                }
-//            }
-//        }
-//    }
+    public void modificarEncerradomento(Comissao encerrarComissao) throws SQLException {
+       String sql = "UPDATE comissoes SET estado=?, modificado=?"
+                + "where id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setString(1, "Inativo");
+            
+            Date date = Date.valueOf(LocalDate.now());
+            pstm.setDate(2, date);
+
+            pstm.setInt(3, encerrarComissao.getId());
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
 }

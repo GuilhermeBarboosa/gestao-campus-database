@@ -9,6 +9,7 @@ import dao.ComissaoDAO;
 import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 import model.Comissao;
 import model.ReuniaoPresente;
@@ -23,136 +24,86 @@ public class ReuniaoPresenteView {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
 
-    public ReuniaoPresente criarReuniaoPresente(ServidorDAO servidorDAO, ComissaoDAO comDAO) {
-        String servidorRead = "";
-        String comissaoRead = "";
+    public ReuniaoPresente criarReuniaoPresente(List<String> servidorVet, List<String> comissaoVet) {
 
-        ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
+        try {
+            ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
-        Comissao[] comAll = comDAO.getAll();
-        for (Comissao com : comAll) {
-            if (com != null) {
-                comissaoRead += "ID: " + com.getId() + " - comissao: " + com.getNameComissao() + "\n";
-            }
-        }
-        System.out.println(comissaoRead);
-        System.out.println("Comissao: ");
-        Comissao comAux = comDAO.getById(Integer.parseInt(ler.nextLine()));
-        reuniaoPresente.setComissao(comAux);
-        
-        
-        System.out.println("Ata de reunião:  ");
-        reuniaoPresente.setAtaReuniao(ler.nextLine());
-        
-        
-        
-        Servidor[] servAll = servidorDAO.getAll();
-        for (Servidor serv : servAll) {
-            if (serv != null) {
-                servidorRead += "ID: " + serv.getId() + " - NOME: " + serv.getNome() + "\n";
-            }
-        }
-        System.out.println(servidorRead);
-
-       
-     
-        System.out.println("Quantos servidores vai inserir: ");
-        int tamanhoFor = Integer.parseInt(ler.nextLine());
-        for (int i = 0; i < tamanhoFor; i++) {
-            System.out.println("Servidor: ");
-            Servidor servAux = servidorDAO.getById(Integer.parseInt(ler.nextLine()));
-            reuniaoPresente.setServidor(servAux);
-        }
-
-        reuniaoPresente.setDtCriacao(LocalDate.now());
-        return reuniaoPresente;
-    }
-
-    public ReuniaoPresente modifReuniaoPresente(ReuniaoPresente reunPresenteAlt, ServidorDAO servidorDAO, ComissaoDAO comDAO) {
-        String servidorRead = "";
-        String comissaoRead = "";
- 
-       Comissao[] comAll = comDAO.getAll();
-        for (Comissao com : comAll) {
-            if (com != null) {
-                comissaoRead += "ID: " + com.getId() + " - comissao: " + com.getNameComissao() + "\n";
-            }
-        }
-        System.out.println(comissaoRead);
-        System.out.println("Comissao: ");
-        Comissao comAux = comDAO.getById(Integer.parseInt(ler.nextLine()));
-        reunPresenteAlt.setComissao(comAux);
-        
-        reunPresenteAlt.clearServidores();
-        
-        System.out.println("Ata de reunião:  ");
-        reunPresenteAlt.setAtaReuniao(ler.nextLine());
-        
-        
-        
-        Servidor[] servAll = servidorDAO.getAll();
-        for (Servidor serv : servAll) {
-            if (serv != null) {
-                servidorRead += "ID: " + serv.getId() + " - NOME: " + serv.getNome() + "\n";
-            }
-        }
-        System.out.println(servidorRead);
-        
-
-         System.out.println("Quantos servidores vai inserir: ");
-        int tamanhoFor = Integer.parseInt(ler.nextLine());
-        for (int i = 0; i < tamanhoFor; i++) {
-            System.out.println("Servidor: ");
-            Servidor servAux = servidorDAO.getById(Integer.parseInt(ler.nextLine()));
-            reunPresenteAlt.setServidor(servAux);
-        }
-
-        reunPresenteAlt.setDtModificacao(LocalDate.now());
-        return reunPresenteAlt;
-    }
-
-    public void mostrarTodosReunioesPresente(ReuniaoPresente[] reuniao, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) {
-        boolean aux = false;
-        String responseString = "";
-        for (int i = 0; i < reuniao.length; i++) {
-            if (reuniao[i] != null) {
-                aux = true;
-            }
-        }
-
-        if (aux) {
-            for (int i = 0; i < reuniao.length; i++) {
-                if (reuniao[i] != null) {
-                    System.out.println(reuniao[i].toString());
+            if (comissaoVet.size() == 0) {
+                System.out.println("Nenhum comissao cadastrado...");
+                return null;
+            } else {
+                for (String string : comissaoVet) {
+                    System.out.println(string);
                 }
             }
-            System.out.println(responseString);
-        } else {
-            System.out.println("Não ha reunião cadastrados.");
+            System.out.println("Insira o id da comissao: ");
+            reuniaoPresente.setId_comissao(Integer.parseInt(ler.nextLine()));
+
+            System.out.println("Ata de reunião:  ");
+            reuniaoPresente.setAtaReuniao(ler.nextLine());
+
+            if (servidorVet.size() == 0) {
+                System.out.println("Nenhum servidor cadastrado...");
+                return null;
+            } else {
+                for (String string : servidorVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Insira o id do servidor: ");
+            reuniaoPresente.setId_servidor(Integer.parseInt(ler.nextLine()));
+
+            reuniaoPresente.setDtCriacao(LocalDate.now());
+            return reuniaoPresente;
+        } catch (Exception e) {
+            return null;
         }
     }
-    /////////////////////////////////////////////////////
 
+    public ReuniaoPresente modifReuniaoPresente(ReuniaoPresente reunPresenteAlt, List<String> servidorVet, List<String> comissaoVet) {
+        try {
 
-    public ReuniaoPresente setTeste() {
-        ComissaoDAO comDAO = new ComissaoDAO();
-        Comissao comAux = comDAO.getById(0);
-        
-        ServidorDAO servDAO = new ServidorDAO();
-        
-        
-        ReuniaoPresente reuniPresente = new ReuniaoPresente();
-        reuniPresente.setComissao(comAux);
-        Servidor servAux = servDAO.getById(0);
-        reuniPresente.setServidor(servAux);
-        
-        servAux = servDAO.getById(1);
-        reuniPresente.setServidor(servAux);
-        
-        servAux = servDAO.getById(2);
-        reuniPresente.setServidor(servAux);
-        reuniPresente.setAtaReuniao("Reuniao sobre o inicio");
-        reuniPresente.setDtCriacao(LocalDate.now());
-        return reuniPresente;
+            if (comissaoVet.size() == 0) {
+                System.out.println("Nenhum comissao cadastrado...");
+                return null;
+            } else {
+                for (String string : comissaoVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Insira o id da comissao: ");
+            reunPresenteAlt.setId_comissao(Integer.parseInt(ler.nextLine()));
+
+            System.out.println("Ata de reunião:  ");
+            reunPresenteAlt.setAtaReuniao(ler.nextLine());
+
+            if (servidorVet.size() == 0) {
+                System.out.println("Nenhum servidor cadastrado...");
+                return null;
+            } else {
+                for (String string : servidorVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Insira o id do servidor: ");
+            reunPresenteAlt.setId_servidor(Integer.parseInt(ler.nextLine()));
+
+            reunPresenteAlt.setDtModificacao(LocalDate.now());
+            return reunPresenteAlt;
+        } catch (Exception e) {
+            return null;
+        }
     }
+
+    public void mostrarTodosReunioesPresente(List<String> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há reunião e presente cadastrados");
+        } else {
+            for (String string : vetResult) {
+                System.out.println(string);
+            }
+        }
+    }
+
 }
