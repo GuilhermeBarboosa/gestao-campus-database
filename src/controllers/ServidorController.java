@@ -35,7 +35,6 @@ public class ServidorController extends DefaultController {
                 }else{
                     GUI.error();
                 }
-               
                 break;
             case 2:
                 servV.mostrarServidores(vetResultId);

@@ -10,6 +10,7 @@ import dao.CursoDAO;
 import dao.DisciplinaDAO;
 import dao.OfertaDAO;
 import dao.ServidorDAO;
+import java.util.List;
 import model.Oferta;
 import view.AtividadeView;
 import view.OfertaView;
@@ -19,63 +20,53 @@ import view.OfertaView;
  * @author Aluno
  */
 public class OfertaDisciplinaController extends DefaultController {
-    
+
     private final OfertaView ofertaView = new OfertaView();
     private final AtividadeView atividadeView = new AtividadeView();
 
-    public void menu(OfertaDAO ofertaDAO, DisciplinaDAO disciplinaDAO, 
-                     ServidorDAO servidorDAO, CursoDAO cursoDAO, AtividadeDAO atividadeDAO) {
+    public void menu(OfertaDAO ofertaDAO, DisciplinaDAO disciplinaDAO,
+            ServidorDAO servidorDAO, CursoDAO cursoDAO, AtividadeDAO atividadeDAO) throws Exception {
         System.out.println("OFERTA DE DISCIPLINA");
         opcCrud = GUI.menu();
-        Oferta[] ofVet = ofertaDAO.getAll();
+
+        List<String> servidorVet = servidorDAO.readId();
+        List<String> disciplinaVet = disciplinaDAO.readId();
+        List<String> cursoVet = cursoDAO.readId();
+
+        List<String> vetResultId = ofertaDAO.readId();
+        List<String> vetResult = ofertaDAO.read();
+
         switch (opcCrud) {
             case 1:
-                Oferta of = ofertaView.criarOferta(servidorDAO, cursoDAO, disciplinaDAO);
-                ofertaDAO.setDisciplina(of);
-
-                disciplinaAux = disciplinaDAO.getId(of.getDisciplina().getId());
-                servidorAux = servidorDAO.getId(of.getServidor().getId());
-
-                servidorDAO.aumentarHoras(servidorAux.getId(), of.getAulaSemanais());
-                atividadeAux = atividadeView.criarAula(servidorAux, disciplinaAux, of.getAulaSemanais());
-                atividadeDAO.setAtividade(atividadeAux);
+                Oferta of = ofertaView.criarOferta(servidorVet, cursoVet, disciplinaVet);
+                if(of != null){
+                    ofertaDAO.create(of);
+                }else{
+                    GUI.error();
+                }
                 break;
             case 2:
-                ofertaView.mostrarTodasOfertas(ofVet, servidorDAO, cursoDAO, disciplinaDAO);
+                ofertaView.mostrarTodasOfertas(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-
-                Oferta ofertaAlt = ofertaDAO.getId(auxLoc);
-
-                disciplinaAux = disciplinaDAO.getId(ofertaAlt.getDisciplina().getId());
-                servidorAux = servidorDAO.getId(ofertaAlt.getServidor().getId());
-
-                servidorDAO.removerHoras(servidorAux.getId(), disciplinaAux.getCargaHoraria());
-
+                Oferta ofertaAlt = ofertaDAO.find(auxLoc);
                 if (ofertaAlt != null) {
-
-                    ofertaAlt = ofertaView.modifOferta(ofertaAlt, servidorDAO, cursoDAO, disciplinaDAO);
+                    ofertaAlt = ofertaView.modifOferta(ofertaAlt, servidorVet, cursoVet, disciplinaVet);
                     ofertaDAO.update(ofertaAlt);
-
-                    disciplinaAux = disciplinaDAO.getId(ofertaAlt.getDisciplina().getId());
-                    servidorAux = servidorDAO.getId(ofertaAlt.getServidor().getId());
-
-                    servidorDAO.aumentarHoras(servidorAux.getId(), disciplinaAux.getCargaHoraria());
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                ofertaView.mostrarTodasOfertas(ofVet, servidorDAO, cursoDAO, disciplinaDAO);
+                ofertaView.mostrarTodasOfertas(vetResult);
                 break;
             case 4:
-                ofertaView.mostrarTodasOfertas(ofVet, servidorDAO, cursoDAO, disciplinaDAO);
+                ofertaView.mostrarTodasOfertas(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Oferta ofDelete = ofertaDAO.getId(auxLoc);
-                if (ofDelete != null) {
-                    ofertaDAO.delete(ofDelete);
+                if (auxLoc != 0) {
+                    ofertaDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

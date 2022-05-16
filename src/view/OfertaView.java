@@ -10,6 +10,7 @@ import dao.DisciplinaDAO;
 import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 import model.Curso;
 import model.Disciplina;
@@ -24,183 +25,118 @@ public class OfertaView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
+    int id = 0;
 
-    public Oferta criarOferta(ServidorDAO servidorDAO, CursoDAO cursoDAO, DisciplinaDAO discDAO) {
-        String cursoRead = "";
-        String disciplinaRead = "";
-        String servidorRead = "";
-        Oferta of = new Oferta();
-        
-        
-       
-        Curso[] cursoAll = cursoDAO.getAll();
-        for (Curso curso : cursoAll) {
-            if (curso != null) {
-                cursoRead += "ID: " + curso.getId() + " - NOME: " + curso.getNome() + "\n";
-            }
-        }
-        System.out.println(cursoRead);
-        System.out.println("Escolha pelo id um curso:");
-        Curso cursoAux = cursoDAO.getId(Integer.parseInt(ler.nextLine()));
-        of.setCurso(cursoAux);
+    public Oferta criarOferta(List<String> servidorVet, List<String> cursoVet, List<String> disciplinaVet) {
 
-        
-        
-        
-        Disciplina[] discAll = discDAO.getAll();
-        for (Disciplina disc : discAll) {
-            if (disc != null) {
-                disciplinaRead += "ID: " + disc.getId() + " - NOME: " + disc.getNome() + "\n";
-            }
-        }
-        System.out.println(disciplinaRead);
-        System.out.println("Escolha pelo id uma disciplina:");
-        Disciplina discAux = discDAO.getId(Integer.parseInt(ler.nextLine()));
-        of.setDisciplina(discAux);
+        try {
 
-        
-        
-        
-        Servidor[] servAll = servidorDAO.getAll();
-        for (Servidor serv : servAll) {
-            if (serv != null) {
-                servidorRead += "ID: " + serv.getId() + " - NOME: " + serv.getNome() + "\n";
-            }
-        }
-        System.out.println(servidorRead);
-        System.out.println("Escolha pelo id um Servidor:");
-        Servidor servAux = servidorDAO.getById(Integer.parseInt(ler.nextLine()));
-        of.setServidor(servAux);
-
-
-        
-        
-        System.out.println("Ano: ");
-        of.setAno(Integer.parseInt(ler.nextLine()));
-        System.out.println("Semestre: ");
-        of.setSemestre(Integer.parseInt(ler.nextLine()));
-        System.out.println("Aulas Semanais: ");
-        of.setAulaSemanais(Integer.parseInt(ler.nextLine()));
-        of.setDtCriacao(LocalDate.now());
-        return of;
-    }
-
-    public Oferta modifOferta(Oferta ofertaAlt, ServidorDAO servidorDAO, CursoDAO cursoDAO, DisciplinaDAO discDAO) {
-        String cursoRead = "";
-        String disciplinaRead = "";
-        String servidorRead = "";
-
-        Curso[] cursoAll = cursoDAO.getAll();
-        for (Curso curso : cursoAll) {
-            if (curso != null) {
-                cursoRead += "ID: " + curso.getId() + " - NOME: " + curso.getNome() + "\n";
-            }
-        }
-        System.out.println(cursoRead);
-        System.out.println("Escolha pelo id um curso:");
-        Curso cursoAux = cursoDAO.getId(Integer.parseInt(ler.nextLine()));
-        ofertaAlt.setCurso(cursoAux);
-
-        
-        
-        
-        Disciplina[] discAll = discDAO.getAll();
-        for (Disciplina disc : discAll) {
-            if (disc != null) {
-                disciplinaRead += "ID: " + disc.getId() + " - NOME: " + disc.getNome() + "\n";
-            }
-        }
-        System.out.println(disciplinaRead);
-        System.out.println("Escolha pelo id uma disciplina:");
-        Disciplina discAux = discDAO.getId(Integer.parseInt(ler.nextLine()));
-        ofertaAlt.setDisciplina(discAux);
-
-        
-        
-        
-        Servidor[] servAll = servidorDAO.getAll();
-        for (Servidor serv : servAll) {
-            if (serv != null) {
-                servidorRead += "ID: " + serv.getId() + " - NOME: " + serv.getNome() + "\n";
-            }
-        }
-        System.out.println(servidorRead);
-        System.out.println("Escolha pelo id um Servidor:");
-        Servidor servAux = servidorDAO.getById(Integer.parseInt(ler.nextLine()));
-        ofertaAlt.setServidor(servAux);
-
-  
-        System.out.println("Ano: ");
-        ofertaAlt.setAno(Integer.parseInt(ler.nextLine()));
-        System.out.println("Semestre: ");
-        ofertaAlt.setSemestre(Integer.parseInt(ler.nextLine()));
-        System.out.println("Aulas Semanais: ");
-        ofertaAlt.setAulaSemanais(Integer.parseInt(ler.nextLine()));
-        ofertaAlt.setDtMoficacao(LocalDate.now());
-        return ofertaAlt;
-    }
-
-    public void mostrarTodasOfertas(Oferta[] ofertas, ServidorDAO servidorDAO, CursoDAO cursoDAO, DisciplinaDAO disciplinaDAO) {
-        boolean aux = false;
-        String responseString = "";
-    
-        for (int i = 0; i < ofertas.length; i++) {
-            if (ofertas[i] != null) {
-                aux = true;
-            }
-        }
-        if (aux) {
-            for (int i = 0; i < ofertas.length; i++) {
-                if (ofertas[i] != null) {
-                    System.out.println(ofertas[i].toString());
+            Oferta of = new Oferta();
+            of.setId(id);
+            id++;
+            if (servidorVet.size() == 0) {
+                System.out.println("Nenhum servidores cadastrado...");
+                return null;
+            } else {
+                for (String string : servidorVet) {
+                    System.out.println(string);
                 }
             }
-            System.out.println(responseString);
-        } else {
-            System.out.println("Não ha oferta cadastrados.");
+            System.out.println("Escolha pelo id um servidor:");
+            of.setId_servidor(Integer.parseInt(ler.nextLine()));
+
+            if (cursoVet.size() == 0) {
+                System.out.println("Nenhum curso cadastrado...");
+                return null;
+            } else {
+                for (String string : cursoVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Escolha pelo id um curso:");
+            of.setId_curso(Integer.parseInt(ler.nextLine()));
+
+            if (disciplinaVet.size() == 0) {
+                System.out.println("Nenhum disciplina cadastrado...");
+                return null;
+            } else {
+                for (String string : disciplinaVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Escolha pelo id uma disciplina:");
+            of.setId_disciplina(Integer.parseInt(ler.nextLine()));
+
+            System.out.println("Ano: ");
+            of.setAno(Integer.parseInt(ler.nextLine()));
+            System.out.println("Semestre: ");
+            of.setSemestre(Integer.parseInt(ler.nextLine()));
+            System.out.println("Aulas Semanais: ");
+            of.setAulaSemanais(Integer.parseInt(ler.nextLine()));
+            of.setDtCriacao(LocalDate.now());
+            return of;
+        } catch (Exception e) {
+            return null;
         }
     }
 
-    public Oferta setTeste1() {
-        CursoDAO cursoDAO = new CursoDAO();
-        Curso cursoAux = cursoDAO.getId(1);
-        
-        ServidorDAO servDAO = new ServidorDAO();
-        Servidor servAux = servDAO.getById(0);
-        
-        DisciplinaDAO discDAO = new DisciplinaDAO();
-        Disciplina discAux = discDAO.getId(0);
-        
-        Oferta of = new Oferta();
-        of.setCurso(cursoAux);
-        of.setServidor(servAux);
-        of.setSemestre(2);
-        of.setAno(2022);
-        of.setDisciplina(discAux);
-        of.setAulaSemanais(5);
-        of.setDtCriacao(LocalDate.now());
-        return of;
+    public Oferta modifOferta(Oferta ofertaAlt, List<String> servidorVet, List<String> cursoVet, List<String> disciplinaVet) {
+        try {
+
+            if (servidorVet.size() == 0) {
+                System.out.println("Nenhum servidores cadastrado...");
+                return null;
+            } else {
+                for (String string : servidorVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Escolha pelo id um servidor:");
+            ofertaAlt.setId_servidor(Integer.parseInt(ler.nextLine()));
+
+            if (cursoVet.size() == 0) {
+                System.out.println("Nenhum curso cadastrado...");
+                return null;
+            } else {
+                for (String string : cursoVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Escolha pelo id um curso:");
+            ofertaAlt.setId_curso(Integer.parseInt(ler.nextLine()));
+
+            if (disciplinaVet.size() == 0) {
+                System.out.println("Nenhum curso cadastrado...");
+                return null;
+            } else {
+                for (String string : disciplinaVet) {
+                    System.out.println(string);
+                }
+            }
+            System.out.println("Escolha pelo id um disciplina:");
+            ofertaAlt.setId_disciplina(Integer.parseInt(ler.nextLine()));
+
+            System.out.println("Ano: ");
+            ofertaAlt.setAno(Integer.parseInt(ler.nextLine()));
+            System.out.println("Semestre: ");
+            ofertaAlt.setSemestre(Integer.parseInt(ler.nextLine()));
+            System.out.println("Aulas Semanais: ");
+            ofertaAlt.setAulaSemanais(Integer.parseInt(ler.nextLine()));
+            ofertaAlt.setDtMoficacao(LocalDate.now());
+            return ofertaAlt;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public Oferta setTeste2() {
-        CursoDAO cursoDAO = new CursoDAO();
-        Curso cursoAux = cursoDAO.getId(1);
-        
-        ServidorDAO servDAO = new ServidorDAO();
-        Servidor servAux = servDAO.getById(1);
-        
-        DisciplinaDAO discDAO = new DisciplinaDAO();
-        Disciplina discAux = discDAO.getId(1);
-        
-        Oferta of = new Oferta();
-        of.setCurso(cursoAux);
-        of.setServidor(servAux);
-        of.setSemestre(1);
-        of.setAno(2022);
-        of.setDisciplina(discAux);
-        of.setAulaSemanais(5);
-        of.setDtCriacao(LocalDate.now());
-        return of;
+    public void mostrarTodasOfertas(List<String> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há ofertas cadastradas");
+        } else {
+            for (String string : vetResult) {
+                System.out.println(string);
+            }
+        }
     }
 
 }
