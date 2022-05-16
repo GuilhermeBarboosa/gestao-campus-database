@@ -19,6 +19,7 @@ public class ServidorController extends DefaultController {
     private final ServidorView servV = new ServidorView();
 
     public void menu(ServidorDAO servDAO, CampusDAO campusDAO) throws Exception {
+        System.out.println("SERVIDOR");
         opcCrud = GUI.menu();
 
         List<String> campusVet = campusDAO.readId();

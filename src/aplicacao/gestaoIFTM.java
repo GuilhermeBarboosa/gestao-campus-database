@@ -45,15 +45,14 @@ public class gestaoIFTM {
 
     private Scanner ler = new Scanner(System.in);
 
-
-    private  CampusController campusController = new CampusController();
-    private  ServidorController servidorController = new ServidorController();
-    private  CursoController cursoController = new CursoController();
-    private  DisciplinaController disciplinaController = new DisciplinaController();
+    private CampusController campusController = new CampusController();
+    private ServidorController servidorController = new ServidorController();
+    private CursoController cursoController = new CursoController();
+    private DisciplinaController disciplinaController = new DisciplinaController();
 //    private  OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
 //    private  OrientacaoController oreintacaoController = new OrientacaoController();
-    private  AtividadeController atividadeController = new AtividadeController();
-//    private  ComissaoController comissaoController = new ComissaoController();
+    private AtividadeController atividadeController = new AtividadeController();
+    private ComissaoController comissaoController = new ComissaoController();
 //    private  VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
 //    private  UserComumController userComController = new UserComumController();
 //    private  ReuniaoController reuniaoController = new ReuniaoController();
@@ -61,14 +60,14 @@ public class gestaoIFTM {
 //    private  EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
 //    private  RelatorioController relatorioController = new RelatorioController();
 
-    private  CampusDAO campusDAO = new CampusDAO();
-    private  ServidorDAO servidorDAO = new ServidorDAO();
-    private  CursoDAO cursoDAO = new CursoDAO();
-    private  DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private CampusDAO campusDAO = new CampusDAO();
+    private ServidorDAO servidorDAO = new ServidorDAO();
+    private CursoDAO cursoDAO = new CursoDAO();
+    private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 //    private  OfertaDAO ofertaDAO = new OfertaDAO();
 //    private  OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
-    private  AtividadeDAO atividadeDAO = new AtividadeDAO();
-//    private  ComissaoDAO comissaoDAO = new ComissaoDAO();
+    private AtividadeDAO atividadeDAO = new AtividadeDAO();
+    private ComissaoDAO comissaoDAO = new ComissaoDAO();
 //    private  VinculoDAO vinculoDAO = new VinculoDAO();
 //    private  ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
 //    private  ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
@@ -90,7 +89,7 @@ public class gestaoIFTM {
 
     private void principal() throws Exception {
         sistemaAdm();
-        
+
 //        try {
 //            do {
 //                String[] loginSenha = GUI.login();
@@ -143,9 +142,9 @@ public class gestaoIFTM {
                 case 7:
                     atividadeController.menu(atividadeDAO, servidorDAO);
                     break;
-//                case 8:
-//                    comissaoController.menu(comissaoDAO);
-//                    break;
+                case 8:
+                    comissaoController.menu(comissaoDAO);
+                    break;
 //                case 9:
 //                    vinculoServiComi.menu(vinculoDAO, servidorDAO, comissaoDAO);
 //                    break;

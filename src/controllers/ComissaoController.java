@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.ComissaoDAO;
+import java.util.List;
 import model.Comissao;
 import view.ComissaoView;
 
@@ -14,23 +15,32 @@ import view.ComissaoView;
  * @author Aluno
  */
 public class ComissaoController extends DefaultController {
-    
+
     private final ComissaoView comissaoView = new ComissaoView();
 
-    public void menu(ComissaoDAO comissaoDAO) {
+    public void menu(ComissaoDAO comissaoDAO) throws Exception {
         System.out.println("COMISSÃO");
-        Comissao[] comVet = comissaoDAO.getAll();
         opcCrud = GUI.menu();
+
+        List<String> vetResultId = comissaoDAO.readId();
+        List<String> vetResult = comissaoDAO.read();
+
         switch (opcCrud) {
             case 1:
                 Comissao com = comissaoView.criarComissao();
-                comissaoDAO.setComissao(com);
+                if (com != null) {
+                    comissaoDAO.create(com);
+                } else {
+                    GUI.error();
+                }
+
                 break;
             case 2:
-                comissaoView.mostrarTodosComissao(comVet);
+                comissaoView.mostrarTodosComissao(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Comissao comAlt = comissaoDAO.getId(auxLoc);
+                Comissao comAlt = comissaoDAO.find(auxLoc);
+
                 if (comAlt != null) {
                     comissaoDAO.update(comissaoView.modifComissao(comAlt));
                     GUI.sucess();
@@ -39,15 +49,14 @@ public class ComissaoController extends DefaultController {
                 }
                 break;
             case 3:
-                comissaoView.mostrarTodosComissao(comVet);
+                comissaoView.mostrarTodosComissao(vetResult);
                 break;
             case 4:
-                comissaoView.mostrarTodosComissao(comVet);
+                comissaoView.mostrarTodosComissao(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Comissao comDelete = comissaoDAO.getId(auxLoc);
-                if (comDelete != null) {
-                    comissaoDAO.delete(comDelete);
+                if (auxLoc != 0) {
+                    comissaoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();
