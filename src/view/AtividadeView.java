@@ -99,16 +99,18 @@ public class AtividadeView {
         }
     }
 
-//    public Atividade criarAula(Servidor servAux, Disciplina discAux, double horasSemanais) {
-//        Atividade at = new Atividade();
-//        at.setServidor(servAux);
-//        at.setDescricao("Preparação da aula " + discAux.getNome());
-//        at.setHorasSemanais(horasSemanais);
-//        System.out.println("Data de inicio: ");
-//        at.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-//        System.out.println("Data de termino: ");
-//        at.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-//        at.setDtCriacao(LocalDate.now());
-//        return at;
-//    }
+    public Atividade createAula(Servidor servAux, Disciplina discAux) {
+        Atividade at = new Atividade();
+        at.setId_servidor(servAux.getId());
+        at.setDescricao("Preparação da aula " + discAux.getNome());
+        at.setHorasSemanais(discAux.getCargaHoraria());
+        System.out.println("Data de inicio: ");
+        at.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Data de termino: ");
+        at.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
+        at.setDtCriacao(LocalDate.now());
+        return at;
+    }
+
+
 }

@@ -27,7 +27,7 @@ public class VinculoView {
     int menu = 0;
     int auxOPC = 0;
 
-    public Vinculo criarVinculo(List<String> servidorVet, List<String> comissaoVet) {
+    public Vinculo criarVinculo(List<String> servidorVet, List<String> comissaoVet, ServidorDAO servidorDAO) {
         try {
             Vinculo vinc = new Vinculo();
 
@@ -44,8 +44,9 @@ public class VinculoView {
 
             menu = tipoEscolha();
             if (menu == 1) {
-//            Servidor servResponse = servidorMenorCarga(servAll);
-//            vinc.setServidor(servResponse);
+                Servidor servResponse = servidorMenorCarga(servidorDAO.getServidoresHoras());
+                System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
+                vinc.setId_servidor(servResponse.getId());
             } else if (menu == 2) {
 
                 if (servidorVet.size() == 0) {
@@ -75,7 +76,7 @@ public class VinculoView {
 
     }
 
-    public Vinculo modifVinculo(Vinculo vinAlt, List<String> servidorVet, List<String> comissaoVet) {
+    public Vinculo modifVinculo(Vinculo vinAlt, List<String> servidorVet, List<String> comissaoVet, ServidorDAO servidorDAO) {
 
         try {
 
@@ -92,8 +93,9 @@ public class VinculoView {
 
             menu = tipoEscolha();
             if (menu == 1) {
-//            Servidor servResponse = servidorMenorCarga(servAll);
-//            vinc.setServidor(servResponse);
+                Servidor servResponse = servidorMenorCarga(servidorDAO.getServidoresHoras());
+                System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
+                vinAlt.setId_servidor(servResponse.getId());
             } else if (menu == 2) {
 
                 if (servidorVet.size() == 0) {
@@ -122,18 +124,6 @@ public class VinculoView {
         }
     }
 
-//    private Servidor servidorMenorCarga(Servidor[] servAll) {
-//        Servidor servResponse = servAll[0];
-//        for (Servidor serv1 : servAll) {
-//            if (serv1 != null) {
-//                if (serv1.getHorasTotais() < servResponse.getHorasTotais()) {
-//                    servResponse = serv1;
-//                }
-//            }
-//        }
-//        return servResponse;
-//    }
-    
     public void mostrarTodosVinculos(List<String> vetResult) {
         if (vetResult.size() == 0) {
             System.out.println("Não há vinculo cadastrados");
@@ -153,6 +143,17 @@ public class VinculoView {
             tipoEscolha();
         }
         return auxOp;
+    }
+
+    private Servidor servidorMenorCarga(List<Servidor> servidoresHoras) {
+        Servidor servidorMenor = servidoresHoras.get(0);
+
+        for (Servidor servidor : servidoresHoras) {
+            if (servidor.getHorasTotais() < servidorMenor.getHorasTotais()) {
+                servidorMenor = servidor;
+            }
+        }
+        return servidorMenor;
     }
 
 }

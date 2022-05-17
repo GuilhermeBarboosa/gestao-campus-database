@@ -395,4 +395,61 @@ public class ServidorDAO {
         }
     }
 
+    public List<Servidor> getServidoresHoras() throws SQLException {
+        String sql = "SELECT * FROM servidores";
+
+        List<Servidor> servidores = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Servidor serv = new Servidor();
+
+                serv.setId(rset.getInt("id"));
+                serv.setNome(rset.getString("nome"));
+                serv.setId_campus(rset.getInt("campus"));
+                serv.setEmail(rset.getString("email"));
+                serv.setCargo(rset.getString("cargo"));
+                serv.setLogin(rset.getString("login"));
+                serv.setSenha(rset.getString("senha"));
+                serv.setHorasTotais(rset.getDouble("horas_totais"));
+                serv.setPerfil(rset.getInt("perfil"));
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                serv.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    serv.setDtModificacao(dataAtualizada);
+                }
+
+                servidores.add(serv);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return servidores;
+    }
+
 }

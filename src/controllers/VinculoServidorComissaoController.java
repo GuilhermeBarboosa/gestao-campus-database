@@ -34,7 +34,7 @@ public class VinculoServidorComissaoController extends DefaultController {
         opcCrud = GUI.menu();
         switch (opcCrud) {
             case 1:
-                Vinculo vinc = vinculoView.criarVinculo(servidorVet, comissaoVet);
+                Vinculo vinc = vinculoView.criarVinculo(servidorVet, comissaoVet, servidorDAO);
                 if (vinc != null) {
                     Servidor servAux = servidorDAO.find(vinc.getId_servidor());
                     Comissao comAux = comissaoDAO.find(vinc.getId_comissao());
@@ -55,7 +55,7 @@ public class VinculoServidorComissaoController extends DefaultController {
                     Comissao comAux = comissaoDAO.find(vinAlt.getId_comissao());
                     servidorDAO.removeHours(servAux, comAux.getHorasSemanais(), vinAlt.getId_servidor());
                     
-                    vinculoDAO.update(vinculoView.modifVinculo(vinAlt, servidorVet, comissaoVet));
+                    vinculoDAO.update(vinculoView.modifVinculo(vinAlt, servidorVet, comissaoVet, servidorDAO));
                     
                     servAux = servidorDAO.find(vinAlt.getId_servidor());
                     comAux = comissaoDAO.find(vinAlt.getId_comissao());

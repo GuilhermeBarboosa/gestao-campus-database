@@ -11,6 +11,7 @@ import dao.DisciplinaDAO;
 import dao.OfertaDAO;
 import dao.ServidorDAO;
 import java.util.List;
+import model.Atividade;
 import model.Curso;
 import model.Disciplina;
 import model.Oferta;
@@ -46,8 +47,10 @@ public class OfertaDisciplinaController extends DefaultController {
                     Servidor servAux = servidorDAO.find(of.getId_servidor());
                     Disciplina discAux = disciplinaDAO.find(of.getId_disciplina());
 
+                    Atividade atividadeAux = atividadeView.createAula(servAux, discAux);
+                    atividadeDAO.create(atividadeAux);
+                    
                     servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), of.getId_servidor());
-
                     ofertaDAO.create(of);
 
                 } else {

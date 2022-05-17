@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Atividade;
+import model.Disciplina;
+import model.Oferta;
 import model.Servidor;
 
 /**
@@ -282,4 +284,5 @@ public class AtividadeDAO {
         }
         return null;
     }
+
 }
