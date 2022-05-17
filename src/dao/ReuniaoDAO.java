@@ -87,8 +87,8 @@ public class ReuniaoDAO {
                         + "Servidor: " + rset.getString(9) + "\n"
                         + "Conteudo da ata: " + rset.getString(4) + "\n"
                         + "Data da reunião: " + rset.getString(5) + "\n"      
-                        + "Cadastrado: " + rset.getString(10) + "\n"
-                        + "Modificado: " + rset.getString(11) + "\n"
+                        + "Cadastrado: " + rset.getString(6) + "\n"
+                        + "Modificado: " + rset.getString(7) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {

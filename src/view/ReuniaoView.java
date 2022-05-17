@@ -84,6 +84,7 @@ public class ReuniaoView {
                     System.out.println(string);
                 }
             }
+            System.out.println("Escolha um servidor: ");
             reunAlt.setId_servidorSecre(Integer.parseInt(ler.nextLine()));
 
             System.out.println("Data da reunião:  ");
