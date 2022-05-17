@@ -44,7 +44,7 @@ public class VinculoView {
 
             menu = tipoEscolha();
             if (menu == 1) {
-                Servidor servResponse = servidorMenorCarga(servidorDAO.getServidoresHoras());
+                Servidor servResponse = servidorMenorCarga(servidorDAO.getAll());
                 System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
                 vinc.setId_servidor(servResponse.getId());
             } else if (menu == 2) {
@@ -93,7 +93,7 @@ public class VinculoView {
 
             menu = tipoEscolha();
             if (menu == 1) {
-                Servidor servResponse = servidorMenorCarga(servidorDAO.getServidoresHoras());
+                Servidor servResponse = servidorMenorCarga(servidorDAO.getAll());
                 System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
                 vinAlt.setId_servidor(servResponse.getId());
             } else if (menu == 2) {

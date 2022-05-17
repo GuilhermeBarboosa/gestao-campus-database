@@ -395,7 +395,7 @@ public class ServidorDAO {
         }
     }
 
-    public List<Servidor> getServidoresHoras() throws SQLException {
+    public List<Servidor> getAll() throws SQLException {
         String sql = "SELECT * FROM servidores";
 
         List<Servidor> servidores = new ArrayList<>();
