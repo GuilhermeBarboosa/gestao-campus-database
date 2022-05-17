@@ -35,7 +35,7 @@ public class AtividadeController extends DefaultController {
                 if (at != null) {
                     Servidor servAux = servidorDAO.find(at.getId_servidor());
                     servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
-                    
+
                     atividadeDAO.create(at);
                 } else {
                     GUI.error();
@@ -52,10 +52,11 @@ public class AtividadeController extends DefaultController {
                     servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
 
                     atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
-                    atividadeDAO.update(atAlt);
 
                     servAux = servidorDAO.find(atAlt.getId_servidor());
                     servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+
+                    atividadeDAO.update(atAlt);
                     GUI.sucess();
                 } else {
                     GUI.error();
