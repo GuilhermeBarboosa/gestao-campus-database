@@ -86,17 +86,17 @@ public class CampusDAO {
 
             while (rset.next()) {
                 
-                  vetResult.add("Id: \t\t" + rset.getString(1) + "\n"
-                        + "Nome: \t\t" + rset.getString(2) + "\n"
-                        + "Abreviação: \t\t" + rset.getString(3) + "\n"
-                        + "Duração de aula: \t" + rset.getString(4) + "\n"
-                        + "Criação do camp: \t" + rset.getString(5) + "\n"
-                        + "Cidade: \t\t" + rset.getString(6) + "\n"
-                        + "Bairro: \t\t" + rset.getString(7) + "\n"
-                        + "Rua: \t\t" + rset.getString(8) + "\n"
-                        + "CEP: \t\t" + rset.getString(9) + "\n"
-                        + "Cadastrado: \t\t" + rset.getString(10) + "\n"
-                        + "Modificado: \t\t" + rset.getString(11) + "\n"
+                  vetResult.add("Id: " + rset.getString(1) + "\n"
+                        + "Nome: " + rset.getString(2) + "\n"
+                        + "Abreviação: " + rset.getString(3) + "\n"
+                        + "Duração de aula: " + rset.getString(4) + "\n"
+                        + "Criação do camp: " + rset.getString(5) + "\n"
+                        + "Cidade: " + rset.getString(6) + "\n"
+                        + "Bairro: " + rset.getString(7) + "\n"
+                        + "Rua: " + rset.getString(8) + "\n"
+                        + "CEP: " + rset.getString(9) + "\n"
+                        + "Cadastrado: " + rset.getString(10) + "\n"
+                        + "Modificado: " + rset.getString(11) + "\n"
                         + "----------------------------------------------------------");
             }
      
@@ -138,9 +138,9 @@ public class CampusDAO {
             while (rset.next()) {
                 
                 vetResult.add("=========================\n"
-                        + "Id: \t" + rset.getString(1) + "\n"
-                        + "Nome: \t" + rset.getString(2) + "\n"
-                        + "Abreviação: \t" + rset.getString(3) + "\n"
+                        + "Id: " + rset.getString(1) + "\n"
+                        + "Nome: " + rset.getString(2) + "\n"
+                        + "Abreviação: " + rset.getString(3) + "\n"
                         + "=========================" + "\n");
             }
      

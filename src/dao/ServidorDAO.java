@@ -83,17 +83,17 @@ public class ServidorDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: \t" + rset.getString(1) + "\n"
-                        + "Nome: \t" + rset.getString(2) + "\n"
-                        + "Campus: \t" + rset.getString(13) + "\n"
-                        + "Email: \t" + rset.getString(4) + "\n"
-                        + "Cargo: \t" + rset.getString(5) + "\n"
-                        + "Login: \t" + rset.getString(6) + "\n"
-                        + "Senha: \t" + rset.getString(7) + "\n"
-                        + "Perfil: \t" + rset.getString(8) + "\n"
-                        + "Horas: \t" + rset.getString(9) + "\n"
-                        + "Cadastrado: \t" + rset.getString(10) + "\n"
-                        + "Modificado: \t" + rset.getString(11) + "\n"
+                vetResult.add("Id: " + rset.getString(1) + "\n"
+                        + "Nome: " + rset.getString(2) + "\n"
+                        + "Campus: " + rset.getString(13) + "\n"
+                        + "Email: " + rset.getString(4) + "\n"
+                        + "Cargo: " + rset.getString(5) + "\n"
+                        + "Login: " + rset.getString(6) + "\n"
+                        + "Senha: " + rset.getString(7) + "\n"
+                        + "Perfil: " + rset.getString(8) + "\n"
+                        + "Horas: " + rset.getString(9) + "\n"
+                        + "Cadastrado: " + rset.getString(10) + "\n"
+                        + "Modificado: " + rset.getString(11) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {

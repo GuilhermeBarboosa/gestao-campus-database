@@ -87,14 +87,14 @@ public class VinculoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: \t" + rset.getString(1) + "\n"
-                        + "Servidor: \t" + rset.getString(10) + "\n"
-                        + "Comissao: \t" + rset.getString(21) + "\n"
-                        + "Papel: \t" + rset.getString(4) + "\n"
-                        + "Data de entrada: \t" + rset.getString(5) + "\n"
-                        + "Data de saida: \t" + rset.getString(6) + "\n"
-                        + "Cadastrado: \t" + rset.getString(7) + "\n"
-                        + "Modificado: \t" + rset.getString(8) + "\n"
+                vetResult.add("Id: " + rset.getString(1) + "\n"
+                        + "Servidor: " + rset.getString(10) + "\n"
+                        + "Comissao: " + rset.getString(21) + "\n"
+                        + "Papel: " + rset.getString(4) + "\n"
+                        + "Data de entrada: " + rset.getString(5) + "\n"
+                        + "Data de saida: " + rset.getString(6) + "\n"
+                        + "Cadastrado: " + rset.getString(7) + "\n"
+                        + "Modificado: " + rset.getString(8) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {

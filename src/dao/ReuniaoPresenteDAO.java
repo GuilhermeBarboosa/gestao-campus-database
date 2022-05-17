@@ -80,12 +80,12 @@ public class ReuniaoPresenteDAO {
 
             while (rset.next()) {
 
-                vetResult.add( "Id: \t" + rset.getString(1) + "\n"
-                        + "Comissao: \t" + rset.getString(19) + "\n"
-                        + "Servidor: \t" + rset.getString(8) + "\n"
-                        + "Ata de reunião: \t" + rset.getString(3) + "\n"
-                        + "Cadastrado: \t" + rset.getString(5) + "\n"
-                        + "Modificado: \t" + rset.getString(6) + "\n"
+                vetResult.add( "Id: " + rset.getString(1) + "\n"
+                        + "Comissao: " + rset.getString(19) + "\n"
+                        + "Servidor: " + rset.getString(8) + "\n"
+                        + "Ata de reunião: " + rset.getString(3) + "\n"
+                        + "Cadastrado: " + rset.getString(5) + "\n"
+                        + "Modificado: " + rset.getString(6) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {

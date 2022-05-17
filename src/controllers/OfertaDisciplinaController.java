@@ -49,7 +49,7 @@ public class OfertaDisciplinaController extends DefaultController {
 
                     Atividade atividadeAux = atividadeView.createAula(servAux, discAux);
                     atividadeDAO.create(atividadeAux);
-                    
+
                     servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), of.getId_servidor());
                     ofertaDAO.create(of);
 
@@ -69,6 +69,8 @@ public class OfertaDisciplinaController extends DefaultController {
 
                     ofertaAlt = ofertaView.modifOferta(ofertaAlt, servidorVet, cursoVet, disciplinaVet);
 
+                    servAux = servidorDAO.find(ofertaAlt.getId_servidor());
+                    discAux = disciplinaDAO.find(ofertaAlt.getId_disciplina());
                     servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getId_servidor());
 
                     ofertaDAO.update(ofertaAlt);

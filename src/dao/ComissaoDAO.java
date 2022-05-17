@@ -87,14 +87,14 @@ public class ComissaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: \t" + rset.getString(1) + "\n"
-                        + "Comissao: \t" + rset.getString(2) + "\n"
-                        + "Horas semanais: \t" + rset.getString(3) + "\n"
-                        + "Data de inicio: \t" + rset.getString(4) + "\n"
-                        + "Data de termino: \t" + rset.getString(5) + "\n"
-                        + "Estado: \t" + rset.getString(6) + "\n"
-                        + "Cadastrado: \t" + rset.getString(7) + "\n"
-                        + "Modificado: \t" + rset.getString(8) + "\n"
+                vetResult.add("Id: " + rset.getString(1) + "\n"
+                        + "Comissao: " + rset.getString(2) + "\n"
+                        + "Horas semanais: " + rset.getString(3) + "\n"
+                        + "Data de inicio: " + rset.getString(4) + "\n"
+                        + "Data de termino: " + rset.getString(5) + "\n"
+                        + "Estado: " + rset.getString(6) + "\n"
+                        + "Cadastrado: " + rset.getString(7) + "\n"
+                        + "Modificado: " + rset.getString(8) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {

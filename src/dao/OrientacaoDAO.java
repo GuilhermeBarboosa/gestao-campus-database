@@ -86,15 +86,15 @@ public class OrientacaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: \t" + rset.getString(1) + "\n"
-                        + "Tipo: \t" + rset.getString(2) + "\n"
-                        + "Servidor: \t" + rset.getString(11) + "\n"
-                        + "Aluno: \t" + rset.getString(4) + "\n"
-                        + "Horas Semanais: \t" + rset.getString(5) + "\n"
-                        + "Data de Inicio: \t" + rset.getString(6) + "\n"
-                        + "Data de Termino: \t" + rset.getString(7) + "\n"
-                        + "Cadastrado: \t" + rset.getString(8) + "\n"
-                        + "Modificado: \t" + rset.getString(9) + "\n"
+                vetResult.add("Id: " + rset.getString(1) + "\n"
+                        + "Tipo: " + rset.getString(2) + "\n"
+                        + "Servidor: " + rset.getString(11) + "\n"
+                        + "Aluno: " + rset.getString(4) + "\n"
+                        + "Horas Semanais: " + rset.getString(5) + "\n"
+                        + "Data de Inicio: " + rset.getString(6) + "\n"
+                        + "Data de Termino: " + rset.getString(7) + "\n"
+                        + "Cadastrado: " + rset.getString(8) + "\n"
+                        + "Modificado: " + rset.getString(9) + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
