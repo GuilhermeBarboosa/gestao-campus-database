@@ -44,7 +44,7 @@ public class RelatorioController extends DefaultController {
 
     public void gerarRelat(CampusDAO campusDAO, ServidorDAO servidorDAO, CursoDAO cursoDAO,
             DisciplinaDAO disciplinaDAO, OfertaDAO ofertaDAO, OrientacaoDAO orientacaoDAO, AtividadeDAO ativiDAO,
-            ComissaoDAO comissaoDAO, VinculoDAO vincDAO, ReuniaoDAO reuniaoDAO, ReuniaoPresenteDAO reunPresenteDAO) {
+            ComissaoDAO comissaoDAO, VinculoDAO vincDAO, ReuniaoDAO reuniaoDAO, ReuniaoPresenteDAO reunPresenteDAO) throws Exception {
         int opRelat = 0;
         LocalDate[] filtro;
         opRelat = relatView.opMenuRelat();
@@ -55,10 +55,10 @@ public class RelatorioController extends DefaultController {
                 relatView.relat1(filtro, reuniaoDAO, comissaoDAO, servidorDAO);
                 break;
             case 2:
-                relatView.relat2(servidorDAO, ofertaDAO, ativiDAO, vincDAO, orientacaoDAO, disciplinaDAO, cursoDAO, comissaoDAO);
+//                relatView.relat2(servidorDAO, ofertaDAO, ativiDAO, vincDAO, orientacaoDAO, disciplinaDAO, cursoDAO, comissaoDAO);
                 break;
             case 3:
-                relatView.relat3(campusDAO, ofertaDAO, cursoDAO, disciplinaDAO);
+//                relatView.relat3(campusDAO, ofertaDAO, cursoDAO, disciplinaDAO);
                 break;
             default:
                 break;

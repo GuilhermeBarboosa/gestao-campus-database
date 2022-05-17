@@ -10,6 +10,7 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +38,10 @@ public class ReuniaoDAO {
             pstm.setInt(1, reuniao.getId_comissao());
             pstm.setInt(2, reuniao.getId_servidorSecre());
             pstm.setString(3, reuniao.getConteudoAta());
-            
+
             Date date = Date.valueOf(reuniao.getDtReuniao());
             pstm.setDate(4, date);
-   
+
             date = Date.valueOf(reuniao.getDtCriacao());
             pstm.setDate(5, date);
 
@@ -86,7 +87,7 @@ public class ReuniaoDAO {
                         + "Comissao: " + rset.getString(20) + "\n"
                         + "Servidor: " + rset.getString(9) + "\n"
                         + "Conteudo da ata: " + rset.getString(4) + "\n"
-                        + "Data da reunião: " + rset.getString(5) + "\n"      
+                        + "Data da reunião: " + rset.getString(5) + "\n"
                         + "Cadastrado: " + rset.getString(6) + "\n"
                         + "Modificado: " + rset.getString(7) + "\n"
                         + "--------------------------------------");
@@ -165,7 +166,7 @@ public class ReuniaoDAO {
             pstm.setInt(1, altReuniao.getId_comissao());
             pstm.setInt(2, altReuniao.getId_servidorSecre());
             pstm.setString(3, altReuniao.getConteudoAta());
-            
+
             Date date = Date.valueOf(altReuniao.getDtReuniao());
             pstm.setDate(4, date);
 
@@ -237,7 +238,7 @@ public class ReuniaoDAO {
                 reuniao.setId_comissao(rset.getInt("comissao"));
                 reuniao.setId_servidorSecre(rset.getInt("servidor_secre"));
                 reuniao.setConteudoAta(rset.getString("conteudo_ata"));
-                
+
                 Date date = rset.getDate("dt_reuniao");
                 LocalDate dataAtualizada = date.toLocalDate();
                 reuniao.setDtReuniao(dataAtualizada);
@@ -268,5 +269,55 @@ public class ReuniaoDAO {
             }
         }
         return null;
+    }
+
+    public List<String> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
+        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id WHERE r.dt_reuniao BETWEEN ? AND ?;";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        List<String> vetResult = new ArrayList<>();
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            Date date = Date.valueOf(dtIncial);
+
+            pstm.setDate(1, date);
+            date = Date.valueOf(dtFinal);
+
+            pstm.setDate(2, date);
+            pstm.execute();
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("=========================\n"
+                        + "Id: " + rset.getString(1) + "\n"
+                        + "Comissao: " + rset.getString(20) + "\n"
+                        + "Servidor: " + rset.getString(9) + "\n"
+                        + "Conteudo da ata: " + rset.getString(4) + "\n"
+                        + "Data da reuniao: " + rset.getString(5) + "\n"
+                        + "=========================" + "\n");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
     }
 }

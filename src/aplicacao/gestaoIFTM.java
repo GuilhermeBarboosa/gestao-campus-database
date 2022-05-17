@@ -55,7 +55,7 @@ public class gestaoIFTM {
     private ReuniaoController reuniaoController = new ReuniaoController();
     private ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
     private EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
-//  private  RelatorioController relatorioController = new RelatorioController();
+  private  RelatorioController relatorioController = new RelatorioController();
 
     private CampusDAO campusDAO = new CampusDAO();
     private ServidorDAO servidorDAO = new ServidorDAO();
@@ -149,11 +149,11 @@ public class gestaoIFTM {
                 case 11:
                     reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
                     break;
-//                case 12:
-//                    relatorioController.gerarRelat(campusDAO, servidorDAO, cursoDAO,
-//                            disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
-//                            comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
-//                    break;
+                case 12:
+                    relatorioController.gerarRelat(campusDAO, servidorDAO, cursoDAO,
+                            disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
+                            comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
+                    break;
                 case 13:
                     encerrarComissaoController.menu(comissaoDAO, vinculoDAO);
                     break;
