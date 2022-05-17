@@ -56,7 +56,7 @@ public class RelatorioView {
         return filtro;
     }
 
-     public void relat1(LocalDate[] filtro, ReuniaoDAO reuniaoDAO,
+   public void relat1(LocalDate[] filtro, ReuniaoDAO reuniaoDAO,
             ComissaoDAO comissaoDAO, ServidorDAO servidorDAO) {
         Reuniao[] reuniao = reuniaoDAO.getAll();
         String relat = "";

@@ -245,17 +245,17 @@ public class ComissaoDAO {
                 comissao.setId(rset.getInt("id"));
                 comissao.setNameComissao(rset.getString("comissao"));
                 comissao.setHorasSemanais(rset.getDouble("horas_semanais"));
-                
+
                 Date date = rset.getDate("dt_inicio");
                 LocalDate dataAtualizada = date.toLocalDate();
                 comissao.setDtInicio(dataAtualizada);
-                
+
                 date = rset.getDate("dt_termino");
                 dataAtualizada = date.toLocalDate();
                 comissao.setDtTermino(dataAtualizada);
-                
+
                 comissao.setEstado(rset.getString("estado"));
-    
+
                 date = rset.getDate("cadastrado");
                 dataAtualizada = date.toLocalDate();
                 comissao.setDtCriacao(dataAtualizada);
@@ -285,7 +285,7 @@ public class ComissaoDAO {
     }
 
     public void modificarEncerradomento(Comissao encerrarComissao) throws SQLException {
-       String sql = "UPDATE comissoes SET estado=?, modificado=?"
+        String sql = "UPDATE comissoes SET estado=?, modificado=?"
                 + "where id = ?";
 
         Connection conn = null;
@@ -297,7 +297,7 @@ public class ComissaoDAO {
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, "Inativo");
-            
+
             Date date = Date.valueOf(LocalDate.now());
             pstm.setDate(2, date);
 
@@ -316,4 +316,5 @@ public class ComissaoDAO {
             }
         }
     }
+
 }

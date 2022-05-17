@@ -16,28 +16,25 @@ import view.ComissaoView;
  * @author Aluno
  */
 public class EncerrarComissaoController extends DefaultController {
-    
+
     private final ComissaoView comissaoView = new ComissaoView();
 
     public void menu(ComissaoDAO comissaoDAO, VinculoDAO vinculoDAO) throws Exception {
         System.out.println("ENCERRAR COMISSAO");
-        
+
         List<String> vetResultId = comissaoDAO.readId();
-        
+
         comissaoView.mostrarTodosComissao(vetResultId);
-        
+
         GUI.printID();
-        System.out.println("Insira a comissao que deseja encerrar");
+        System.out.println("Insira a comissao que deseja encerrar: ");
         auxLoc = Integer.parseInt(ler.nextLine());
 
         Comissao comAux = comissaoDAO.find(auxLoc);
-        if(comAux != null){
-             comAux = comissaoView.encerrarComissao(comAux);
-
+        if (comAux != null) {
             comissaoDAO.modificarEncerradomento(comAux);
-
             vinculoDAO.encerrarVinculos(comAux);
         }
-       
+
     }
 }
