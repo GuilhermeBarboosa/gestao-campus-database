@@ -33,9 +33,10 @@ public class AtividadeController extends DefaultController {
                 Atividade at = atividadeView.criarAtividade(servidorVet);
 
                 if (at != null) {
-                    atividadeDAO.create(at);
                     Servidor servAux = servidorDAO.find(at.getId_servidor());
                     servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
+                    
+                    atividadeDAO.create(at);
                 } else {
                     GUI.error();
                 }
@@ -46,14 +47,15 @@ public class AtividadeController extends DefaultController {
                 auxLoc = Integer.parseInt(ler.nextLine());
                 Atividade atAlt = atividadeDAO.find(auxLoc);
 
-                Servidor servAux = servidorDAO.find(atAlt.getId_servidor());
-                servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
                 if (atAlt != null) {
-                    servAux = servidorDAO.find(atAlt.getId_servidor());
-                    servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+                    Servidor servAux = servidorDAO.find(atAlt.getId_servidor());
+                    servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
 
                     atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
                     atividadeDAO.update(atAlt);
+
+                    servAux = servidorDAO.find(atAlt.getId_servidor());
+                    servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
                     GUI.sucess();
                 } else {
                     GUI.error();
@@ -69,10 +71,10 @@ public class AtividadeController extends DefaultController {
 
                 Atividade removeAtividade = atividadeDAO.find(auxLoc);
                 if (removeAtividade != null) {
-                    atividadeDAO.delete(auxLoc);
-
-                    servAux = servidorDAO.find(removeAtividade.getId_servidor());
+                    Servidor servAux = servidorDAO.find(removeAtividade.getId_servidor());
                     servidorDAO.removeHours(servAux, removeAtividade.getHorasSemanais(), removeAtividade.getId_servidor());
+
+                    atividadeDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

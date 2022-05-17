@@ -32,11 +32,11 @@ public class OrientacaoController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Orientacao or = orientacaoView.criarOrientacao(servidorVet);
-                
-                 Servidor servAux = servidorDAO.find(or.getId_servidor());
-                servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
+
                 if (or != null) {
                     orientacaoDAO.create(or);
+                    Servidor servAux = servidorDAO.find(or.getId_servidor());
+                    servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
                 } else {
                     GUI.error();
                 }
@@ -46,8 +46,15 @@ public class OrientacaoController extends DefaultController {
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 Orientacao orAlt = orientacaoDAO.find(auxLoc);
+
                 if (orAlt != null) {
+                    Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
+                    servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+
                     orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorVet));
+
+                    servAux = servidorDAO.find(orAlt.getId_servidor());
+                    servidorDAO.updateHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
                     GUI.sucess();
                 } else {
                     GUI.error();
@@ -60,7 +67,12 @@ public class OrientacaoController extends DefaultController {
                 orientacaoView.mostrarTodasOrientacoes(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                if (auxLoc != 0) {
+
+                orAlt = orientacaoDAO.find(auxLoc);
+                if (orAlt != null) {
+                    Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
+                    servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+
                     orientacaoDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
