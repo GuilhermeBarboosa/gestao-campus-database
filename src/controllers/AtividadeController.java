@@ -9,6 +9,7 @@ import dao.AtividadeDAO;
 import dao.ServidorDAO;
 import java.util.List;
 import model.Atividade;
+import model.Servidor;
 import view.AtividadeView;
 
 /**
@@ -30,6 +31,10 @@ public class AtividadeController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Atividade at = atividadeView.criarAtividade(servidorVet);
+                
+                Servidor servAux = servidorDAO.find(at.getId_servidor());
+                
+                servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
                 if (at != null) {
                     atividadeDAO.create(at);
                 } else {
