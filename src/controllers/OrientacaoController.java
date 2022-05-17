@@ -9,6 +9,7 @@ import dao.OrientacaoDAO;
 import dao.ServidorDAO;
 import java.util.List;
 import model.Orientacao;
+import model.Servidor;
 import view.OrientacaoView;
 
 /**
@@ -31,6 +32,9 @@ public class OrientacaoController extends DefaultController {
         switch (opcCrud) {
             case 1:
                 Orientacao or = orientacaoView.criarOrientacao(servidorVet);
+                
+                 Servidor servAux = servidorDAO.find(or.getId_servidor());
+                servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
                 if (or != null) {
                     orientacaoDAO.create(or);
                 } else {

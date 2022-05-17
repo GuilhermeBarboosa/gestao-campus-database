@@ -366,4 +366,33 @@ public class ServidorDAO {
         }
     }
 
+    public void removeHours(Servidor servAux, double horasSemanais, int idServidor) throws SQLException {
+        String sql = "UPDATE servidores SET horas_totais=?"
+                + "where id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setDouble(1, (servAux.getHorasTotais() - horasSemanais));
+            pstm.setInt(2, idServidor);
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
 }
