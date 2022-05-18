@@ -5,6 +5,14 @@
  */
 package view;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.AtividadeDAO;
 import dao.CampusDAO;
 import dao.ComissaoDAO;
@@ -15,6 +23,9 @@ import dao.OrientacaoDAO;
 import dao.ReuniaoDAO;
 import dao.ServidorDAO;
 import dao.VinculoDAO;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -63,12 +74,46 @@ public class RelatorioView {
 
         List<String> reunioes = reuniaoDAO.relatorioData(filtro[0], filtro[1]);
 
-        if (reunioes.size() == 0) {
-            System.out.println("Sem reunioes...");
-        } else {
-            for (String reuniao : reunioes) {
-                System.out.println(reuniao);
+        Document doc = new Document();
+
+        String arquivoPdf = "relatorioTipo1.pdf";
+
+        try {
+            PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
+
+            doc.open();
+            Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.RED);
+            Paragraph p = new Paragraph("RELATORIO DO TIPO 1\n\n" , f);
+            p.setAlignment(1);
+            doc.add(p);
+
+            p = new Paragraph("");
+
+            doc.add(p);
+
+            PdfPTable table = new PdfPTable(1);
+
+            PdfPCell cel1 = new PdfPCell(new Paragraph(""));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
+            table.addCell(cel1);
+
+            if (reunioes.isEmpty()) {
+                System.out.println("Sem reunioes...");
+            } else {
+                for (String reuniao : reunioes) {
+                    cel1 = new PdfPCell(new Paragraph(reuniao));
+                    cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                    cel1.setPadding(10);
+                    table.addCell(cel1);
+                }
+                doc.add(table);
+                doc.close();
+
+                Desktop.getDesktop().open(new File(arquivoPdf));
             }
+        } catch (Exception e) {
+
         }
 
     }

@@ -296,13 +296,11 @@ public class ReuniaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
+                vetResult.add("Id: " + rset.getString(1) + "\n"
                         + "Comissao: " + rset.getString(20) + "\n"
                         + "Servidor: " + rset.getString(9) + "\n"
                         + "Conteudo da ata: " + rset.getString(4) + "\n"
-                        + "Data da reuniao: " + rset.getString(5) + "\n"
-                        + "=========================" + "\n");
+                        + "Data da reuniao: " + rset.getString(5));
 
             }
         } catch (Exception e) {
