@@ -99,7 +99,7 @@ public class RelatorioView {
             table.addCell(cel1);
 
             if (reunioes.isEmpty()) {
-                System.out.println("Sem reunioes...");
+                System.out.println("Sem reunioes cadastradas...");
             } else {
                 for (String reuniao : reunioes) {
                     cel1 = new PdfPCell(new Paragraph(reuniao));
