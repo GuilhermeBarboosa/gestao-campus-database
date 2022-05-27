@@ -82,14 +82,14 @@ public class CursoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Nome do Curso: " + rset.getString(2) + "\n"
-                        + "Campus: " + rset.getString(10) + "\n"
-                        + "Estado: " + rset.getString(4) + "\n"
-                        + "Ano de inicio: " + rset.getString(5) + "\n"
-                        + "Ano de termino: " + rset.getString(6) + "\n"
-                        + "Cadastrado: " + rset.getString(7) + "\n"
-                        + "Modificado: " + rset.getString(8) + "\n"
+                vetResult.add("Id: " + rset.getString("c.id") + "\n"
+                        + "Nome do Curso: " + rset.getString("c.curso") + "\n"
+                        + "Campus: " + rset.getString("cam.nome") + "\n"
+                        + "Estado: " + rset.getString("c.estado") + "\n"
+                        + "Ano de inicio: " + rset.getString("c.ano_inicio") + "\n"
+                        + "Ano de termino: " + rset.getString("c.ano_termino") + "\n"
+                        + "Cadastrado: " + rset.getString("c.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("c.modificado") + "\n"
                         + "----------------------------------------------------------");
             }
 
@@ -127,9 +127,9 @@ public class CursoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Nome do Curso: " + rset.getString(2) + "\n"
-                        + "Campus: " + rset.getString(10) + "\n"
+                vetResult.add("Id: " + rset.getString("c.id") + "\n"
+                        + "Nome do Curso: " + rset.getString("c.curso") + "\n"
+                        + "Campus: " + rset.getString("cam.nome") + "\n"
                         + "----------------------------------------------------------");
             }
 

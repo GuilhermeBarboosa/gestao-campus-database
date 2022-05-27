@@ -17,7 +17,7 @@ public class ConnectionFactory {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
     
-    //TROCAR PORTA DA CONEXAO
+    //TROCAR PORTA DA CONEXAO 3006 ou 3008
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/gestao";
 
     public static Connection createConnectionToMySql() throws Exception {

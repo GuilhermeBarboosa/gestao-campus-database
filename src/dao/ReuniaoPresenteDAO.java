@@ -80,12 +80,12 @@ public class ReuniaoPresenteDAO {
 
             while (rset.next()) {
 
-                vetResult.add( "Id: " + rset.getString(1) + "\n"
-                        + "Comissao: " + rset.getString(19) + "\n"
-                        + "Servidor: " + rset.getString(8) + "\n"
-                        + "Ata de reunião: " + rset.getString(3) + "\n"
-                        + "Cadastrado: " + rset.getString(5) + "\n"
-                        + "Modificado: " + rset.getString(6) + "\n"
+                vetResult.add( "Id: " + rset.getString("rp.id") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Ata de reunião: " + rset.getString("rp.ata_reuniao") + "\n"
+                        + "Cadastrado: " + rset.getString("rp.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("rp.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -125,9 +125,9 @@ public class ReuniaoPresenteDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Comissao: " + rset.getString(19) + "\n"
-                        + "Servidor: " + rset.getString(8) + "\n"
+                        + "Id: " + rset.getString("rp.id") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

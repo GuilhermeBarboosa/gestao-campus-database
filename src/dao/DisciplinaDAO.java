@@ -77,13 +77,13 @@ public class DisciplinaDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Disciplina: " + rset.getString(2) + "\n"
-                        + "Curso: " + rset.getString(9) + "\n"
-                        + "Carga Horaria: " + rset.getString(4) + "\n"
-                        + "Periodo: " + rset.getString(5) + "\n"
-                        + "Cadstrado: " + rset.getString(6) + "\n"
-                        + "Modificado: " + rset.getString(7) + "\n"
+                vetResult.add("Id: " + rset.getString("d.id") + "\n"
+                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
+                        + "Curso: " + rset.getString("c.curso") + "\n"
+                        + "Carga Horaria: " + rset.getString("d.carga_horaria") + "\n"
+                        + "Periodo: " + rset.getString("d.periodo") + "\n"
+                        + "Cadstrado: " + rset.getString("d.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("d.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -123,9 +123,9 @@ public class DisciplinaDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(2) + "\n"
-                        + "Curso: " + rset.getString(9) + "\n"
+                        + "Id: " + rset.getString("d.id") + "\n"
+                        + "Nome: " + rset.getString("d.disciplina") + "\n"
+                        + "Curso: " + rset.getString("c.curso") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

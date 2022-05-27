@@ -83,15 +83,15 @@ public class OfertaDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Servidor: " + rset.getString(11) + "\n"
-                        + "Disciplina: " + rset.getString(22) + "\n"
-                        + "Curso: " + rset.getString(29) + "\n"
-                        + "Ano: " + rset.getString(5) + "\n"
-                        + "Semestre: " + rset.getString(6) + "\n"
-                        + "Aula semanal: " + rset.getString(7) + "\n"
-                        + "Cadastrado: " + rset.getString(8) + "\n"
-                        + "Modificado: " + rset.getString(9) + "\n"
+                vetResult.add("Id: " + rset.getString("o.id") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
+                        + "Curso: " + rset.getString("c.curso") + "\n"
+                        + "Ano: " + rset.getString("o.ano") + "\n"
+                        + "Semestre: " + rset.getString("o.semestre") + "\n"
+                        + "Aula semanal: " + rset.getString("o.aula_semanal") + "\n"
+                        + "Cadastrado: " + rset.getString("o.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("o.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -132,10 +132,10 @@ public class OfertaDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Servidor: " + rset.getString(11) + "\n"
-                        + "Disciplina: " + rset.getString(22) + "\n"
-                        + "Curso: " + rset.getString(29) + "\n"
+                        + "Id: " + rset.getString("o.id") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
+                        + "Curso: " + rset.getString("c.curso") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

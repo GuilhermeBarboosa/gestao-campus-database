@@ -69,7 +69,7 @@ public class VinculoDAO {
 
     public List<String> read() throws Exception {
 
-        String sql = "SELECT *, s.nome FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
+        String sql = "SELECT *, s.nome, c.comissao FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -87,14 +87,14 @@ public class VinculoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Servidor: " + rset.getString(10) + "\n"
-                        + "Comissao: " + rset.getString(21) + "\n"
-                        + "Papel: " + rset.getString(4) + "\n"
-                        + "Data de entrada: " + rset.getString(5) + "\n"
-                        + "Data de saida: " + rset.getString(6) + "\n"
-                        + "Cadastrado: " + rset.getString(7) + "\n"
-                        + "Modificado: " + rset.getString(8) + "\n"
+                vetResult.add("Id: " + rset.getString("v.id") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Papel: " + rset.getString("v.papel") + "\n"
+                        + "Data de entrada: " + rset.getString("v.dt_entrada") + "\n"
+                        + "Data de saida: " + rset.getString("v.dt_saida") + "\n"
+                        + "Cadastrado: " + rset.getString("v.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("v.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class VinculoDAO {
 
     public List<String> readId() throws Exception {
 
-        String sql = "SELECT *, s.nome FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
+        String sql = "SELECT *, s.nome, c.comissao FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -134,9 +134,9 @@ public class VinculoDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Servidor: " + rset.getString(10) + "\n"
-                        + "Comissao: " + rset.getString(21) + "\n"
+                        + "Id: " + rset.getString("v.id") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

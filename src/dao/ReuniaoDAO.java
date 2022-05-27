@@ -83,13 +83,13 @@ public class ReuniaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Comissao: " + rset.getString(20) + "\n"
-                        + "Servidor: " + rset.getString(9) + "\n"
-                        + "Conteudo da ata: " + rset.getString(4) + "\n"
-                        + "Data da reunião: " + rset.getString(5) + "\n"
-                        + "Cadastrado: " + rset.getString(6) + "\n"
-                        + "Modificado: " + rset.getString(7) + "\n"
+                vetResult.add("Id: " + rset.getString("r.id") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Conteudo da ata: " + rset.getString("r.conteudo_ata") + "\n"
+                        + "Data da reunião: " + rset.getString("r.dt_reuniao") + "\n"
+                        + "Cadastrado: " + rset.getString("r.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("r.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -129,9 +129,9 @@ public class ReuniaoDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Comissao: " + rset.getString(20) + "\n"
-                        + "Servidor: " + rset.getString(9) + "\n"
+                        + "Id: " + rset.getString("r.id") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {
@@ -296,11 +296,13 @@ public class ReuniaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Comissao: " + rset.getString(20) + "\n"
-                        + "Servidor: " + rset.getString(9) + "\n"
-                        + "Conteudo da ata: " + rset.getString(4) + "\n"
-                        + "Data da reuniao: " + rset.getString(5));
+                vetResult.add("=========================\n"
+                        + "Id: " + rset.getString("r.id") + "\n"
+                        + "Comissao: " + rset.getString("c.comissao") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Conteudo da ata: " + rset.getString("r.conteudo_ata") + "\n"
+                        + "Data da reuniao: " + rset.getString("r.dt_reuniao") + "\n"
+                        + "=========================" + "\n");
 
             }
         } catch (Exception e) {

@@ -86,15 +86,15 @@ public class OrientacaoDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Tipo: " + rset.getString(2) + "\n"
-                        + "Servidor: " + rset.getString(11) + "\n"
-                        + "Aluno: " + rset.getString(4) + "\n"
-                        + "Horas Semanais: " + rset.getString(5) + "\n"
-                        + "Data de Inicio: " + rset.getString(6) + "\n"
-                        + "Data de Termino: " + rset.getString(7) + "\n"
-                        + "Cadastrado: " + rset.getString(8) + "\n"
-                        + "Modificado: " + rset.getString(9) + "\n"
+                vetResult.add("Id: " + rset.getString("o.id") + "\n"
+                        + "Tipo: " + rset.getString("o.tipo") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Aluno: " + rset.getString("o.aluno") + "\n"
+                        + "Horas Semanais: " + rset.getString("o.horas_semanais") + "\n"
+                        + "Data de Inicio: " + rset.getString("o.dt_inicio") + "\n"
+                        + "Data de Termino: " + rset.getString("o.dt_termino") + "\n"
+                        + "Cadastrado: " + rset.getString("o.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("o.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -134,10 +134,10 @@ public class OrientacaoDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Tipo: " + rset.getString(2) + "\n"
-                        + "Servidor: " + rset.getString(11) + "\n"
-                        + "Aluno: " + rset.getString(4) + "\n"
+                        + "Id: " + rset.getString("o.id") + "\n"
+                        + "Tipo: " + rset.getString("o.tipo") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Aluno: " + rset.getString("o.aluno") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

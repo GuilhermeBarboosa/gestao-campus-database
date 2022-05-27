@@ -87,14 +87,14 @@ public class AtividadeDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Atividade: " + rset.getString(2) + "\n"
-                        + "Servidor: " + rset.getString(10) + "\n"
-                        + "Horas: " + rset.getString(4) + "\n"
-                        + "Data de inicio: " + rset.getString(5) + "\n"
-                        + "Data de termino: " + rset.getString(6) + "\n"
-                        + "Cadastrado: " + rset.getString(7) + "\n"
-                        + "Modificado: " + rset.getString(8) + "\n"
+                vetResult.add("Id: " + rset.getString("a.id") + "\n"
+                        + "Atividade: " + rset.getString("a.atividade") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "Horas: " + rset.getString("a.horas_semanais") + "\n"
+                        + "Data de inicio: " + rset.getString("a.dt_inicio") + "\n"
+                        + "Data de termino: " + rset.getString("a.dt_termino") + "\n"
+                        + "Cadastrado: " + rset.getString("a.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("a.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -134,9 +134,9 @@ public class AtividadeDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Atividade: " + rset.getString(2) + "\n"
-                        + "Servidor: " + rset.getString(10) + "\n"
+                        + "Id: " + rset.getString("a.id") + "\n"
+                        + "Atividade: " + rset.getString("a.atividade") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {

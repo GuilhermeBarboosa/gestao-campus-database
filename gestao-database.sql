@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 18-Maio-2022 às 11:20
--- Versão do servidor: 5.7.31
--- versão do PHP: 7.3.21
+-- Tempo de geração: 27-Maio-2022 às 20:46
+-- Versão do servidor: 5.7.36
+-- versão do PHP: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS `atividades` (
 --
 
 INSERT INTO `atividades` (`id`, `atividade`, `servidor`, `horas_semanais`, `dt_inicio`, `dt_termino`, `cadastrado`, `modificado`) VALUES
-(1, 'Preparação da aula POO', 1, 40, '2022-05-17', '2022-05-18', '2022-05-17', NULL);
+(1, 'Aula 1', 2, 24, '2022-05-17', '2022-06-18', '2022-05-27', NULL),
+(2, 'Preparação da aula POO', 2, 45, '2022-05-27', '2022-05-28', '2022-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -68,15 +69,14 @@ CREATE TABLE IF NOT EXISTS `campus` (
   `cadastrado` date NOT NULL,
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `campus`
 --
 
 INSERT INTO `campus` (`id`, `nome`, `abreviacao`, `duracao_aula`, `dt_criacao_camp`, `cidade`, `bairro`, `rua`, `cep`, `cadastrado`, `modificado`) VALUES
-(1, 'Instituto Federal de Uberaba', 'IFU', 40, '2000-09-23', 'Uberaba', 'Univerde', 'Rua 1', '2312313-34', '2022-05-17', NULL),
-(3, 'Faculdade de Talentos Humanos', 'FACTHUS', 45, '2003-07-10', 'Uberaba', 'Fabricio', 'Rua 4', '231312-34', '2022-05-17', NULL);
+(1, 'Instituto Federal de Uberaba', 'IFU', 40, '2000-05-20', 'Uberaba', 'Univerde', 'Rua 1', '2173128-34', '2022-05-17', NULL);
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `comissoes` (
   `horas_semanais` double NOT NULL,
   `dt_inicio` date NOT NULL,
   `dt_termino` date NOT NULL,
-  `estado` varchar(160) NOT NULL,
+  `estado` varchar(20) NOT NULL,
   `cadastrado` date NOT NULL,
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `comissoes` (
 --
 
 INSERT INTO `comissoes` (`id`, `comissao`, `horas_semanais`, `dt_inicio`, `dt_termino`, `estado`, `cadastrado`, `modificado`) VALUES
-(1, 'Comissao ABCZ', 25, '2022-05-17', '2022-05-19', 'Inativo', '2022-05-17', '2022-05-17');
+(1, 'Comissao A', 40, '2022-07-25', '2022-07-26', 'Ativo', '2022-05-17', NULL);
 
 -- --------------------------------------------------------
 
@@ -122,15 +122,14 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `campus` (`campus`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cursos`
 --
 
 INSERT INTO `cursos` (`id`, `curso`, `campus`, `estado`, `ano_inicio`, `ano_termino`, `cadastrado`, `modificado`) VALUES
-(2, 'Analise e Desenvolvimento de Sistemas', 3, 'ativo', 2020, 2023, '2022-05-17', NULL),
-(3, 'Engenharia de Computao', 1, 'ativo', 2022, 2023, '2022-05-17', NULL);
+(1, 'ADS', 1, 'ativo', 2022, 2023, '2022-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -149,15 +148,14 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `curso` (`curso`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `disciplinas`
 --
 
 INSERT INTO `disciplinas` (`id`, `disciplina`, `curso`, `carga_horaria`, `periodo`, `cadastrado`, `modificado`) VALUES
-(1, 'POO', 3, 40, 3, '2022-05-17', NULL),
-(2, 'PDM', 3, 45, 3, '2022-05-17', '2022-05-17');
+(1, 'POO', 1, 45, 6, '2022-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -179,9 +177,15 @@ CREATE TABLE IF NOT EXISTS `ofertas` (
   PRIMARY KEY (`id`),
   KEY `curso` (`curso`),
   KEY `disciplina` (`disciplina`),
-  KEY `servidor` (`servidor`),
-  KEY `disciplina_2` (`disciplina`)
+  KEY `servidor` (`servidor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `ofertas`
+--
+
+INSERT INTO `ofertas` (`id`, `curso`, `disciplina`, `servidor`, `ano`, `semestre`, `aula_semanal`, `cadastrado`, `modificado`) VALUES
+(1, 1, 1, 2, 2022, 4, 5, '2022-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,6 +208,13 @@ CREATE TABLE IF NOT EXISTS `orientacoes` (
   KEY `servidor` (`servidor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `orientacoes`
+--
+
+INSERT INTO `orientacoes` (`id`, `tipo`, `servidor`, `aluno`, `horas_semanais`, `dt_inicio`, `dt_termino`, `cadastrado`, `modificado`) VALUES
+(1, 'TCC', 2, 'GUIZIN', 5, '2022-05-27', '2022-06-28', '2022-05-27', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -221,14 +232,7 @@ CREATE TABLE IF NOT EXISTS `reuniao_presente` (
   PRIMARY KEY (`id`),
   KEY `comissao` (`comissao`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `reuniao_presente`
---
-
-INSERT INTO `reuniao_presente` (`id`, `comissao`, `ata_reuniao`, `servidor`, `cadastrado`, `modificado`) VALUES
-(1, 1, 'jkdsajklds', 3, '2022-05-17', '2022-05-17');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -248,16 +252,15 @@ CREATE TABLE IF NOT EXISTS `reunioes` (
   PRIMARY KEY (`id`),
   KEY `servidor_secre` (`servidor_secre`),
   KEY `comissao` (`comissao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `reunioes`
 --
 
 INSERT INTO `reunioes` (`id`, `comissao`, `servidor_secre`, `conteudo_ata`, `dt_reuniao`, `cadastrado`, `modificado`) VALUES
-(1, 1, 3, 'hsdjkakshdjas', '2022-06-18', '2022-05-17', '2022-05-17'),
-(2, 1, 2, 'eqweqweq', '2021-02-01', '2022-05-17', NULL),
-(3, 1, 2, 'uoi2uoi312', '2022-06-22', '2022-05-17', NULL);
+(3, 1, 2, 'aaaaaaaaaaaaaaaa', '2022-06-26', '2022-05-27', NULL),
+(4, 1, 2, 'hhhhhhhhhhhhhh', '2022-06-27', '2022-05-27', NULL);
 
 -- --------------------------------------------------------
 
@@ -280,16 +283,14 @@ CREATE TABLE IF NOT EXISTS `servidores` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `campus` (`campus`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `servidores`
 --
 
 INSERT INTO `servidores` (`id`, `nome`, `campus`, `email`, `cargo`, `login`, `senha`, `perfil`, `horas_totais`, `cadastrado`, `modificado`) VALUES
-(1, 'Carol', 1, 'carol@gmail.com', 'TAE', 'admin', 'admin', 1, 115, '2022-05-17', NULL),
-(2, 'Maria', 1, 'maria@gmail.com', 'pbtt', 'c', 'c', 2, 0, '2022-05-17', '2022-05-17'),
-(3, 'Clara', 3, 'clara@gmail.com', 'pbtt', 'j', 'j', 2, 25, '2022-05-17', NULL);
+(2, 'Guilherme', 1, 'gui@gmail.com', 'tae', 'g', 'g', 1, 114, '2022-05-17', '2022-05-27');
 
 -- --------------------------------------------------------
 
@@ -311,6 +312,13 @@ CREATE TABLE IF NOT EXISTS `vinculos` (
   KEY `servidor` (`servidor`),
   KEY `comissao` (`comissao`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `vinculos`
+--
+
+INSERT INTO `vinculos` (`id`, `servidor`, `comissao`, `papel`, `dt_entrada`, `dt_saida`, `cadastrado`, `modificado`) VALUES
+(1, 2, 1, 'presidente', '2022-05-27', '2022-05-28', '2022-05-27', NULL);
 
 --
 -- Restrições para despejos de tabelas
@@ -339,8 +347,8 @@ ALTER TABLE `disciplinas`
 --
 ALTER TABLE `ofertas`
   ADD CONSTRAINT `ofertas_ibfk_1` FOREIGN KEY (`curso`) REFERENCES `cursos` (`id`),
-  ADD CONSTRAINT `ofertas_ibfk_3` FOREIGN KEY (`servidor`) REFERENCES `servidores` (`id`),
-  ADD CONSTRAINT `ofertas_ibfk_4` FOREIGN KEY (`disciplina`) REFERENCES `disciplinas` (`id`);
+  ADD CONSTRAINT `ofertas_ibfk_2` FOREIGN KEY (`disciplina`) REFERENCES `disciplinas` (`id`),
+  ADD CONSTRAINT `ofertas_ibfk_3` FOREIGN KEY (`servidor`) REFERENCES `servidores` (`id`);
 
 --
 -- Limitadores para a tabela `orientacoes`

@@ -83,17 +83,17 @@ public class ServidorDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(2) + "\n"
-                        + "Campus: " + rset.getString(13) + "\n"
-                        + "Email: " + rset.getString(4) + "\n"
-                        + "Cargo: " + rset.getString(5) + "\n"
-                        + "Login: " + rset.getString(6) + "\n"
-                        + "Senha: " + rset.getString(7) + "\n"
-                        + "Perfil: " + rset.getString(8) + "\n"
-                        + "Horas: " + rset.getString(9) + "\n"
-                        + "Cadastrado: " + rset.getString(10) + "\n"
-                        + "Modificado: " + rset.getString(11) + "\n"
+                vetResult.add("Id: " + rset.getString("s.id") + "\n"
+                        + "Nome: " + rset.getString("s.nome") + "\n"
+                        + "Campus: " + rset.getString("c.nome") + "\n"
+                        + "Email: " + rset.getString("s.email") + "\n"
+                        + "Cargo: " + rset.getString("s.cargo") + "\n"
+                        + "Login: " + rset.getString("s.login") + "\n"
+                        + "Senha: " + rset.getString("s.senha") + "\n"
+                        + "Perfil: " + rset.getString("s.perfil") + "\n"
+                        + "Horas: " + rset.getString("s.horas_totais") + "\n"
+                        + "Cadastrado: " + rset.getString("s.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("s.modificado") + "\n"
                         + "--------------------------------------");
             }
         } catch (Exception e) {
@@ -133,9 +133,9 @@ public class ServidorDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(2) + "\n"
-                        + "Campus: " + rset.getString(13) + "\n"
+                        + "Id: " + rset.getString("s.id") + "\n"
+                        + "Nome: " + rset.getString("s.nome") + "\n"
+                        + "Campus: " + rset.getString("c.nome") + "\n"
                         + "=========================" + "\n");
             }
         } catch (Exception e) {
