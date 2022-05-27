@@ -55,10 +55,10 @@ public class RelatorioController extends DefaultController {
                 relatView.relat1(filtro, reuniaoDAO, comissaoDAO, servidorDAO);
                 break;
             case 2:
-//                relatView.relat2(servidorDAO, ofertaDAO, ativiDAO, vincDAO, orientacaoDAO, disciplinaDAO, cursoDAO, comissaoDAO);
+                relatView.relat2(servidorDAO);
                 break;
             case 3:
-//                relatView.relat3(campusDAO, ofertaDAO, cursoDAO, disciplinaDAO);
+                relatView.relat3(campusDAO);
                 break;
             default:
                 break;

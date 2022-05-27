@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class CampusDAO {
         String sql = "SELECT * FROM campus as c";
 
         List<String> vetResult = new ArrayList<>();
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rset = null;
@@ -85,8 +86,8 @@ public class CampusDAO {
             rset = pstm.executeQuery();
 
             while (rset.next()) {
-                
-                  vetResult.add("Id: " + rset.getString(1) + "\n"
+
+                vetResult.add("Id: " + rset.getString(1) + "\n"
                         + "Nome: " + rset.getString(2) + "\n"
                         + "Abreviação: " + rset.getString(3) + "\n"
                         + "Duração de aula: " + rset.getString(4) + "\n"
@@ -99,7 +100,7 @@ public class CampusDAO {
                         + "Modificado: " + rset.getString(11) + "\n"
                         + "----------------------------------------------------------");
             }
-     
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -120,14 +121,13 @@ public class CampusDAO {
         String sql = "SELECT * FROM campus";
 
         List<String> vetResult = new ArrayList<>();
-        
+
         Connection conn = null;
-        
+
         PreparedStatement pstm = null;
 
         ResultSet rset = null;
 
-        
         try {
             conn = (Connection) createConnectionToMySql();
 
@@ -136,14 +136,14 @@ public class CampusDAO {
             rset = pstm.executeQuery();
 
             while (rset.next()) {
-                
+
                 vetResult.add("=========================\n"
                         + "Id: " + rset.getString(1) + "\n"
                         + "Nome: " + rset.getString(2) + "\n"
                         + "Abreviação: " + rset.getString(3) + "\n"
                         + "=========================" + "\n");
             }
-     
+
         } catch (SQLClientInfoException e) {
             System.err.println(e);
         } finally {
@@ -160,7 +160,6 @@ public class CampusDAO {
         return vetResult;
     }
 
-    
     public void update(Campus altCampus) throws Exception {;
         String sql = "UPDATE campus SET nome=?, abreviacao=?, duracao_aula=?, "
                 + "dt_criacao_camp=?, cidade=?, bairro=?, rua=?, cep=?, modificado=?"
@@ -205,9 +204,9 @@ public class CampusDAO {
     }
 
     public void delete(int idCampus) throws Exception {
-      String sql = "DELETE FROM campus WHERE id = ?";
-       Connection conn = null;
-       PreparedStatement pstm = null;
+        String sql = "DELETE FROM campus WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
 
         try {
             conn = ConnectionFactory.createConnectionToMySql();
@@ -220,7 +219,7 @@ public class CampusDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            
+
             if (pstm != null) {
                 pstm.close();
             }
@@ -228,12 +227,11 @@ public class CampusDAO {
                 conn.close();
             }
         }
-    } 
-    
-    public Campus find(int idCampus) throws Exception {
-        String sql = "SELECT * FROM campus WHERE id = '"+idCampus+"'";
+    }
 
-   
+    public Campus find(int idCampus) throws Exception {
+        String sql = "SELECT * FROM campus WHERE id = '" + idCampus + "'";
+
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -247,7 +245,7 @@ public class CampusDAO {
             rset = pstm.executeQuery();
 
             while (rset.next()) {
-    
+
                 Campus camp = new Campus();
 
                 camp.setId(rset.getInt("id"));
@@ -274,7 +272,7 @@ public class CampusDAO {
                     camp.setDtModificacao(dataAtualizada);
                 }
                 return camp;
- 
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -290,6 +288,48 @@ public class CampusDAO {
             }
         }
         return null;
+    }
+
+    public List<String> relatorioAulas(int idCampus) throws SQLException {
+        String sql = "SELECT * FROM ofertas AS of INNER JOIN cursos AS c ON of.curso = c.id INNER JOIN disciplinas AS d ON of.disciplina = d.id "
+                + "INNER JOIN servidores AS s ON of.servidor = s.id INNER JOIN campus AS camp ON c.campus = camp.id WHERE camp.id = '" + idCampus + "'";
+
+        List<String> vetResult = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("Campus: " + rset.getString("camp.nome") + "\n"
+                        + "Curso: " + rset.getString("c.curso") + "\n"
+                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
+                        + "Servidor: " + rset.getString("s.nome") + "\n"
+                        + "----------------------------------------------------------");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
     }
 
 }

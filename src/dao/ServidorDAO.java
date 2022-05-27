@@ -452,4 +452,53 @@ public class ServidorDAO {
         return servidores;
     }
 
+    public List<String> relatorioCompleto() throws SQLException {
+        String sql = "SELECT DISTINCT * FROM servidores AS s "
+                + "INNER JOIN ofertas AS of ON s.id = of.servidor "
+                + "INNER JOIN disciplinas AS d ON d.id = of.disciplina "
+                + "INNER JOIN atividades AS ati ON s.id = ati.servidor "
+                + "INNER JOIN orientacoes AS ori ON s.id = ori.servidor "
+                + "INNER JOIN vinculos AS vinc ON s.id = vinc.servidor "
+                + "INNER JOIN comissoes AS com ON com.id = vinc.comissao GROUP BY s.id";
+
+        List<String> vetResult = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySql();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+
+                vetResult.add("Id: " + rset.getString("s.id") + "\n"
+                        + "Nome: " + rset.getString("s.nome") + "\n"
+                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
+                        + "Atividade: " + rset.getString("ati.atividade") + "\n"
+                        + "Orientação: " + rset.getString("ori.tipo") + "\n"
+                        + "Comissao: " + rset.getString("com.comissao") + "\n"
+                        + "--------------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rset != null) {
+                rset.close();
+            }
+            if (pstm != null) {
+                pstm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return vetResult;
+    }
+
 }
