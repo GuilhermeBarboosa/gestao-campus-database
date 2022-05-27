@@ -479,11 +479,10 @@ public class ServidorDAO {
 
                 vetResult.add("Id: " + rset.getString("s.id") + "\n"
                         + "Nome: " + rset.getString("s.nome") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Atividade: " + rset.getString("ati.atividade") + "\n"
-                        + "Orientação: " + rset.getString("ori.tipo") + "\n"
-                        + "Comissao: " + rset.getString("com.comissao") + "\n"
-                        + "--------------------------------------");
+                        + "Disciplina: " + rset.getString("d.disciplina") + " -  " + rset.getString("d.carga_horaria") + " horas" + "\n"
+                        + "Atividade: " + rset.getString("ati.atividade") + " -  " + rset.getString("ati.horas_semanais") + " horas" + "\n"
+                        + "Orientação: " + rset.getString("ori.tipo") + " -  " + rset.getString("ori.horas_semanais") +  " horas" + "\n"
+                        + "Comissao: " + rset.getString("com.comissao") + " -  " + rset.getString("com.horas_semanais") + " horas" + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
