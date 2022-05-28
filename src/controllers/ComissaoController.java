@@ -25,44 +25,49 @@ public class ComissaoController extends DefaultController {
         List<String> vetResultId = comissaoDAO.readId();
         List<String> vetResult = comissaoDAO.read();
 
-        switch (opcCrud) {
-            case 1:
-                Comissao com = comissaoView.criarComissao();
-                if (com != null) {
-                    comissaoDAO.create(com);
-                } else {
-                    GUI.error();
-                }
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Comissao com = comissaoView.criarComissao();
+                    if (com != null) {
+                        comissaoDAO.create(com);
+                    } else {
+                        GUI.error();
+                    }
 
-                break;
-            case 2:
-                comissaoView.mostrarTodosComissao(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Comissao comAlt = comissaoDAO.find(auxLoc);
+                    break;
+                case 2:
+                    comissaoView.mostrarTodosComissao(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Comissao comAlt = comissaoDAO.find(auxLoc);
 
-                if (comAlt != null) {
-                    comissaoDAO.update(comissaoView.modifComissao(comAlt));
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                comissaoView.mostrarTodosComissao(vetResult);
-                break;
-            case 4:
-                comissaoView.mostrarTodosComissao(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                if (auxLoc != 0) {
-                    comissaoDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+                    if (comAlt != null) {
+                        comissaoDAO.update(comissaoView.modifComissao(comAlt));
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    comissaoView.mostrarTodosComissao(vetResult);
+                    break;
+                case 4:
+                    comissaoView.mostrarTodosComissao(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    if (auxLoc != 0) {
+                        comissaoDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 
 }

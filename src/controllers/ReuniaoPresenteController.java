@@ -31,7 +31,8 @@ public class ReuniaoPresenteController extends DefaultController {
         List<String> vetResultId = reuniaoPresenteDAO.readId();
         List<String> vetResult = reuniaoPresenteDAO.read();
 
-        switch (opcCrud) {
+        try {
+             switch (opcCrud) {
             case 1:
                 ReuniaoPresente reuniaoPresente = reuniaoPresenteView.criarReuniaoPresente(servidorVet, comissaoVet);
                 if (reuniaoPresente != null) {
@@ -67,6 +68,10 @@ public class ReuniaoPresenteController extends DefaultController {
                 }
                 break;
         }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+       
     }
 
 }

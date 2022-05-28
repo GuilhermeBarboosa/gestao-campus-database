@@ -28,42 +28,47 @@ public class DisciplinaController extends DefaultController {
         List<String> vetResult = disciplinaDAO.read();
 
         opcCrud = GUI.menu();
-        switch (opcCrud) {
-            case 1:
-                Disciplina disc = disciplinaView.criarDisciplina(cursoVet);
-                if (disc != null) {
-                    disciplinaDAO.create(disc);
-                } else {
-                    GUI.error();
-                }
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Disciplina disc = disciplinaView.criarDisciplina(cursoVet);
+                    if (disc != null) {
+                        disciplinaDAO.create(disc);
+                    } else {
+                        GUI.error();
+                    }
 
-                break;
-            case 2:
-                disciplinaView.mostrarTodasDisciplinas(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Disciplina discAlt = disciplinaDAO.find(auxLoc);
-                if (discAlt != null) {
-                    disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoVet));
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                disciplinaView.mostrarTodasDisciplinas(vetResult);
-                break;
-            case 4:
-                disciplinaView.mostrarTodasDisciplinas(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                if (auxLoc != 0) {
-                    disciplinaDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+                    break;
+                case 2:
+                    disciplinaView.mostrarTodasDisciplinas(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Disciplina discAlt = disciplinaDAO.find(auxLoc);
+                    if (discAlt != null) {
+                        disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoVet));
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    disciplinaView.mostrarTodasDisciplinas(vetResult);
+                    break;
+                case 4:
+                    disciplinaView.mostrarTodasDisciplinas(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    if (auxLoc != 0) {
+                        disciplinaDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }

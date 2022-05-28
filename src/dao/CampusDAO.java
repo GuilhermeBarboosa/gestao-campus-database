@@ -86,17 +86,17 @@ public class CampusDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(2) + "\n"
-                        + "Abreviação: " + rset.getString(3) + "\n"
-                        + "Duração de aula: " + rset.getString(4) + "\n"
-                        + "Criação do camp: " + rset.getString(5) + "\n"
-                        + "Cidade: " + rset.getString(6) + "\n"
-                        + "Bairro: " + rset.getString(7) + "\n"
-                        + "Rua: " + rset.getString(8) + "\n"
-                        + "CEP: " + rset.getString(9) + "\n"
-                        + "Cadastrado: " + rset.getString(10) + "\n"
-                        + "Modificado: " + rset.getString(11) + "\n"
+                vetResult.add("Id: " + rset.getString("c.id") + "\n"
+                        + "Nome: " + rset.getString("c.nome") + "\n"
+                        + "Abreviação: " + rset.getString("c.abreviacao") + "\n"
+                        + "Duração de aula: " + rset.getString("c.duracao_aula") + "\n"
+                        + "Criação do camp: " + rset.getString("c.dt_criacao_camp") + "\n"
+                        + "Cidade: " + rset.getString("c.cidade") + "\n"
+                        + "Bairro: " + rset.getString("c.bairro") + "\n"
+                        + "Rua: " + rset.getString("c.rua") + "\n"
+                        + "CEP: " + rset.getString("c.cep") + "\n"
+                        + "Cadastrado: " + rset.getString("c.cadastrado") + "\n"
+                        + "Modificado: " + rset.getString("c.modificado") + "\n"
                         + "----------------------------------------------------------");
             }
 
@@ -117,7 +117,7 @@ public class CampusDAO {
     }
 
     public List<String> readId() throws Exception {
-        String sql = "SELECT * FROM campus";
+        String sql = "SELECT * FROM campus AS c";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -137,9 +137,9 @@ public class CampusDAO {
             while (rset.next()) {
 
                 vetResult.add("=========================\n"
-                        + "Id: " + rset.getString(1) + "\n"
-                        + "Nome: " + rset.getString(2) + "\n"
-                        + "Abreviação: " + rset.getString(3) + "\n"
+                        + "Id: " + rset.getString("c.id") + "\n"
+                        + "Nome: " + rset.getString("c.nome") + "\n"
+                        + "Abreviação: " + rset.getString("c.abreviacao") + "\n"
                         + "=========================" + "\n");
             }
 

@@ -29,41 +29,46 @@ public class ReuniaoController extends DefaultController {
         List<String> vetResultId = reuniaoDAO.readId();
         List<String> vetResult = reuniaoDAO.read();
         opcCrud = GUI.menu();
-        switch (opcCrud) {
-            case 1:
-                Reuniao reuniao = reuniaoView.criarReuniao(servidorVet, comissaoVet);
-                if (reuniao != null) {
-                    reuniaoDAO.create(reuniao);
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 2:
-                reuniaoView.mostrarTodosReunioes(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Reuniao reunAlt = reuniaoDAO.find(auxLoc);
-                if (reunAlt != null) {
-                    reuniaoDAO.update(reuniaoView.modifReuniao(reunAlt, servidorVet, comissaoVet));
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                reuniaoView.mostrarTodosReunioes(vetResult);
-                break;
-            case 4:
-                reuniaoView.mostrarTodosReunioes(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                if (auxLoc != 0) {
-                    reuniaoDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Reuniao reuniao = reuniaoView.criarReuniao(servidorVet, comissaoVet);
+                    if (reuniao != null) {
+                        reuniaoDAO.create(reuniao);
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 2:
+                    reuniaoView.mostrarTodosReunioes(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Reuniao reunAlt = reuniaoDAO.find(auxLoc);
+                    if (reunAlt != null) {
+                        reuniaoDAO.update(reuniaoView.modifReuniao(reunAlt, servidorVet, comissaoVet));
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    reuniaoView.mostrarTodosReunioes(vetResult);
+                    break;
+                case 4:
+                    reuniaoView.mostrarTodosReunioes(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    if (auxLoc != 0) {
+                        reuniaoDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }

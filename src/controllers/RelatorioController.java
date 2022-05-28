@@ -19,30 +19,30 @@ public class RelatorioController extends DefaultController {
 
     private final RelatorioView relatView = new RelatorioView();
 
-    public void gerarRelat(CampusDAO campusDAO, ServidorDAO servidorDAO,RelatorioDAO relatorioDAO) throws Exception {
+    public void gerarRelat(CampusDAO campusDAO, ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws Exception {
         int opRelat = 0;
         LocalDate[] filtro;
         opRelat = relatView.opMenuRelat();
 
-        switch (opRelat) {
-            case 1:
-                filtro = relatView.opMenuRelat1();
-                relatView.relat1(filtro, relatorioDAO);
-                break;
-            case 2:
-                relatView.relat2(servidorDAO, relatorioDAO);
-                break;
-            case 3:
-                relatView.relat3(campusDAO, relatorioDAO);
-                break;
-            default:
-                break;
+        try {
+            switch (opRelat) {
+                case 1:
+                    filtro = relatView.opMenuRelat1();
+                    relatView.relat1(filtro, relatorioDAO);
+                    break;
+                case 2:
+                    relatView.relat2(servidorDAO, relatorioDAO);
+                    break;
+                case 3:
+                    relatView.relat3(campusDAO, relatorioDAO);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
     }
 
- 
-
-    
-    
 }

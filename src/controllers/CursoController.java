@@ -26,43 +26,49 @@ public class CursoController extends DefaultController {
 
         List<String> vetResultId = cursoDAO.readId();
         List<String> vetResult = cursoDAO.read();
-        switch (opcCrud) {
-            case 1:
-                Curso curso = cursoView.criarCurso(campusVet);
-                if(curso != null){
-                    cursoDAO.create(curso);
-                }else{
-                   GUI.error();
-                }
-                
-                break;
-            case 2:
-                cursoView.mostrarCurso(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Curso cursoAlt = cursoDAO.find(auxLoc);
-                if (cursoAlt != null) {
-                    cursoDAO.update(cursoView.modifCurso(cursoAlt, campusVet));
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                cursoView.mostrarCurso(vetResult);
-                break;
-            case 4:
-                cursoView.mostrarCurso(vetResultId);
-                ;
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                if (auxLoc != 0) {
-                    cursoDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Curso curso = cursoView.criarCurso(campusVet);
+                    if (curso != null) {
+                        cursoDAO.create(curso);
+                    } else {
+                        GUI.error();
+                    }
+
+                    break;
+                case 2:
+                    cursoView.mostrarCurso(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Curso cursoAlt = cursoDAO.find(auxLoc);
+                    if (cursoAlt != null) {
+                        cursoDAO.update(cursoView.modifCurso(cursoAlt, campusVet));
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    cursoView.mostrarCurso(vetResult);
+                    break;
+                case 4:
+                    cursoView.mostrarCurso(vetResultId);
+                    ;
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    if (auxLoc != 0) {
+                        cursoDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }

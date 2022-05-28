@@ -27,7 +27,8 @@ public class ServidorController extends DefaultController {
         List<String> vetResultId = servDAO.readId();
         List<String> vetResult = servDAO.read();
 
-        switch (opcCrud) {
+        try {
+            switch (opcCrud) {
             case 1:
                 Servidor servidor = servV.criarServ(campusVet);
                 if(servidor != null){
@@ -64,6 +65,10 @@ public class ServidorController extends DefaultController {
                 }
                 break;
         }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
     }
 
 }

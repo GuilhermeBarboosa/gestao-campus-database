@@ -29,56 +29,61 @@ public class OrientacaoController extends DefaultController {
         List<String> vetResultId = orientacaoDAO.readId();
         List<String> vetResult = orientacaoDAO.read();
 
-        switch (opcCrud) {
-            case 1:
-                Orientacao or = orientacaoView.criarOrientacao(servidorVet);
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Orientacao or = orientacaoView.criarOrientacao(servidorVet);
 
-                if (or != null) {
-                    orientacaoDAO.create(or);
-                    Servidor servAux = servidorDAO.find(or.getId_servidor());
-                    servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 2:
-                orientacaoView.mostrarTodasOrientacoes(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Orientacao orAlt = orientacaoDAO.find(auxLoc);
+                    if (or != null) {
+                        orientacaoDAO.create(or);
+                        Servidor servAux = servidorDAO.find(or.getId_servidor());
+                        servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 2:
+                    orientacaoView.mostrarTodasOrientacoes(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Orientacao orAlt = orientacaoDAO.find(auxLoc);
 
-                if (orAlt != null) {
-                    Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
-                    servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                    if (orAlt != null) {
+                        Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
+                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
 
-                    orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorVet));
+                        orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorVet));
 
-                    servAux = servidorDAO.find(orAlt.getId_servidor());
-                    servidorDAO.updateHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                orientacaoView.mostrarTodasOrientacoes(vetResult);
-                break;
-            case 4:
-                orientacaoView.mostrarTodasOrientacoes(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
+                        servAux = servidorDAO.find(orAlt.getId_servidor());
+                        servidorDAO.updateHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    orientacaoView.mostrarTodasOrientacoes(vetResult);
+                    break;
+                case 4:
+                    orientacaoView.mostrarTodasOrientacoes(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
 
-                orAlt = orientacaoDAO.find(auxLoc);
-                if (orAlt != null) {
-                    Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
-                    servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                    orAlt = orientacaoDAO.find(auxLoc);
+                    if (orAlt != null) {
+                        Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
+                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
 
-                    orientacaoDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+                        orientacaoDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }

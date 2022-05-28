@@ -27,41 +27,46 @@ public class CampusController extends DefaultController {
         List<String> vetResultId = campusDAO.readId();
         List<String> vetResult = campusDAO.read();
 
-        switch (opcCrud) {
-            case 1:
-                Campus campus = campusView.criarCampus();
-                if (campus != null) {
-                    campusDAO.create(campus);
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 2:
-                campusView.mostrarTodosCampos(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Campus CampusAlt = campusDAO.find(auxLoc);
-                if (CampusAlt != null) {
-                    campusDAO.update(campusView.modifCampus(CampusAlt));
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                campusView.mostrarTodosCampos(vetResult);
-                break;
-            case 4:
-                campusView.mostrarTodosCampos(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                campusDAO.delete(auxLoc);
-                if (auxLoc != 0) {
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Campus campus = campusView.criarCampus();
+                    if (campus != null) {
+                        campusDAO.create(campus);
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 2:
+                    campusView.mostrarTodosCampos(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Campus CampusAlt = campusDAO.find(auxLoc);
+                    if (CampusAlt != null) {
+                        campusDAO.update(campusView.modifCampus(CampusAlt));
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    campusView.mostrarTodosCampos(vetResult);
+                    break;
+                case 4:
+                    campusView.mostrarTodosCampos(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    campusDAO.delete(auxLoc);
+                    if (auxLoc != 0) {
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }

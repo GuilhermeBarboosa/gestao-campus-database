@@ -28,59 +28,65 @@ public class AtividadeController extends DefaultController {
 
         List<String> vetResultId = atividadeDAO.readId();
         List<String> vetResult = atividadeDAO.read();
-        switch (opcCrud) {
-            case 1:
-                Atividade at = atividadeView.criarAtividade(servidorVet);
 
-                if (at != null) {
-                    Servidor servAux = servidorDAO.find(at.getId_servidor());
-                    servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
+        try {
+            switch (opcCrud) {
+                case 1:
+                    Atividade at = atividadeView.criarAtividade(servidorVet);
 
-                    atividadeDAO.create(at);
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 2:
-                atividadeView.mostrarAtividades(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
-                Atividade atAlt = atividadeDAO.find(auxLoc);
+                    if (at != null) {
+                        Servidor servAux = servidorDAO.find(at.getId_servidor());
+                        servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
 
-                if (atAlt != null) {
-                    Servidor servAux = servidorDAO.find(atAlt.getId_servidor());
-                    servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+                        atividadeDAO.create(at);
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 2:
+                    atividadeView.mostrarAtividades(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
+                    Atividade atAlt = atividadeDAO.find(auxLoc);
 
-                    atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
+                    if (atAlt != null) {
+                        Servidor servAux = servidorDAO.find(atAlt.getId_servidor());
+                        servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
 
-                    servAux = servidorDAO.find(atAlt.getId_servidor());
-                    servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+                        atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
 
-                    atividadeDAO.update(atAlt);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
-            case 3:
-                atividadeView.mostrarAtividades(vetResult);
-                break;
-            case 4:
-                atividadeView.mostrarAtividades(vetResultId);
-                GUI.printID();
-                auxLoc = Integer.parseInt(ler.nextLine());
+                        servAux = servidorDAO.find(atAlt.getId_servidor());
+                        servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
 
-                Atividade removeAtividade = atividadeDAO.find(auxLoc);
-                if (removeAtividade != null) {
-                    Servidor servAux = servidorDAO.find(removeAtividade.getId_servidor());
-                    servidorDAO.removeHours(servAux, removeAtividade.getHorasSemanais(), removeAtividade.getId_servidor());
+                        atividadeDAO.update(atAlt);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+                case 3:
+                    atividadeView.mostrarAtividades(vetResult);
+                    break;
+                case 4:
+                    atividadeView.mostrarAtividades(vetResultId);
+                    GUI.printID();
+                    auxLoc = Integer.parseInt(ler.nextLine());
 
-                    atividadeDAO.delete(auxLoc);
-                    GUI.sucess();
-                } else {
-                    GUI.error();
-                }
-                break;
+                    Atividade removeAtividade = atividadeDAO.find(auxLoc);
+                    if (removeAtividade != null) {
+                        Servidor servAux = servidorDAO.find(removeAtividade.getId_servidor());
+                        servidorDAO.removeHours(servAux, removeAtividade.getHorasSemanais(), removeAtividade.getId_servidor());
+
+                        atividadeDAO.delete(auxLoc);
+                        GUI.sucess();
+                    } else {
+                        GUI.error();
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
+
     }
 }
