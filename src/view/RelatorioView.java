@@ -161,7 +161,7 @@ public class RelatorioView {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo1.pdf";
+        String arquivoPdf = "relatorioTipo3.pdf";
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
