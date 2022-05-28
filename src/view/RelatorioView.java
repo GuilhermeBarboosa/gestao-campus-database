@@ -14,11 +14,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import dao.CampusDAO;
-import dao.ComissaoDAO;
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.ReuniaoDAO;
+import dao.RelatorioDAO;
 import dao.ServidorDAO;
 import java.awt.Desktop;
 import java.io.File;
@@ -55,10 +51,9 @@ public class RelatorioView {
         return filtro;
     }
 
-    public void relat1(LocalDate[] filtro, ReuniaoDAO reuniaoDAO,
-            ComissaoDAO comissaoDAO, ServidorDAO servidorDAO) throws Exception {
+    public void relat1(LocalDate[] filtro, RelatorioDAO relatorioDAO) throws Exception {
 
-        List<String> reunioes = reuniaoDAO.relatorioData(filtro[0], filtro[1]);
+        List<String> reunioes = relatorioDAO.relatorioData(filtro[0], filtro[1]);
 
         Document doc = new Document();
 
@@ -69,7 +64,7 @@ public class RelatorioView {
 
             doc.open();
             Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.RED);
-            Paragraph p = new Paragraph("RELATORIO DO TIPO 1\n\n" , f);
+            Paragraph p = new Paragraph("RELATORIO DO TIPO 1\n\n", f);
             p.setAlignment(1);
             doc.add(p);
 
@@ -104,8 +99,9 @@ public class RelatorioView {
 
     }
 
-   public void relat2(ServidorDAO servidorDAO) throws SQLException {
-         List<String> relatorioServidor = servidorDAO.relatorioCompleto();
+    public void relat2(ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws SQLException {
+
+        List<String> relatorioServidor = relatorioDAO.relatorioCompleto();
 
         Document doc = new Document();
 
@@ -116,7 +112,7 @@ public class RelatorioView {
 
             doc.open();
             Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.RED);
-            Paragraph p = new Paragraph("RELATORIO DO TIPO 1\n\n" , f);
+            Paragraph p = new Paragraph("RELATORIO DO TIPO 1\n\n", f);
             p.setAlignment(1);
             doc.add(p);
 
@@ -151,23 +147,20 @@ public class RelatorioView {
 
     }
 
-   public void relat3(CampusDAO campusDAO) throws Exception {
-        
+    public void relat3(CampusDAO campusDAO, RelatorioDAO relatorioDAO) throws Exception {
+
         List<String> campus = campusDAO.readId();
-        
-        
+
         for (String cam : campus) {
             System.out.println(cam);
-       }
+        }
         System.out.println("Insira o id: ");
         int aux = Integer.parseInt(ler.nextLine());
-     
-        List<String> aulas = campusDAO.relatorioAulas(aux);
-        
+
+        List<String> aulas = relatorioDAO.relatorioAulas(aux);
+
         Document doc = new Document();
-        
-        
-        
+
         String arquivoPdf = "relatorioTipo1.pdf";
 
         try {
@@ -175,7 +168,7 @@ public class RelatorioView {
 
             doc.open();
             Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.RED);
-            Paragraph p = new Paragraph("RELATORIO DO TIPO 2\n\n" , f);
+            Paragraph p = new Paragraph("RELATORIO DO TIPO 2\n\n", f);
             p.setAlignment(1);
             doc.add(p);
 

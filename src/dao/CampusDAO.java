@@ -290,46 +290,6 @@ public class CampusDAO {
         return null;
     }
 
-    public List<String> relatorioAulas(int idCampus) throws SQLException {
-        String sql = "SELECT * FROM ofertas AS of INNER JOIN cursos AS c ON of.curso = c.id INNER JOIN disciplinas AS d ON of.disciplina = d.id "
-                + "INNER JOIN servidores AS s ON of.servidor = s.id INNER JOIN campus AS camp ON c.campus = camp.id WHERE camp.id = '" + idCampus + "'";
-
-        List<String> vetResult = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement pstm = null;
-
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("Campus: " + rset.getString("camp.nome") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "----------------------------------------------------------");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+    
 
 }

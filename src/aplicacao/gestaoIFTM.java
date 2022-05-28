@@ -5,7 +5,6 @@
  */
 package aplicacao;
 
-import java.util.Scanner;
 import view.Gui;
 
 import controllers.AtividadeController;
@@ -30,6 +29,7 @@ import dao.CursoDAO;
 import dao.DisciplinaDAO;
 import dao.OfertaDAO;
 import dao.OrientacaoDAO;
+import dao.RelatorioDAO;
 import dao.ReuniaoDAO;
 import dao.ReuniaoPresenteDAO;
 import dao.ServidorDAO;
@@ -39,36 +39,34 @@ import java.sql.SQLException;
 import model.Servidor;
 
 public class gestaoIFTM {
+    
+    private final CampusController campusController = new CampusController();
+    private final ServidorController servidorController = new ServidorController();
+    private final CursoController cursoController = new CursoController();
+    private final DisciplinaController disciplinaController = new DisciplinaController();
+    private final OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
+    private final OrientacaoController orientacaoController = new OrientacaoController();
+    private final AtividadeController atividadeController = new AtividadeController();
+    private final ComissaoController comissaoController = new ComissaoController();
+    private final VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
+    private final UserComumController userComController = new UserComumController();
+    private final ReuniaoController reuniaoController = new ReuniaoController();
+    private final ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
+    private final EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
+    private final RelatorioController relatorioController = new RelatorioController();
 
-    private Scanner ler = new Scanner(System.in);
-
-    private CampusController campusController = new CampusController();
-    private ServidorController servidorController = new ServidorController();
-    private CursoController cursoController = new CursoController();
-    private DisciplinaController disciplinaController = new DisciplinaController();
-    private OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
-    private OrientacaoController orientacaoController = new OrientacaoController();
-    private AtividadeController atividadeController = new AtividadeController();
-    private ComissaoController comissaoController = new ComissaoController();
-    private VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
-    private UserComumController userComController = new UserComumController();
-    private ReuniaoController reuniaoController = new ReuniaoController();
-    private ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
-    private EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
-  private  RelatorioController relatorioController = new RelatorioController();
-
-    private CampusDAO campusDAO = new CampusDAO();
-    private ServidorDAO servidorDAO = new ServidorDAO();
-    private CursoDAO cursoDAO = new CursoDAO();
-    private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-    private OfertaDAO ofertaDAO = new OfertaDAO();
-    private OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
-    private AtividadeDAO atividadeDAO = new AtividadeDAO();
-    private ComissaoDAO comissaoDAO = new ComissaoDAO();
-    private VinculoDAO vinculoDAO = new VinculoDAO();
-    private ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
-    private ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
-
+    private final CampusDAO campusDAO = new CampusDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final CursoDAO cursoDAO = new CursoDAO();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private final OfertaDAO ofertaDAO = new OfertaDAO();
+    private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
+    private final AtividadeDAO atividadeDAO = new AtividadeDAO();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+    private final VinculoDAO vinculoDAO = new VinculoDAO();
+    private final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
+    private final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
+    private final RelatorioDAO relatorioDAO = new RelatorioDAO();
     int opcCrud;
     boolean sair = false;
     int auxLoc;
@@ -150,9 +148,7 @@ public class gestaoIFTM {
                     reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
                     break;
                 case 12:
-                    relatorioController.gerarRelat(campusDAO, servidorDAO, cursoDAO,
-                            disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
-                            comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
+                    relatorioController.gerarRelat(campusDAO, servidorDAO, relatorioDAO);
                     break;
                 case 13:
                     encerrarComissaoController.menu(comissaoDAO, vinculoDAO);

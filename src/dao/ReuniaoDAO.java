@@ -10,13 +10,10 @@ import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Reuniao;
-import model.Servidor;
-import view.ReuniaoView;
 
 /**
  *
@@ -271,53 +268,5 @@ public class ReuniaoDAO {
         return null;
     }
 
-    public List<String> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
-        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id WHERE r.dt_reuniao BETWEEN ? AND ?;";
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
-
-        List<String> vetResult = new ArrayList<>();
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            Date date = Date.valueOf(dtIncial);
-
-            pstm.setDate(1, date);
-            date = Date.valueOf(dtFinal);
-
-            pstm.setDate(2, date);
-            pstm.execute();
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("r.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Conteudo da ata: " + rset.getString("r.conteudo_ata") + "\n"
-                        + "Data da reuniao: " + rset.getString("r.dt_reuniao") + "\n"
-                        + "=========================" + "\n");
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+    
 }
