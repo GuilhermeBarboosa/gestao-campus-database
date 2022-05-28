@@ -5,18 +5,7 @@
  */
 package controllers;
 
-import dao.AtividadeDAO;
-import dao.CampusDAO;
-import dao.ComissaoDAO;
-import dao.CursoDAO;
 import dao.DefaultDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.OrientacaoDAO;
-import dao.ReuniaoDAO;
-import dao.ReuniaoPresenteDAO;
-import dao.ServidorDAO;
-import dao.VinculoDAO;
 import java.util.List;
 import view.AtividadeView;
 import view.CampusView;

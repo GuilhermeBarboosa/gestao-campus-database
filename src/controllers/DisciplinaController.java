@@ -5,9 +5,7 @@
  */
 package controllers;
 
-import dao.CursoDAO;
 import dao.DefaultDAO;
-import dao.DisciplinaDAO;
 import java.util.List;
 import model.Disciplina;
 import view.DisciplinaView;

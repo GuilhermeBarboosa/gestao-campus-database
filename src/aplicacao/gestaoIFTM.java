@@ -41,11 +41,11 @@ public class gestaoIFTM implements DefaultDAO{
                         sistemaComum();
                     }
                 } else {
-                    System.out.println("Usuario não encontrado");
+                    System.err.println("Usuario não encontrado");
                 }
             } while (servidorLogin == null);
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
         }
     }
 

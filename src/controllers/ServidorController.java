@@ -5,9 +5,7 @@
  */
 package controllers;
 
-import dao.CampusDAO;
 import dao.DefaultDAO;
-import dao.ServidorDAO;
 import java.util.List;
 import model.Servidor;
 import view.ServidorView;

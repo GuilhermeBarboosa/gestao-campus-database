@@ -5,8 +5,6 @@
  */
 package controllers;
 
-import dao.CampusDAO;
-import dao.CursoDAO;
 import dao.DefaultDAO;
 import java.util.List;
 import model.Curso;

@@ -5,9 +5,7 @@
  */
 package controllers;
 
-import dao.ComissaoDAO;
 import dao.DefaultDAO;
-import dao.VinculoDAO;
 import java.util.List;
 import model.Comissao;
 import view.ComissaoView;

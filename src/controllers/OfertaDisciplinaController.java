@@ -5,12 +5,7 @@
  */
 package controllers;
 
-import dao.AtividadeDAO;
-import dao.CursoDAO;
 import dao.DefaultDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.ServidorDAO;
 import java.util.List;
 import model.Atividade;
 import model.Disciplina;

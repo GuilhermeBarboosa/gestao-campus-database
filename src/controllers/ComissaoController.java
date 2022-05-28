@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import dao.ComissaoDAO;
 import dao.DefaultDAO;
 import java.util.List;
 import model.Comissao;

@@ -1,9 +1,6 @@
 package controllers;
 
-import dao.CampusDAO;
 import dao.DefaultDAO;
-import dao.RelatorioDAO;
-import dao.ServidorDAO;
 import java.time.LocalDate;
 import view.RelatorioView;
 

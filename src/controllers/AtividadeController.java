@@ -5,9 +5,7 @@
  */
 package controllers;
 
-import dao.AtividadeDAO;
 import dao.DefaultDAO;
-import dao.ServidorDAO;
 import java.util.List;
 import model.Atividade;
 import model.Servidor;
