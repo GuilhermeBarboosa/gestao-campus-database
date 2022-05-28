@@ -1,17 +1,8 @@
 package controllers;
 
-import dao.AtividadeDAO;
 import dao.CampusDAO;
-import dao.ComissaoDAO;
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.OrientacaoDAO;
 import dao.RelatorioDAO;
-import dao.ReuniaoDAO;
-import dao.ReuniaoPresenteDAO;
 import dao.ServidorDAO;
-import dao.VinculoDAO;
 import java.time.LocalDate;
 import view.RelatorioView;
 

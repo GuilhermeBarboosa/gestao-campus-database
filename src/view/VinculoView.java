@@ -5,13 +5,11 @@
  */
 package view;
 
-import dao.ComissaoDAO;
 import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
 

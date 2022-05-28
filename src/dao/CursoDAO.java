@@ -5,19 +5,15 @@
  */
 package dao;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import static factory.ConnectionFactory.createConnectionToMySql;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLClientInfoException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Campus;
 import model.Curso;
-import view.CursoView;
 
 /**
  *

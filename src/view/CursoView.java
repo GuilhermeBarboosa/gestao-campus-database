@@ -5,12 +5,10 @@
  */
 package view;
 
-import dao.CampusDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Campus;
 import model.Curso;
 
 /**

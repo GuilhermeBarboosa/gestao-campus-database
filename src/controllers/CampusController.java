@@ -6,9 +6,7 @@
 package controllers;
 
 import dao.CampusDAO;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import model.Campus;
 import view.CampusView;
 import view.Gui;

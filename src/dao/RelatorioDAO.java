@@ -5,7 +5,7 @@
  */
 package dao;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;
@@ -20,6 +20,7 @@ import java.util.List;
  * @author Usuario
  */
 public class RelatorioDAO {
+
     public List<String> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
         String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id WHERE r.dt_reuniao BETWEEN ? AND ?;";
 
@@ -69,9 +70,10 @@ public class RelatorioDAO {
         }
         return vetResult;
     }
-    
+
     public List<String> relatorioCompleto() throws SQLException {
-        String sql = "SELECT DISTINCT * FROM servidores AS s "
+
+        String sql = "SELECT * FROM servidores AS s "
                 + "INNER JOIN ofertas AS of ON s.id = of.servidor "
                 + "INNER JOIN disciplinas AS d ON d.id = of.disciplina "
                 + "INNER JOIN atividades AS ati ON s.id = ati.servidor "
@@ -94,13 +96,14 @@ public class RelatorioDAO {
             rset = pstm.executeQuery();
 
             while (rset.next()) {
-
+      
                 vetResult.add("Id: " + rset.getString("s.id") + "\n"
                         + "Nome: " + rset.getString("s.nome") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + " -  " + rset.getString("d.carga_horaria") + " horas" + "\n"
-                        + "Atividade: " + rset.getString("ati.atividade") + " -  " + rset.getString("ati.horas_semanais") + " horas" + "\n"
-                        + "Orientação: " + rset.getString("ori.tipo") + " -  " + rset.getString("ori.horas_semanais") +  " horas" + "\n"
-                        + "Comissao: " + rset.getString("com.comissao") + " -  " + rset.getString("com.horas_semanais") + " horas" + "\n");
+                        + "Disciplina: " + rset.getString("d.disciplina") + " - " + rset.getString("d.carga_horaria") + " horas" + "\n"
+                        + "Atividade: " + rset.getString("ati.atividade") + " - " + rset.getString("ati.horas_semanais") + " horas" + "\n"
+                        + "Orientação: " + rset.getString("ori.tipo") + " - " + rset.getString("ori.horas_semanais") + " horas" + "\n"
+                        + "Comissao: " + rset.getString("com.comissao") + " - " + rset.getString("com.horas_semanais") + " horas" + "\n");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +120,7 @@ public class RelatorioDAO {
         }
         return vetResult;
     }
-    
+
     public List<String> relatorioAulas(int idCampus) throws SQLException {
         String sql = "SELECT * FROM ofertas AS of INNER JOIN cursos AS c ON of.curso = c.id INNER JOIN disciplinas AS d ON of.disciplina = d.id "
                 + "INNER JOIN servidores AS s ON of.servidor = s.id INNER JOIN campus AS camp ON c.campus = camp.id WHERE camp.id = '" + idCampus + "'";

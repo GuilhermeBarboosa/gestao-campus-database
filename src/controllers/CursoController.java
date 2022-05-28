@@ -8,10 +8,8 @@ package controllers;
 import dao.CampusDAO;
 import dao.CursoDAO;
 import java.util.List;
-import java.util.Scanner;
 import model.Curso;
 import view.CursoView;
-import view.Gui;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 package dao;
 
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.Date;

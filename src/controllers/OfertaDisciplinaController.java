@@ -12,7 +12,6 @@ import dao.OfertaDAO;
 import dao.ServidorDAO;
 import java.util.List;
 import model.Atividade;
-import model.Curso;
 import model.Disciplina;
 import model.Oferta;
 import model.Servidor;

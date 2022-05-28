@@ -5,17 +5,11 @@
  */
 package view;
 
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Curso;
-import model.Disciplina;
 import model.Oferta;
-import model.Servidor;
 
 /**
  *
