@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.ComissaoDAO;
+import dao.DefaultDAO;
 import dao.ReuniaoDAO;
 import dao.ServidorDAO;
 import java.util.List;
@@ -16,11 +17,11 @@ import view.ReuniaoView;
  *
  * @author Aluno
  */
-public class ReuniaoController extends DefaultController {
+public class ReuniaoController extends DefaultController implements DefaultDAO{
 
     private final ReuniaoView reuniaoView = new ReuniaoView();
 
-    public void menu(ReuniaoDAO reuniaoDAO, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("REUNIÃO");
 
         List<String> servidorVet = servidorDAO.readId();

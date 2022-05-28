@@ -9,6 +9,7 @@ import dao.AtividadeDAO;
 import dao.CampusDAO;
 import dao.ComissaoDAO;
 import dao.CursoDAO;
+import dao.DefaultDAO;
 import dao.DisciplinaDAO;
 import dao.OfertaDAO;
 import dao.OrientacaoDAO;
@@ -33,7 +34,7 @@ import view.VinculoView;
  *
  * @author Aluno
  */
-public class UserComumController extends DefaultController {
+public class UserComumController extends DefaultController implements DefaultDAO{
 
     private final CampusView campV = new CampusView();
     private final ServidorView serV = new ServidorView();
@@ -47,13 +48,11 @@ public class UserComumController extends DefaultController {
     private final ReuniaoView reunV = new ReuniaoView();
     private final ReuniaoPresenteView reunPresenteV = new ReuniaoPresenteView();
 
-    public void menu(CampusDAO campusDAO, ServidorDAO servidorDAO, CursoDAO cursoDAO,
-            DisciplinaDAO discDAO, OfertaDAO ofDAO, OrientacaoDAO orDAO, AtividadeDAO atDAO,
-            ComissaoDAO comDAO, VinculoDAO vincDAO, ReuniaoDAO reunDAO, ReuniaoPresenteDAO reunPresenteDAO) throws Exception {
-        int op = 0;
+    public void menu() throws Exception {
+        int opcCrud = 0;
         do {
-            op = GUI.menuComum();
-            switch (op) {
+            opcCrud = GUI.menuComum();
+            switch (opcCrud) {
                 case 1:
                     List<String> responseCampus = campusDAO.read();
                     campV.mostrarTodosCampos(responseCampus);
@@ -70,45 +69,45 @@ public class UserComumController extends DefaultController {
                     break;
 
                 case 4:
-                    List<String> responseDisciplina = discDAO.read();
+                    List<String> responseDisciplina = disciplinaDAO.read();
                     discV.mostrarTodasDisciplinas(responseDisciplina);
                     break;
 
                 case 5:
-                    List<String> responseOferta = ofDAO.read();
+                    List<String> responseOferta = ofertaDAO.read();
                     ofertaV.mostrarTodasOfertas(responseOferta);
                     break;
 
                 case 6:
-                    List<String> responseOrientacao = orDAO.read();
+                    List<String> responseOrientacao = orientacaoDAO.read();
                     orientacaoV.mostrarTodasOrientacoes(responseOrientacao);
                     break;
 
                 case 7:
-                    List<String> responseAtividade = atDAO.read();
+                    List<String> responseAtividade = atividadeDAO.read();
                     atV.mostrarAtividades(responseAtividade);
                     break;
 
                 case 8:
-                    List<String> responseComissao = comDAO.read();
+                    List<String> responseComissao = comissaoDAO.read();
                     comV.mostrarTodosComissao(responseComissao);
                     break;
 
                 case 9:
-                    List<String> responseVinculo = comDAO.read();
+                    List<String> responseVinculo = vinculoDAO.read();
                     vincV.mostrarTodosVinculos(responseVinculo);
                     break;
 
                 case 10:
-                    List<String> responseReuniao = comDAO.read();
+                    List<String> responseReuniao = reuniaoDAO.read();
                     reunV.mostrarTodosReunioes(responseReuniao);
                     break;
                 case 11:
-                    List<String> responseReuniaoPresente = comDAO.read();
+                    List<String> responseReuniaoPresente = reuniaoPresenteDAO.read();
                     reunPresenteV.mostrarTodosReunioesPresente(responseReuniaoPresente);
                     break;
             }
-        } while (op != 12);
+        } while (opcCrud != 12);
     }
 
 }

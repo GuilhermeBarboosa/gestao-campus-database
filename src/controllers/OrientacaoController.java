@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import dao.DefaultDAO;
 import dao.OrientacaoDAO;
 import dao.ServidorDAO;
 import java.util.List;
@@ -16,11 +17,11 @@ import view.OrientacaoView;
  *
  * @author Aluno
  */
-public class OrientacaoController extends DefaultController {
+public class OrientacaoController extends DefaultController implements DefaultDAO{
 
     private final OrientacaoView orientacaoView = new OrientacaoView();
 
-    public void menu(ServidorDAO servidorDAO, OrientacaoDAO orientacaoDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("ORIENTAÇÃO");
         opcCrud = GUI.menu();
 

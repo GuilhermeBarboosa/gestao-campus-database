@@ -7,66 +7,13 @@ package aplicacao;
 
 import view.Gui;
 
-import controllers.AtividadeController;
-import controllers.CampusController;
-import controllers.ComissaoController;
-import controllers.CursoController;
-import controllers.DisciplinaController;
-import controllers.EncerrarComissaoController;
-import controllers.OfertaDisciplinaController;
-import controllers.OrientacaoController;
-import controllers.RelatorioController;
-import controllers.ReuniaoController;
-import controllers.ReuniaoPresenteController;
-import controllers.ServidorController;
-import controllers.UserComumController;
-import controllers.VinculoServidorComissaoController;
-
-import dao.AtividadeDAO;
-import dao.CampusDAO;
-import dao.ComissaoDAO;
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.OrientacaoDAO;
-import dao.RelatorioDAO;
-import dao.ReuniaoDAO;
-import dao.ReuniaoPresenteDAO;
-import dao.ServidorDAO;
-import dao.VinculoDAO;
+import dao.DefaultDAO;
 import java.sql.SQLException;
 
 import model.Servidor;
 
-public class gestaoIFTM {
+public class gestaoIFTM implements DefaultDAO{
     
-    private final CampusController campusController = new CampusController();
-    private final ServidorController servidorController = new ServidorController();
-    private final CursoController cursoController = new CursoController();
-    private final DisciplinaController disciplinaController = new DisciplinaController();
-    private final OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
-    private final OrientacaoController orientacaoController = new OrientacaoController();
-    private final AtividadeController atividadeController = new AtividadeController();
-    private final ComissaoController comissaoController = new ComissaoController();
-    private final VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
-    private final UserComumController userComController = new UserComumController();
-    private final ReuniaoController reuniaoController = new ReuniaoController();
-    private final ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
-    private final EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
-    private final RelatorioController relatorioController = new RelatorioController();
-
-    private final CampusDAO campusDAO = new CampusDAO();
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final CursoDAO cursoDAO = new CursoDAO();
-    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-    private final OfertaDAO ofertaDAO = new OfertaDAO();
-    private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
-    private final AtividadeDAO atividadeDAO = new AtividadeDAO();
-    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
-    private final VinculoDAO vinculoDAO = new VinculoDAO();
-    private final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
-    private final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
-    private final RelatorioDAO relatorioDAO = new RelatorioDAO();
     int opcCrud;
     boolean sair = false;
     int auxLoc;
@@ -98,14 +45,12 @@ public class gestaoIFTM {
                 }
             } while (servidorLogin == null);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
         }
     }
 
     public void sistemaComum() throws Exception {
-        userComController.menu(campusDAO, servidorDAO, cursoDAO,
-                disciplinaDAO, ofertaDAO, orientacaoDAO, atividadeDAO,
-                comissaoDAO, vinculoDAO, reuniaoDAO, reuniaoPresenteDAO);
+        userComController.menu();
         principal();
     }
 
@@ -115,43 +60,43 @@ public class gestaoIFTM {
             opc = GUI.escolherCRUD();
             switch (opc) {
                 case 1:
-                    campusController.menu(campusDAO);
+                    campusController.menu();
                     break;
                 case 2:
-                    servidorController.menu(servidorDAO, campusDAO);
+                    servidorController.menu();
                     break;
                 case 3:
-                    cursoController.menu(cursoDAO, campusDAO);
+                    cursoController.menu();
                     break;
                 case 4:
-                    disciplinaController.menu(disciplinaDAO, cursoDAO);
+                    disciplinaController.menu();
                     break;
                 case 5:
-                    ofertaDisciplinaController.menu(ofertaDAO, disciplinaDAO, servidorDAO, cursoDAO, atividadeDAO);
+                    ofertaDisciplinaController.menu();
                     break;
                 case 6:
-                    orientacaoController.menu(servidorDAO, orientacaoDAO);
+                    orientacaoController.menu();
                     break;
                 case 7:
-                    atividadeController.menu(atividadeDAO, servidorDAO);
+                    atividadeController.menu();
                     break;
                 case 8:
-                    comissaoController.menu(comissaoDAO);
+                    comissaoController.menu();
                     break;
                 case 9:
-                    vinculoServiComi.menu(vinculoDAO, servidorDAO, comissaoDAO);
+                    vinculoServiComi.menu();
                     break;
                 case 10:
-                    reuniaoController.menu(reuniaoDAO, servidorDAO, comissaoDAO);
+                    reuniaoController.menu();
                     break;
                 case 11:
-                    reuniaoPresenteController.menu(reuniaoPresenteDAO, servidorDAO, comissaoDAO);
+                    reuniaoPresenteController.menu();
                     break;
                 case 12:
-                    relatorioController.gerarRelat(campusDAO, servidorDAO, relatorioDAO);
+                    relatorioController.gerarRelat();
                     break;
                 case 13:
-                    encerrarComissaoController.menu(comissaoDAO, vinculoDAO);
+                    encerrarComissaoController.menu();
                     break;
                 default:
                     System.out.println("SAINDO DO MENU...");

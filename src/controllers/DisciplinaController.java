@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.CursoDAO;
+import dao.DefaultDAO;
 import dao.DisciplinaDAO;
 import java.util.List;
 import model.Disciplina;
@@ -15,11 +16,11 @@ import view.DisciplinaView;
  *
  * @author Aluno
  */
-public class DisciplinaController extends DefaultController {
+public class DisciplinaController extends DefaultController implements DefaultDAO{
 
     private final DisciplinaView disciplinaView = new DisciplinaView();
 
-    public void menu(DisciplinaDAO disciplinaDAO, CursoDAO cursoDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("DISCIPLINA");
 
         List<String> cursoVet = cursoDAO.readId();

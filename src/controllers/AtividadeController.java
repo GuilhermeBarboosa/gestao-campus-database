@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.AtividadeDAO;
+import dao.DefaultDAO;
 import dao.ServidorDAO;
 import java.util.List;
 import model.Atividade;
@@ -16,11 +17,11 @@ import view.AtividadeView;
  *
  * @author Aluno
  */
-public class AtividadeController extends DefaultController {
+public class AtividadeController extends DefaultController implements DefaultDAO{
 
     private final AtividadeView atividadeView = new AtividadeView();
 
-    public void menu(AtividadeDAO atividadeDAO, ServidorDAO servidorDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("ATIVIDADE");
         opcCrud = GUI.menu();
 

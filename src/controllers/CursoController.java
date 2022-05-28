@@ -7,6 +7,7 @@ package controllers;
 
 import dao.CampusDAO;
 import dao.CursoDAO;
+import dao.DefaultDAO;
 import java.util.List;
 import model.Curso;
 import view.CursoView;
@@ -15,11 +16,11 @@ import view.CursoView;
  *
  * @author Aluno
  */
-public class CursoController extends DefaultController {
+public class CursoController extends DefaultController implements DefaultDAO{
 
     private final CursoView cursoView = new CursoView();
 
-    public void menu(CursoDAO cursoDAO, CampusDAO campusDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("CURSO");
         opcCrud = GUI.menu();
         List<String> campusVet = campusDAO.readId();

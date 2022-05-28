@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.CampusDAO;
+import dao.DefaultDAO;
 import dao.RelatorioDAO;
 import dao.ServidorDAO;
 import java.time.LocalDate;
@@ -15,11 +16,11 @@ import view.RelatorioView;
  *
  * @author Aluno
  */
-public class RelatorioController extends DefaultController {
+public class RelatorioController extends DefaultController implements DefaultDAO{
 
     private final RelatorioView relatView = new RelatorioView();
 
-    public void gerarRelat(CampusDAO campusDAO, ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws Exception {
+    public void gerarRelat() throws Exception {
         int opRelat = 0;
         LocalDate[] filtro;
         opRelat = relatView.opMenuRelat();

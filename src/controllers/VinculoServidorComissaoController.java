@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.ComissaoDAO;
+import dao.DefaultDAO;
 import dao.ServidorDAO;
 import dao.VinculoDAO;
 import java.util.List;
@@ -18,11 +19,11 @@ import view.VinculoView;
  *
  * @author Aluno
  */
-public class VinculoServidorComissaoController extends DefaultController {
+public class VinculoServidorComissaoController extends DefaultController implements DefaultDAO{
 
     private final VinculoView vinculoView = new VinculoView();
 
-    public void menu(VinculoDAO vinculoDAO, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("VINCULO DE SERVIDOR A COMISSÃO");
 
         List<String> servidorVet = servidorDAO.readId();

@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.CampusDAO;
+import dao.DefaultDAO;
 import dao.ServidorDAO;
 import java.util.List;
 import model.Servidor;
@@ -14,25 +15,25 @@ import view.ServidorView;
  *
  * @author Aluno
  */
-public class ServidorController extends DefaultController {
+public class ServidorController extends DefaultController implements DefaultDAO{
 
     private final ServidorView servV = new ServidorView();
 
-    public void menu(ServidorDAO servDAO, CampusDAO campusDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("SERVIDOR");
         opcCrud = GUI.menu();
 
         List<String> campusVet = campusDAO.readId();
-        
-        List<String> vetResultId = servDAO.readId();
-        List<String> vetResult = servDAO.read();
+   
+        List<String> vetResultId = servidorDAO.readId();
+        List<String> vetResult = servidorDAO.read();
 
         try {
             switch (opcCrud) {
             case 1:
                 Servidor servidor = servV.criarServ(campusVet);
                 if(servidor != null){
-                     servDAO.create(servidor);
+                     servidorDAO.create(servidor);
                 }else{
                     GUI.error();
                 }
@@ -41,10 +42,10 @@ public class ServidorController extends DefaultController {
                 servV.mostrarServidores(vetResultId);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
-                Servidor servAlt = servDAO.find(auxLoc);
+                Servidor servAlt = servidorDAO.find(auxLoc);
 
                 if (servAlt != null) {
-                    servDAO.update(servV.modifServ(servAlt, campusVet));
+                    servidorDAO.update(servV.modifServ(servAlt, campusVet));
                     GUI.sucess();
                 } else {
                     GUI.error();
@@ -58,7 +59,7 @@ public class ServidorController extends DefaultController {
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 if (auxLoc != 0) {
-                    servDAO.delete(auxLoc);
+                    servidorDAO.delete(auxLoc);
                     GUI.sucess();
                 } else {
                     GUI.error();

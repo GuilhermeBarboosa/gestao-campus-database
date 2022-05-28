@@ -7,6 +7,7 @@ package controllers;
 
 import dao.AtividadeDAO;
 import dao.CursoDAO;
+import dao.DefaultDAO;
 import dao.DisciplinaDAO;
 import dao.OfertaDAO;
 import dao.ServidorDAO;
@@ -22,13 +23,12 @@ import view.OfertaView;
  *
  * @author Aluno
  */
-public class OfertaDisciplinaController extends DefaultController {
+public class OfertaDisciplinaController extends DefaultController implements DefaultDAO{
 
     private final OfertaView ofertaView = new OfertaView();
     private final AtividadeView atividadeView = new AtividadeView();
 
-    public void menu(OfertaDAO ofertaDAO, DisciplinaDAO disciplinaDAO,
-            ServidorDAO servidorDAO, CursoDAO cursoDAO, AtividadeDAO atividadeDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("OFERTA DE DISCIPLINA");
         opcCrud = GUI.menu();
 

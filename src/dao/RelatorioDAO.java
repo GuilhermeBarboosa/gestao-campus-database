@@ -74,12 +74,12 @@ public class RelatorioDAO {
     public List<String> relatorioCompleto() throws SQLException {
 
         String sql = "SELECT * FROM servidores AS s "
-                + "INNER JOIN ofertas AS of ON s.id = of.servidor "
-                + "INNER JOIN disciplinas AS d ON d.id = of.disciplina "
+                + "INNER JOIN ofertas AS ofe ON s.id = ofe.servidor "
+                + "INNER JOIN disciplinas AS d ON d.id = ofe.disciplina "
                 + "INNER JOIN atividades AS ati ON s.id = ati.servidor "
                 + "INNER JOIN orientacoes AS ori ON s.id = ori.servidor "
                 + "INNER JOIN vinculos AS vinc ON s.id = vinc.servidor "
-                + "INNER JOIN comissoes AS com ON com.id = vinc.comissao GROUP BY s.id";
+                + "INNER JOIN comissoes AS com ON com.id = vinc.comissao; ";
 
         List<String> vetResult = new ArrayList<>();
 
@@ -96,7 +96,7 @@ public class RelatorioDAO {
             rset = pstm.executeQuery();
 
             while (rset.next()) {
-      
+
                 vetResult.add("Id: " + rset.getString("s.id") + "\n"
                         + "Nome: " + rset.getString("s.nome") + "\n"
                         + "Disciplina: " + rset.getString("d.disciplina") + " - " + rset.getString("d.carga_horaria") + " horas" + "\n"

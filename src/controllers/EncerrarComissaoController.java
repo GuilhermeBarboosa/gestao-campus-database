@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.ComissaoDAO;
+import dao.DefaultDAO;
 import dao.VinculoDAO;
 import java.util.List;
 import model.Comissao;
@@ -15,11 +16,11 @@ import view.ComissaoView;
  *
  * @author Aluno
  */
-public class EncerrarComissaoController extends DefaultController {
+public class EncerrarComissaoController extends DefaultController implements DefaultDAO{
 
     private final ComissaoView comissaoView = new ComissaoView();
 
-    public void menu(ComissaoDAO comissaoDAO, VinculoDAO vinculoDAO) throws Exception {
+    public void menu() throws Exception {
         try {
             System.out.println("ENCERRAR COMISSAO");
 

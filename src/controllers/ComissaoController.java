@@ -6,6 +6,7 @@
 package controllers;
 
 import dao.ComissaoDAO;
+import dao.DefaultDAO;
 import java.util.List;
 import model.Comissao;
 import view.ComissaoView;
@@ -14,11 +15,11 @@ import view.ComissaoView;
  *
  * @author Aluno
  */
-public class ComissaoController extends DefaultController {
+public class ComissaoController extends DefaultController implements DefaultDAO{
 
     private final ComissaoView comissaoView = new ComissaoView();
 
-    public void menu(ComissaoDAO comissaoDAO) throws Exception {
+    public void menu() throws Exception {
         System.out.println("COMISSÃO");
         opcCrud = GUI.menu();
 
