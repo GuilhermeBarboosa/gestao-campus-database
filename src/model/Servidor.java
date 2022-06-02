@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Servidor {
 
     private int id;
-    private int id_campus;
+    private Campus campus;
     private String nome;
     private String email;
     private String cargo;
@@ -73,14 +73,13 @@ public class Servidor {
         this.senha = senha;
     }
 
-    public int getId_campus() {
-        return id_campus;
+    public Campus getCampus() {
+        return campus;
     }
 
-    public void setId_campus(int id_campus) {
-        this.id_campus = id_campus;
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
-
 
     public double getHorasTotais() {
         return horasTotais;

@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Atividade;
 import model.Disciplina;
@@ -13,12 +12,13 @@ import model.Oferta;
 import model.Servidor;
 import view.AtividadeView;
 import view.OfertaView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class OfertaDisciplinaController extends DefaultController implements DefaultDAO{
+public class OfertaDisciplinaController extends DefaultController implements Default{
 
     private final OfertaView ofertaView = new OfertaView();
     private final AtividadeView atividadeView = new AtividadeView();

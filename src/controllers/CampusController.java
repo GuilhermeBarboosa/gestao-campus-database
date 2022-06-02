@@ -6,17 +6,17 @@
 package controllers;
 
 import dao.CampusDAO;
-import dao.DefaultDAO;
 import java.util.List;
 import model.Campus;
 import view.CampusView;
 import view.Gui;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class CampusController extends DefaultController implements DefaultDAO{
+public class CampusController extends DefaultController implements Default{
 
     private final Gui GUI = new Gui();
     private final CampusView campusView = new CampusView();
@@ -26,9 +26,8 @@ public class CampusController extends DefaultController implements DefaultDAO{
         opcCrud = GUI.menu();
 
         CampusDAO campusDAO = new CampusDAO();
-        
-        List<String> vetResultId = campusDAO.readId();
-        List<String> vetResult = campusDAO.read();
+      
+        List<Campus> vetResult = campusDAO.read();
 
         try {
             switch (opcCrud) {
@@ -41,7 +40,7 @@ public class CampusController extends DefaultController implements DefaultDAO{
                     }
                     break;
                 case 2:
-                    campusView.mostrarTodosCampos(vetResultId);
+                    campusView.mostrarIdTodosCampos(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Campus CampusAlt = campusDAO.find(auxLoc);
@@ -56,7 +55,7 @@ public class CampusController extends DefaultController implements DefaultDAO{
                     campusView.mostrarTodosCampos(vetResult);
                     break;
                 case 4:
-                    campusView.mostrarTodosCampos(vetResultId);
+                    campusView.mostrarIdTodosCampos(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     campusDAO.delete(auxLoc);

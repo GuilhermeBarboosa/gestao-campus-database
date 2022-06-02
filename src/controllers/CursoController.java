@@ -5,16 +5,16 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Curso;
 import view.CursoView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class CursoController extends DefaultController implements DefaultDAO{
+public class CursoController extends DefaultController implements Default{
 
     private final CursoView cursoView = new CursoView();
 

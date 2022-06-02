@@ -5,16 +5,16 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Reuniao;
 import view.ReuniaoView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class ReuniaoController extends DefaultController implements DefaultDAO{
+public class ReuniaoController extends DefaultController implements Default{
 
     private final ReuniaoView reuniaoView = new ReuniaoView();
 

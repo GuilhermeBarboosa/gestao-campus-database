@@ -5,16 +5,16 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Comissao;
 import view.ComissaoView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class ComissaoController extends DefaultController implements DefaultDAO{
+public class ComissaoController extends DefaultController implements Default{
 
     private final ComissaoView comissaoView = new ComissaoView();
 

@@ -5,17 +5,17 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Atividade;
 import model.Servidor;
 import view.AtividadeView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class AtividadeController extends DefaultController implements DefaultDAO{
+public class AtividadeController extends DefaultController implements Default{
 
     private final AtividadeView atividadeView = new AtividadeView();
 

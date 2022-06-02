@@ -68,17 +68,17 @@ public class CampusDAO {
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Campus> read() throws Exception {
         String sql = "SELECT * FROM campus as c";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Campus> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rset = null;
 
         try {
-            conn = ConnectionFactory.createConnectionToMySql();;;
+            conn = ConnectionFactory.createConnectionToMySql();
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -86,65 +86,37 @@ public class CampusDAO {
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("c.id") + "\n"
-                        + "Nome: " + rset.getString("c.nome") + "\n"
-                        + "Abreviação: " + rset.getString("c.abreviacao") + "\n"
-                        + "Duração de aula: " + rset.getString("c.duracao_aula") + "\n"
-                        + "Criação do camp: " + rset.getString("c.dt_criacao_camp") + "\n"
-                        + "Cidade: " + rset.getString("c.cidade") + "\n"
-                        + "Bairro: " + rset.getString("c.bairro") + "\n"
-                        + "Rua: " + rset.getString("c.rua") + "\n"
-                        + "CEP: " + rset.getString("c.cep") + "\n"
-                        + "Cadastrado: " + rset.getString("c.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("c.modificado") + "\n"
-                        + "----------------------------------------------------------");
+                Campus campus = new Campus();
+
+                campus.setId(rset.getInt("c.id"));
+                campus.setNome(rset.getString("c.nome"));
+                campus.setAbreviacao(rset.getString("c.abreviacao"));
+                campus.setDuracaoAula(rset.getDouble("c.duracao_aula"));
+
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                campus.setDtCriacaoCamp(dataAtualizada);
+
+                campus.setCidade(rset.getString("c.cidade"));
+                campus.setBairro(rset.getString("c.bairro"));
+                campus.setRua(rset.getString("c.rua"));
+                campus.setCep(rset.getString("c.cep"));
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                campus.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    campus.setDtModificacao(dataAtualizada);
+                }
+
+                vetResult.add(campus);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
-
-    public List<String> readId() throws Exception {
-        String sql = "SELECT * FROM campus AS c";
-
-        List<String> vetResult = new ArrayList<>();
-
-        Connection conn = null;
-
-        PreparedStatement pstm = null;
-
-        ResultSet rset = null;
-
-        try {
-            conn = (Connection) createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("c.id") + "\n"
-                        + "Nome: " + rset.getString("c.nome") + "\n"
-                        + "Abreviação: " + rset.getString("c.abreviacao") + "\n"
-                        + "=========================" + "\n");
-            }
-
-        } catch (SQLClientInfoException e) {
-            System.err.println(e);
         } finally {
             if (rset != null) {
                 rset.close();
@@ -288,7 +260,5 @@ public class CampusDAO {
         }
         return null;
     }
-
-    
 
 }

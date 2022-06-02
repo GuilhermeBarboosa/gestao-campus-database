@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import model.Campus;
 
 /**
  *
@@ -149,7 +150,7 @@ public class RelatorioView {
 
     public void relat3(CampusDAO campusDAO, RelatorioDAO relatorioDAO) throws Exception {
 
-        List<String> campus = campusDAO.readId();
+        List<Campus> campus = campusDAO.read();
 
         for (String cam : campus) {
             System.out.println(cam);

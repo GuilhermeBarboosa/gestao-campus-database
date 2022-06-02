@@ -1,8 +1,8 @@
 package controllers;
 
-import dao.DefaultDAO;
 import java.time.LocalDate;
 import view.RelatorioView;
+import dao.Default;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,7 +13,7 @@ import view.RelatorioView;
  *
  * @author Aluno
  */
-public class RelatorioController extends DefaultController implements DefaultDAO{
+public class RelatorioController extends DefaultController implements Default{
 
     private final RelatorioView relatView = new RelatorioView();
 

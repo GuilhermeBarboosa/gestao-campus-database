@@ -19,7 +19,7 @@ import model.Reuniao;
  *
  * @author Gui
  */
-public class ReuniaoDAO {
+public class ReuniaoDAO implements Default{
 
     public void create(Reuniao reuniao) throws Exception {
         String sql = "INSERT INTO reunioes (comissao, servidor_secre, conteudo_ata, dt_reuniao, cadastrado) VALUES (?,?,?,?,?)";

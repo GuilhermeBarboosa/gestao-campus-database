@@ -5,17 +5,17 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Orientacao;
 import model.Servidor;
 import view.OrientacaoView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class OrientacaoController extends DefaultController implements DefaultDAO{
+public class OrientacaoController extends DefaultController implements Default{
 
     private final OrientacaoView orientacaoView = new OrientacaoView();
 

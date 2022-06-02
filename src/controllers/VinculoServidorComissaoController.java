@@ -5,18 +5,18 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
 import view.VinculoView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class VinculoServidorComissaoController extends DefaultController implements DefaultDAO{
+public class VinculoServidorComissaoController extends DefaultController implements Default{
 
     private final VinculoView vinculoView = new VinculoView();
 

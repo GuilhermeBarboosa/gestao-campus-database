@@ -5,16 +5,16 @@
  */
 package controllers;
 
-import dao.DefaultDAO;
 import java.util.List;
 import model.Disciplina;
 import view.DisciplinaView;
+import dao.Default;
 
 /**
  *
  * @author Aluno
  */
-public class DisciplinaController extends DefaultController implements DefaultDAO{
+public class DisciplinaController extends DefaultController implements Default{
 
     private final DisciplinaView disciplinaView = new DisciplinaView();
 

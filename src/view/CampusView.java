@@ -77,12 +77,34 @@ public class CampusView {
     }
 
     /////////////////////////////////////////////////////
-    public void mostrarTodosCampos(List<String> vetResult) {
+    public void mostrarTodosCampos(List<Campus> vetResult) {
         if (vetResult.size() == 0) {
             System.out.println("Não há campus cadastrados");
         } else {
-            for (String string : vetResult) {
-                System.out.println(string);
+            for (Campus campus : vetResult) {
+                System.out.println("ID: " + campus.getId());
+                System.out.println("NOME: " + campus.getNome());
+                System.out.println("ABREVIAÇÃO: " + campus.getAbreviacao());
+                System.out.println("DURAÇÃO DE AULA: " + campus.getDuracaoAula());
+                System.out.println("DATA DE CRIAÇÃO DO CAMPUS: " + campus.getDtCriacaoCamp());
+                System.out.println("CIDADE: " + campus.getCidade());
+                System.out.println("BAIRRO: " + campus.getBairro());
+                System.out.println("RUA: " + campus.getRua());
+                System.out.println("CEP: " + campus.getCep());
+                System.out.println("CRIAÇÃO: " + campus.getDtCriacao());
+                System.out.println("MODIFICAÇÃO: " + campus.getDtModificacao());
+            }
+        }
+    }
+
+    public void mostrarIdTodosCampos(List<Campus> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há campus cadastrados");
+        } else {
+            for (Campus campus : vetResult) {
+                System.out.println("ID: " + campus.getId());
+                System.out.println("NOME: " + campus.getNome());
+                System.out.println("ABREVIAÇÃO: " + campus.getAbreviacao());
             }
         }
     }

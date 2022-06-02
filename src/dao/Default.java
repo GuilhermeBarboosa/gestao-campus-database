@@ -19,12 +19,23 @@ import controllers.ReuniaoPresenteController;
 import controllers.ServidorController;
 import controllers.UserComumController;
 import controllers.VinculoServidorComissaoController;
+import view.AtividadeView;
+import view.CampusView;
+import view.ComissaoView;
+import view.CursoView;
+import view.DisciplinaView;
+import view.OfertaView;
+import view.OrientacaoView;
+import view.ReuniaoPresenteView;
+import view.ReuniaoView;
+import view.ServidorView;
+import view.VinculoView;
 
 /**
  *
  * @author Gui
  */
-public interface DefaultDAO {
+public interface Default {
 
     public final CampusController campusController = new CampusController();
     public final ServidorController servidorController = new ServidorController();
@@ -53,4 +64,16 @@ public interface DefaultDAO {
     public final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
     public final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
     public final RelatorioDAO relatorioDAO = new RelatorioDAO();
+
+    public final CampusView campV = new CampusView();
+    public final ServidorView servV = new ServidorView();
+    public final CursoView cursoV = new CursoView();
+    public final DisciplinaView discV = new DisciplinaView();
+    public final OfertaView ofertaV = new OfertaView();
+    public final OrientacaoView orientacaoV = new OrientacaoView();
+    public final AtividadeView atV = new AtividadeView();
+    public final ComissaoView comV = new ComissaoView();
+    public final VinculoView vincV = new VinculoView();
+    public final ReuniaoView reunV = new ReuniaoView();
+    public final ReuniaoPresenteView reunPresenteV = new ReuniaoPresenteView();
 }

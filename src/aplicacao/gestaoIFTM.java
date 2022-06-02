@@ -7,13 +7,15 @@ package aplicacao;
 
 import view.Gui;
 
-import dao.DefaultDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Servidor;
+import dao.Default;
 
-public class gestaoIFTM implements DefaultDAO{
-    
+public class gestaoIFTM implements Default {
+
     int opcCrud;
     boolean sair = false;
     int auxLoc;
@@ -105,8 +107,18 @@ public class gestaoIFTM implements DefaultDAO{
         principal();
     }
 
-    public Servidor login(String login, String senha) throws SQLException {
-        Servidor responseLogin = servidorDAO.login(login, senha);
+    public Servidor login(String login, String senha) throws SQLException, Exception {
+        Servidor responseLogin = new Servidor();
+
+        List<Servidor> vetServidor = servidorDAO.read();
+
+        for (Servidor servidor : vetServidor) {
+            if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
+                responseLogin = servidor;
+                return responseLogin;
+            }
+        }
+
         return responseLogin;
     }
 }

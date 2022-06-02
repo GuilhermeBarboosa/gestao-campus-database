@@ -20,7 +20,7 @@ import model.Comissao;
  *
  * @author Gui
  */
-public class ComissaoDAO {
+public class ComissaoDAO implements Default{
 
     public void create(Comissao comissao) throws Exception {
         String sql = "INSERT INTO comissoes (comissao, horas_semanais, dt_inicio, dt_termino, estado, cadastrado) VALUES (?,?,?,?,?,?)";

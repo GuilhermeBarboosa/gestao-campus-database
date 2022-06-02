@@ -21,7 +21,7 @@ import model.Vinculo;
  *
  * @author Gui
  */
-public class VinculoDAO {
+public class VinculoDAO implements Default{
 
     public void create(Vinculo vinculo) throws Exception {
         String sql = "INSERT INTO vinculos (servidor, comissao, papel, dt_entrada, dt_saida, cadastrado) VALUES (?,?,?,?,?,?)";
