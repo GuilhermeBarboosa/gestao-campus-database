@@ -23,7 +23,7 @@ public class AtividadeController extends DefaultController implements Default{
         System.out.println("ATIVIDADE");
         opcCrud = GUI.menu();
 
-        List<String> servidorVet = servidorDAO.readId();
+        List<Servidor> servidorVet = servidorDAO.read();
 
         List<String> vetResultId = atividadeDAO.readId();
         List<String> vetResult = atividadeDAO.read();
@@ -34,8 +34,8 @@ public class AtividadeController extends DefaultController implements Default{
                     Atividade at = atividadeView.criarAtividade(servidorVet);
 
                     if (at != null) {
-                        Servidor servAux = servidorDAO.find(at.getId_servidor());
-                        servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getId_servidor());
+                        Servidor servAux = servidorDAO.find(at.getServidor().getId());
+                        servidorDAO.updateHours(servAux, at.getHorasSemanais(), at.getServidor().getId());
 
                         atividadeDAO.create(at);
                     } else {
@@ -49,13 +49,13 @@ public class AtividadeController extends DefaultController implements Default{
                     Atividade atAlt = atividadeDAO.find(auxLoc);
 
                     if (atAlt != null) {
-                        Servidor servAux = servidorDAO.find(atAlt.getId_servidor());
-                        servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(atAlt.getServidor().getId());
+                        servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getServidor().getId());
 
                         atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
 
-                        servAux = servidorDAO.find(atAlt.getId_servidor());
-                        servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getId_servidor());
+                        servAux = servidorDAO.find(atAlt.getServidor().getId());
+                        servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getServidor().getId());
 
                         atividadeDAO.update(atAlt);
                         GUI.sucess();
@@ -73,8 +73,8 @@ public class AtividadeController extends DefaultController implements Default{
 
                     Atividade removeAtividade = atividadeDAO.find(auxLoc);
                     if (removeAtividade != null) {
-                        Servidor servAux = servidorDAO.find(removeAtividade.getId_servidor());
-                        servidorDAO.removeHours(servAux, removeAtividade.getHorasSemanais(), removeAtividade.getId_servidor());
+                        Servidor servAux = servidorDAO.find(removeAtividade.getServidor().getId());
+                        servidorDAO.removeHours(servAux, removeAtividade.getHorasSemanais(), removeAtividade.getServidor().getId());
 
                         atividadeDAO.delete(auxLoc);
                         GUI.sucess();
