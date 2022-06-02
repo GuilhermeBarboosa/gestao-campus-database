@@ -19,9 +19,9 @@ import model.Atividade;
  *
  * @author Gui
  */
-public class AtividadeDAO {
+public class AtividadeDAO implements Default{
 
-    public void create(Atividade atividade) throws Exception {
+    public void create(Atividade atividade) throws Exception{
         String sql = "INSERT INTO atividades (atividade, servidor, horas_semanais, dt_inicio, dt_termino,"
                 + " cadastrado) VALUES (?,?,?,?,?,?)";
 

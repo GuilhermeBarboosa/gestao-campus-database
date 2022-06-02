@@ -19,7 +19,7 @@ import model.Oferta;
  *
  * @author Gui
  */
-public class OfertaDAO {
+public class OfertaDAO implements Default{
 
     public void create(Oferta oferta) throws Exception {
         String sql = "INSERT INTO ofertas (curso, disciplina, servidor, ano, semestre, aula_semanal, cadastrado) VALUES (?,?,?,?,?,?,?)";

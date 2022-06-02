@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public class ReuniaoPresente {
 
     private int id;
-    private int id_comissao;
+    private Comissao comissao;
     private String ataReuniao;
-    private int id_servidor;
+    private Servidor servidor;
     private LocalDate dtCriacao;
     private LocalDate dtModificacao;
 
@@ -28,23 +28,22 @@ public class ReuniaoPresente {
         this.id = id;
     }
 
-    public int getId_comissao() {
-        return id_comissao;
+    public Comissao getComissao() {
+        return comissao;
     }
 
-    public void setId_comissao(int id_comissao) {
-        this.id_comissao = id_comissao;
+    public void setComissao(Comissao comissao) {
+        this.comissao = comissao;
     }
 
-    public int getId_servidor() {
-        return id_servidor;
+    public Servidor getServidor() {
+        return servidor;
     }
 
-    public void setId_servidor(int id_servidor) {
-        this.id_servidor = id_servidor;
+    public void setServidor(Servidor servidor) {
+        this.servidor = servidor;
     }
-  
-    
+
     public String getAtaReuniao() {
         return ataReuniao;
     }

@@ -19,7 +19,7 @@ import model.Orientacao;
  *
  * @author Gui
  */
-public class OrientacaoDAO {
+public class OrientacaoDAO implements Default{
 
     public void create(Orientacao orientacao) throws Exception {
         String sql = "INSERT INTO orientacoes (tipo, servidor, aluno, horas_semanais, dt_inicio, dt_termino, cadastrado) VALUES (?,?,?,?,?,?,?)";

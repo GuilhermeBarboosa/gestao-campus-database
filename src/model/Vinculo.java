@@ -14,8 +14,8 @@ import java.time.LocalDate;
 public class Vinculo {
 
     private int id;
-    private int id_servidor;
-    private int id_comissao;
+    private Servidor servidor;
+    private Comissao comissao;
     private String papel;
     private LocalDate dtEntrada;
     private LocalDate dtSaida;
@@ -30,22 +30,22 @@ public class Vinculo {
         this.id = id;
     }
 
-    public int getId_servidor() {
-        return id_servidor;
+    public Servidor getServidor() {
+        return servidor;
     }
 
-    public void setId_servidor(int id_servidor) {
-        this.id_servidor = id_servidor;
+    public void setServidor(Servidor servidor) {
+        this.servidor = servidor;
     }
 
-    public int getId_comissao() {
-        return id_comissao;
+    public Comissao getComissao() {
+        return comissao;
     }
 
-    public void setId_comissao(int id_comissao) {
-        this.id_comissao = id_comissao;
+    public void setComissao(Comissao comissao) {
+        this.comissao = comissao;
     }
-
+    
     public String getPapel() {
         return papel;
     }

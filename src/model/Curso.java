@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Curso {
 
     private int id;
-    private int id_campus;
+    private Campus campus;
     private String nome;
     private String estado;
     private int anoInicio;
@@ -30,12 +30,12 @@ public class Curso {
         this.id = id;
     }
 
-    public int getId_campus() {
-        return id_campus;
+    public Campus getCampus() {
+        return campus;
     }
 
-    public void setId_campus(int id_campus) {
-        this.id_campus = id_campus;
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
     
     public String getNome() {

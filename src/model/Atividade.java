@@ -16,7 +16,7 @@ public class Atividade {
 
     private int id;
     private String descricao;
-    private int id_servidor;
+    private Servidor servidor;
     private double horasSemanais;
     private LocalDate dtInicio;
     private LocalDate dtTermino;
@@ -31,12 +31,12 @@ public class Atividade {
         this.id = id;
     }
 
-    public int getId_servidor() {
-        return id_servidor;
+    public Servidor getServidor() {
+        return servidor;
     }
 
-    public void setId_servidor(int id_servidor) {
-        this.id_servidor = id_servidor;
+    public void setServidor(Servidor servidor) {
+        this.servidor = servidor;
     }
 
     public String getDescricao() {

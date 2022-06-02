@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public class Oferta {
 
     private int id;
-    private int id_curso;
-    private int id_servidor;
-    private int id_disciplina;
+    private Curso curso;
+    private Servidor servidor;
+    private Disciplina disciplina;
     private int ano;
     private int semestre;
     private int aulaSemanais;
@@ -31,28 +31,28 @@ public class Oferta {
         this.id = id;
     }
 
-    public int getId_curso() {
-        return id_curso;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setId_curso(int id_curso) {
-        this.id_curso = id_curso;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
-    public int getId_servidor() {
-        return id_servidor;
+    public Servidor getServidor() {
+        return servidor;
     }
 
-    public void setId_servidor(int id_servidor) {
-        this.id_servidor = id_servidor;
+    public void setServidor(Servidor servidor) {
+        this.servidor = servidor;
     }
 
-    public int getId_disciplina() {
-        return id_disciplina;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setId_disciplina(int id_disciplina) {
-        this.id_disciplina = id_disciplina;
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 
     public int getAno() {
@@ -123,5 +123,4 @@ public class Oferta {
 //        aux += "\n\n";
 //        return aux;
 //    }
-
 }

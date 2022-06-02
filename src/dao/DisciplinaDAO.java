@@ -19,7 +19,7 @@ import model.Disciplina;
  *
  * @author Gui
  */
-public class DisciplinaDAO {
+public class DisciplinaDAO implements Default{
 
     public void create(Disciplina disc) throws Exception {
         String sql = "INSERT INTO disciplinas (disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";

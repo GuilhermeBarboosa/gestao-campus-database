@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Usuario
  */
-public class RelatorioDAO {
+public class RelatorioDAO implements Default{
 
     public List<String> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
         String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id WHERE r.dt_reuniao BETWEEN ? AND ?;";

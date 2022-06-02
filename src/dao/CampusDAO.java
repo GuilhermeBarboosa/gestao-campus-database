@@ -21,7 +21,7 @@ import model.Campus;
  *
  * @author Gui
  */
-public class CampusDAO {
+public class CampusDAO implements Default{
 
     public void create(Campus camp) throws Exception {
         String sql = "INSERT INTO campus(nome, abreviacao, duracao_aula, dt_criacao_camp, cidade, bairro, rua, cep, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";

@@ -14,10 +14,10 @@ import java.time.LocalDate;
 public class Reuniao {
 
     private int id;
-    private int id_comissao;
+    private Comissao comissao;
     private LocalDate dtReuniao;
     private String conteudoAta;
-    private int id_servidorSecre;
+    private Servidor servidorSecre;
     private LocalDate dtCriacao;
     private LocalDate dtModificacao;
 
@@ -29,14 +29,22 @@ public class Reuniao {
         this.id = id;
     }
 
-    public int getId_comissao() {
-        return id_comissao;
+    public Comissao getComissao() {
+        return comissao;
     }
 
-    public void setId_comissao(int id_comissao) {
-        this.id_comissao = id_comissao;
+    public void setComissao(Comissao comissao) {
+        this.comissao = comissao;
     }
 
+    public Servidor getServidorSecre() {
+        return servidorSecre;
+    }
+
+    public void setServidorSecre(Servidor servidorSecre) {
+        this.servidorSecre = servidorSecre;
+    }
+    
     public LocalDate getDtReuniao() {
         return dtReuniao;
     }
@@ -51,14 +59,6 @@ public class Reuniao {
 
     public void setConteudoAta(String conteudoAta) {
         this.conteudoAta = conteudoAta;
-    }
-
-    public int getId_servidorSecre() {
-        return id_servidorSecre;
-    }
-
-    public void setId_servidorSecre(int id_servidorSecre) {
-        this.id_servidorSecre = id_servidorSecre;
     }
     
     public LocalDate getDtCriacao() {

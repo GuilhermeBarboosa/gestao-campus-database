@@ -15,7 +15,7 @@ public class Disciplina {
 
     private int id;
     private String nome;
-    private int id_curso;
+    private Curso curso;
     private double cargaHoraria;
     private int periodo;
     private LocalDate dtCriacao;
@@ -29,14 +29,16 @@ public class Disciplina {
         this.id = id;
     }
 
-    public int getId_curso() {
-        return id_curso;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setId_curso(int id_curso) {
-        this.id_curso = id_curso;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
+   
+    
     public String getNome() {
         return nome;
     }

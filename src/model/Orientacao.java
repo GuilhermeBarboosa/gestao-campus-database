@@ -15,7 +15,7 @@ public class Orientacao {
 
     private int id;
     private String tipo;
-    private int id_servidor;
+    private Servidor servidor;
     private String nomeAluno;
     private double horasSemanais;
     private LocalDate dtInicio;
@@ -31,12 +31,12 @@ public class Orientacao {
         this.id = id;
     }
 
-    public int getId_servidor() {
-        return id_servidor;
+    public Servidor getServidor() {
+        return servidor;
     }
 
-    public void setId_servidor(int id_servidor) {
-        this.id_servidor = id_servidor;
+    public void setServidor(Servidor servidor) {
+        this.servidor = servidor;
     }
 
     public String getTipo() {

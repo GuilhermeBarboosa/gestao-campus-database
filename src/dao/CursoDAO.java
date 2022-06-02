@@ -19,7 +19,7 @@ import model.Curso;
  *
  * @author Usuario
  */
-public class CursoDAO {
+public class CursoDAO implements Default{
 
     public void create(Curso curso) throws Exception {
         String sql = "INSERT INTO cursos(curso, campus, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
