@@ -21,6 +21,8 @@ public class ServidorController extends DefaultController implements Default{
         System.out.println("SERVIDOR");
         opcCrud = GUI.menu();
         
+        
+        
         List<Servidor> vetResult = servidorDAO.read();
 
         try {

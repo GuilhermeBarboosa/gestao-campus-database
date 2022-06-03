@@ -74,12 +74,30 @@ public class ComissaoView {
 
     }
 
-    public void mostrarTodosComissao(List<String> vetResult) {
+    public void mostrarTodosComissao(List<Comissao> vetResult) {
         if (vetResult.size() == 0) {
             System.out.println("Não há servidores cadastrados");
         } else {
-            for (String string : vetResult) {
-                System.out.println(string);
+            for (Comissao comissao : vetResult) {
+                System.out.println("ID: " + comissao.getId());
+                System.out.println("COMISSAO: " + comissao.getId());
+                System.out.println("HORAS SEMANAIS: " + comissao.getId());
+                System.out.println("DATA DE INICIO: " + comissao.getId());
+                System.out.println("DATA DE TERMINO: " + comissao.getId());
+                System.out.println("ESTADO: " + comissao.getId());
+                System.out.println("DATA DE CRIAÇÃO: " + comissao.getId());
+                System.out.println("DATA DE MODIFICAÇÃO: " + comissao.getId());
+            }
+        }
+    }
+
+    public void mostrarIdTodosComissao(List<Comissao> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há servidores cadastrados");
+        } else {
+            for (Comissao comissao : vetResult) {
+                System.out.println("ID: " + comissao.getId());
+                System.out.println("COMISSAO: " + comissao.getId());
             }
         }
     }

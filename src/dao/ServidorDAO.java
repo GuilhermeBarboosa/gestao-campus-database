@@ -98,11 +98,11 @@ public class ServidorDAO implements Default{
                 servidor.setPerfil(rset.getInt("s.perfil"));
                 servidor.setHorasTotais(rset.getDouble("s.horas_totais"));
                 
-                Date date = rset.getDate("cadastrado");
+                Date date = rset.getDate("s.cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
                 servidor.setDtCriacao(dataAtualizada);
                 
-                date = rset.getDate("cadastrado");
+                date = rset.getDate("s.modificado");
                 dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
                     servidor.setDtModificacao(dataAtualizada);

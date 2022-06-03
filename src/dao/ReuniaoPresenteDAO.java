@@ -13,13 +13,15 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Comissao;
 import model.ReuniaoPresente;
+import model.Servidor;
 
 /**
  *
  * @author Gui
  */
-public class ReuniaoPresenteDAO {
+public class ReuniaoPresenteDAO implements Default {
 
     public void create(ReuniaoPresente reuniaoPresente) throws Exception {
         String sql = "INSERT INTO reuniao_presente (comissao, ata_reuniao, servidor, cadastrado) VALUES (?,?,?,?)";
@@ -32,11 +34,10 @@ public class ReuniaoPresenteDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            
-            pstm.setInt(1, reuniaoPresente.getId_comissao());
+            pstm.setInt(1, reuniaoPresente.getComissao().getId());
             pstm.setString(2, reuniaoPresente.getAtaReuniao());
-            pstm.setInt(3, reuniaoPresente.getId_servidor());
-       
+            pstm.setInt(3, reuniaoPresente.getServidor().getId());
+
             Date date = Date.valueOf(reuniaoPresente.getDtCriacao());
             pstm.setDate(4, date);
 
@@ -58,11 +59,11 @@ public class ReuniaoPresenteDAO {
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<ReuniaoPresente> read() throws Exception {
 
         String sql = "SELECT *, s.nome, c.comissao FROM reuniao_presente AS rp INNER JOIN servidores AS s ON rp.servidor = s.id INNER JOIN comissoes AS c ON rp.comissao = c.id";
 
-        List<String> vetResult = new ArrayList<>();
+        List<ReuniaoPresente> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -78,55 +79,29 @@ public class ReuniaoPresenteDAO {
 
             while (rset.next()) {
 
-                vetResult.add( "Id: " + rset.getString("rp.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Ata de reunião: " + rset.getString("rp.ata_reuniao") + "\n"
-                        + "Cadastrado: " + rset.getString("rp.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("rp.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
-    
-    public List<String> readId() throws Exception {
+                ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
-        String sql = "SELECT *, s.nome, c.comissao FROM reuniao_presente AS rp INNER JOIN servidores AS s ON rp.servidor = s.id INNER JOIN comissoes AS c ON rp.comissao = c.id";
+                reuniaoPresente.setId(rset.getInt("rp.id"));
 
-        List<String> vetResult = new ArrayList<>();
+                Comissao comissao = comissaoDAO.find(rset.getInt("rp.comissao"));
+                reuniaoPresente.setComissao(comissao);
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                Servidor servidor = servidorDAO.find(rset.getInt("rp.servidor"));
+                reuniaoPresente.setServidor(servidor);
 
-        ResultSet rset = null;
+                reuniaoPresente.setAtaReuniao(rset.getString("rp.ata_reuniao"));
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                Date date = rset.getDate("rp.cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                reuniaoPresente.setDtCriacao(dataAtualizada);
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+                date = rset.getDate("rp.modificado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    reuniaoPresente.setDtModificacao(dataAtualizada);
+                }
 
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("rp.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(reuniaoPresente);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,10 +130,10 @@ public class ReuniaoPresenteDAO {
             conn = ConnectionFactory.createConnectionToMySql();
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
-            pstm.setInt(1, altReuniaoPresente.getId_comissao());
+
+            pstm.setInt(1, altReuniaoPresente.getComissao().getId());
             pstm.setString(2, altReuniaoPresente.getAtaReuniao());
-            pstm.setInt(3, altReuniaoPresente.getId_servidor());
+            pstm.setInt(3, altReuniaoPresente.getServidor().getId());
 
             Date date = Date.valueOf(altReuniaoPresente.getDtModificacao());
             pstm.setDate(4, date);
@@ -222,24 +197,27 @@ public class ReuniaoPresenteDAO {
 
             while (rset.next()) {
 
-                ReuniaoPresente reuniaoPresetente = new ReuniaoPresente();
+                ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
-                reuniaoPresetente.setId(rset.getInt("id"));
-                reuniaoPresetente.setId_comissao(rset.getInt("comissao"));
-                reuniaoPresetente.setAtaReuniao(rset.getString("ata_reuniao"));
-                reuniaoPresetente.setId_servidor(rset.getInt("servidor"));
-    
+                reuniaoPresente.setId(rset.getInt("id"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("rp.comissao"));
+                reuniaoPresente.setComissao(comissao);
+
+                Servidor servidor = servidorDAO.find(rset.getInt("rp.servidor"));
+                reuniaoPresente.setServidor(servidor);
+
+                reuniaoPresente.setAtaReuniao(rset.getString("ata_reuniao"));
 
                 Date date = rset.getDate("cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
-                reuniaoPresetente.setDtCriacao(dataAtualizada);
+                reuniaoPresente.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("modificado");
                 if (date != null) {
                     dataAtualizada = date.toLocalDate();
-                    reuniaoPresetente.setDtModificacao(dataAtualizada);
+                    reuniaoPresente.setDtModificacao(dataAtualizada);
                 }
-                return reuniaoPresetente;
+                return reuniaoPresente;
 
             }
         } catch (Exception e) {

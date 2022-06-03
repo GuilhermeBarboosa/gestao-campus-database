@@ -13,13 +13,14 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Curso;
 import model.Disciplina;
 
 /**
  *
  * @author Gui
  */
-public class DisciplinaDAO implements Default{
+public class DisciplinaDAO implements Default {
 
     public void create(Disciplina disc) throws Exception {
         String sql = "INSERT INTO disciplinas (disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";
@@ -33,7 +34,7 @@ public class DisciplinaDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, disc.getNome());
-            pstm.setInt(2, disc.getId_curso());
+            pstm.setInt(2, disc.getCurso().getId());
             pstm.setDouble(3, disc.getCargaHoraria());
             pstm.setInt(4, disc.getPeriodo());
             Date date = Date.valueOf(disc.getDtCriacao());
@@ -57,11 +58,11 @@ public class DisciplinaDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Disciplina> read() throws Exception {
 
         String sql = "SELECT *, c.curso FROM disciplinas as d INNER JOIN cursos AS c ON d.curso = c.id;";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Disciplina> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -77,56 +78,26 @@ public class DisciplinaDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("d.id") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "Carga Horaria: " + rset.getString("d.carga_horaria") + "\n"
-                        + "Periodo: " + rset.getString("d.periodo") + "\n"
-                        + "Cadstrado: " + rset.getString("d.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("d.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Disciplina disciplina = new Disciplina();
 
-    public List<String> readId() throws Exception {
+                disciplina.setId(rset.getInt("d.id"));
+                disciplina.setNome(rset.getString("d.disciplina"));
 
-        String sql = "SELECT *, c.curso FROM disciplinas as d INNER JOIN cursos AS c ON d.curso = c.id;";
+                Curso curso = cursoDAO.find(rset.getInt("c.curso"));
+                disciplina.setCurso(curso);
 
-        List<String> vetResult = new ArrayList<>();
+                disciplina.setCargaHoraria(rset.getDouble("d.carga_horaria"));
+                disciplina.setPeriodo(rset.getInt("d.periodo"));
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                disciplina.setDtCriacao(dataAtualizada);
 
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("d.id") + "\n"
-                        + "Nome: " + rset.getString("d.disciplina") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "=========================" + "\n");
+                date = rset.getDate("modificado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    disciplina.setDtModificacao(dataAtualizada);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,7 +129,7 @@ public class DisciplinaDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, altDisciplina.getNome());
-            pstm.setInt(2, altDisciplina.getId_curso());
+            pstm.setInt(2, altDisciplina.getCurso().getId());
             pstm.setDouble(3, altDisciplina.getCargaHoraria());
             pstm.setInt(4, altDisciplina.getPeriodo());
 
@@ -228,7 +199,10 @@ public class DisciplinaDAO implements Default{
 
                 disciplina.setId(rset.getInt("id"));
                 disciplina.setNome(rset.getString("disciplina"));
-                disciplina.setId_curso(rset.getInt("curso"));
+
+                Curso curso = cursoDAO.find(rset.getInt("curso"));
+                disciplina.setCurso(curso);
+
                 disciplina.setCargaHoraria(rset.getDouble("carga_horaria"));
                 disciplina.setPeriodo(rset.getInt("periodo"));
 

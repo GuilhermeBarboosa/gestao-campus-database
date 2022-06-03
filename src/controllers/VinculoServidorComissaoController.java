@@ -23,22 +23,18 @@ public class VinculoServidorComissaoController extends DefaultController impleme
     public void menu() throws Exception {
         System.out.println("VINCULO DE SERVIDOR A COMISSÃO");
 
-        List<String> servidorVet = servidorDAO.readId();
-        List<String> comissaoVet = comissaoDAO.readId();
-
-        List<String> vetResultId = vinculoDAO.readId();
-        List<String> vetResult = vinculoDAO.read();
+        List<Vinculo> vetResult = vinculoDAO.read();
 
         opcCrud = GUI.menu();
 
         try {
             switch (opcCrud) {
                 case 1:
-                    Vinculo vinc = vinculoView.criarVinculo(servidorVet, comissaoVet, servidorDAO);
+                    Vinculo vinc = vinculoView.criarVinculo(servidorDAO, comissaoDAO);
                     if (vinc != null) {
-                        Servidor servAux = servidorDAO.find(vinc.getId_servidor());
-                        Comissao comAux = comissaoDAO.find(vinc.getId_comissao());
-                        servidorDAO.updateHours(servAux, comAux.getHorasSemanais(), vinc.getId_servidor());
+                        Servidor servAux = servidorDAO.find(vinc.getServidor().getId());
+                        Comissao comAux = comissaoDAO.find(vinc.getComissao().getId());
+                        servidorDAO.updateHours(servAux, comAux.getHorasSemanais(), vinc.getServidor().getId());
 
                         vinculoDAO.create(vinc);
                     } else {
@@ -46,20 +42,20 @@ public class VinculoServidorComissaoController extends DefaultController impleme
                     }
                     break;
                 case 2:
-                    vinculoView.mostrarTodosVinculos(vetResultId);
+                    vinculoView.mostrarIdTodosVinculos(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Vinculo vinAlt = vinculoDAO.find(auxLoc);
                     if (vinAlt != null) {
-                        Servidor servAux = servidorDAO.find(vinAlt.getId_servidor());
-                        Comissao comAux = comissaoDAO.find(vinAlt.getId_comissao());
-                        servidorDAO.removeHours(servAux, comAux.getHorasSemanais(), vinAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(vinAlt.getServidor().getId());
+                        Comissao comAux = comissaoDAO.find(vinAlt.getComissao().getId());
+                        servidorDAO.removeHours(servAux, comAux.getHorasSemanais(), vinAlt.getServidor().getId());
 
-                        vinculoDAO.update(vinculoView.modifVinculo(vinAlt, servidorVet, comissaoVet, servidorDAO));
+                        vinculoDAO.update(vinculoView.modifVinculo(vinAlt, servidorDAO, comissaoDAO));
 
-                        servAux = servidorDAO.find(vinAlt.getId_servidor());
-                        comAux = comissaoDAO.find(vinAlt.getId_comissao());
-                        servidorDAO.updateHours(servAux, comAux.getHorasSemanais(), vinAlt.getId_servidor());
+                        servAux = servidorDAO.find(vinAlt.getServidor().getId());
+                        comAux = comissaoDAO.find(vinAlt.getComissao().getId());
+                        servidorDAO.updateHours(servAux, comAux.getHorasSemanais(), vinAlt.getServidor().getId());
 
                         GUI.sucess();
                     } else {
@@ -70,15 +66,15 @@ public class VinculoServidorComissaoController extends DefaultController impleme
                     vinculoView.mostrarTodosVinculos(vetResult);
                     break;
                 case 4:
-                    vinculoView.mostrarTodosVinculos(vetResultId);
+                    vinculoView.mostrarIdTodosVinculos(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
 
                     vinAlt = vinculoDAO.find(auxLoc);
                     if (vinAlt != null) {
-                        Servidor servAux = servidorDAO.find(vinAlt.getId_servidor());
-                        Comissao comAux = comissaoDAO.find(vinAlt.getId_comissao());
-                        servidorDAO.removeHours(servAux, comAux.getHorasSemanais(), vinAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(vinAlt.getServidor().getId());
+                        Comissao comAux = comissaoDAO.find(vinAlt.getComissao().getId());
+                        servidorDAO.removeHours(servAux, comAux.getHorasSemanais(), vinAlt.getServidor().getId());
 
                         vinculoDAO.delete(auxLoc);
                         GUI.sucess();

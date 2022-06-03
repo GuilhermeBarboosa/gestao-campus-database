@@ -14,14 +14,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Atividade;
+import model.Servidor;
 
 /**
  *
  * @author Gui
  */
-public class AtividadeDAO implements Default{
+public class AtividadeDAO implements Default {
 
-    public void create(Atividade atividade) throws Exception{
+    public void create(Atividade atividade) throws Exception {
         String sql = "INSERT INTO atividades (atividade, servidor, horas_semanais, dt_inicio, dt_termino,"
                 + " cadastrado) VALUES (?,?,?,?,?,?)";
 
@@ -34,7 +35,7 @@ public class AtividadeDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, atividade.getDescricao());
-            pstm.setInt(2, atividade.getId_servidor());
+            pstm.setInt(2, atividade.getServidor().getId());
             pstm.setDouble(3, atividade.getHorasSemanais());
 
             Date date = Date.valueOf(atividade.getDtInicio());
@@ -64,11 +65,11 @@ public class AtividadeDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Atividade> read() throws Exception {
 
         String sql = "SELECT *, s.nome FROM atividades as a INNER JOIN servidores AS s ON a.servidor = s.id;";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Atividade> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -84,57 +85,34 @@ public class AtividadeDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("a.id") + "\n"
-                        + "Atividade: " + rset.getString("a.atividade") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Horas: " + rset.getString("a.horas_semanais") + "\n"
-                        + "Data de inicio: " + rset.getString("a.dt_inicio") + "\n"
-                        + "Data de termino: " + rset.getString("a.dt_termino") + "\n"
-                        + "Cadastrado: " + rset.getString("a.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("a.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Atividade atividade = new Atividade();
+                atividade.setId(rset.getInt("a.id"));
+                atividade.setDescricao(rset.getString("a.atividade"));
 
-    public List<String> readId() throws Exception {
+                Servidor servidor = servidorDAO.find(rset.getInt("a.servidor"));
+                atividade.setServidor(servidor);
 
-        String sql = "SELECT *, s.nome FROM atividades as a INNER JOIN servidores AS s ON a.servidor = s.id;";
+                atividade.setHorasSemanais(rset.getDouble("a.horas_semanais"));
 
-        List<String> vetResult = new ArrayList<>();
+                Date date = rset.getDate("a.dt_inicio");
+                LocalDate dataAtualizada = date.toLocalDate();
+                atividade.setDtInicio(dataAtualizada);
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                date = rset.getDate("a.dt_termino");
+                dataAtualizada = date.toLocalDate();
+                atividade.setDtTermino(dataAtualizada);
 
-        ResultSet rset = null;
+                date = rset.getDate("a.cadastrado");
+                dataAtualizada = date.toLocalDate();
+                atividade.setDtCriacao(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                date = rset.getDate("a.modificado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    atividade.setDtModificacao(dataAtualizada);
+                }
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("a.id") + "\n"
-                        + "Atividade: " + rset.getString("a.atividade") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(atividade);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,7 +144,7 @@ public class AtividadeDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, altAtividade.getDescricao());
-            pstm.setInt(2, altAtividade.getId_servidor());
+            pstm.setInt(2, altAtividade.getServidor().getId());
             pstm.setDouble(3, altAtividade.getHorasSemanais());
 
             Date date = Date.valueOf(altAtividade.getDtInicio());
@@ -241,14 +219,16 @@ public class AtividadeDAO implements Default{
 
                 atividade.setId(rset.getInt("id"));
                 atividade.setDescricao(rset.getString("atividade"));
-                atividade.setId_servidor(rset.getInt("servidor"));
+                
+                Servidor servidor = servidorDAO.find(rset.getInt("a.servidor"));
+                atividade.setServidor(servidor);
+
                 atividade.setHorasSemanais(rset.getDouble("horas_semanais"));
 
                 Date date = rset.getDate("dt_inicio");
                 LocalDate dataAtualizada = date.toLocalDate();
                 atividade.setDtInicio(dataAtualizada);
 
-                
                 date = rset.getDate("dt_termino");
                 dataAtualizada = date.toLocalDate();
                 atividade.setDtTermino(dataAtualizada);

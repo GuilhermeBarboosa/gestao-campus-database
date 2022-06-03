@@ -20,12 +20,13 @@ import model.Servidor;
 public class ServidorView {
 
     Scanner ler = new Scanner(System.in);
+    CampusView campusView = new CampusView();
     static int id = 1;
 
     public Servidor criarServ(CampusDAO campusDAO) {
         try {
             Servidor serv = new Servidor();
-            CampusView campusView = new CampusView();
+            
 
             serv.setId(id);
             id++;
@@ -47,7 +48,7 @@ public class ServidorView {
             System.out.println("Perfil(1-ADM | 2-COMUM) : ");
             serv.setPerfil(Integer.parseInt(ler.nextLine()));
 
-            List<Campus> campusVet = new ArrayList();
+            List<Campus> campusVet = campusDAO.read();
 
             if (campusVet.size() == 0) {
                 System.out.println("Nenhum campus cadastrado...");
@@ -57,7 +58,6 @@ public class ServidorView {
             }
 
             System.out.println("Insira o ID: ");
-
             Campus campus = campusDAO.find(Integer.parseInt(ler.nextLine()));
 
             serv.setCampus(campus);
@@ -72,8 +72,7 @@ public class ServidorView {
 
     public Servidor modifServ(Servidor servAlt, CampusDAO campusDAO) {
         try {
-            CampusView campusView = new CampusView();
-
+         
             System.out.println("Nome: ");
             servAlt.setNome(ler.nextLine());
             System.out.println("Email: ");
@@ -92,7 +91,7 @@ public class ServidorView {
             System.out.println("Perfil(1-ADM | 2-COMUM : ");
             servAlt.setPerfil(Integer.parseInt(ler.nextLine()));
 
-            List<Campus> campusVet = new ArrayList();
+            List<Campus> campusVet = campusDAO.read();
 
             if (campusVet.size() == 0) {
                 System.out.println("Nenhum campus cadastrado...");
@@ -116,7 +115,7 @@ public class ServidorView {
     }
 
     public void mostrarServidores(List<Servidor> vetResult) {
-        if (vetResult.size() == 0) {
+        if (vetResult.isEmpty()) {
             System.out.println("Não há servidores cadastrados");
         } else {
             for (Servidor servidor : vetResult) {

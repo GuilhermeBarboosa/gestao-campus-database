@@ -9,6 +9,7 @@ import java.util.List;
 import model.Curso;
 import view.CursoView;
 import dao.Default;
+import model.Campus;
 
 /**
  *
@@ -21,15 +22,13 @@ public class CursoController extends DefaultController implements Default{
     public void menu() throws Exception {
         System.out.println("CURSO");
         opcCrud = GUI.menu();
-        List<String> campusVet = campusDAO.readId();
-
-        List<String> vetResultId = cursoDAO.readId();
-        List<String> vetResult = cursoDAO.read();
+   
+        List<Curso> vetResult = cursoDAO.read();
 
         try {
             switch (opcCrud) {
                 case 1:
-                    Curso curso = cursoView.criarCurso(campusVet);
+                    Curso curso = cursoView.criarCurso(campusDAO);
                     if (curso != null) {
                         cursoDAO.create(curso);
                     } else {
@@ -38,22 +37,24 @@ public class CursoController extends DefaultController implements Default{
 
                     break;
                 case 2:
-                    cursoView.mostrarCurso(vetResultId);
+                    cursoView.mostrarIdCurso(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Curso cursoAlt = cursoDAO.find(auxLoc);
                     if (cursoAlt != null) {
-                        cursoDAO.update(cursoView.modifCurso(cursoAlt, campusVet));
+                        cursoDAO.update(cursoView.modifCurso(cursoAlt, campusDAO));
                         GUI.sucess();
                     } else {
                         GUI.error();
                     }
                     break;
                 case 3:
-                    cursoView.mostrarCurso(vetResult);
+            {
+                cursoView.mostrarCurso(vetResult);
+            }
                     break;
                 case 4:
-                    cursoView.mostrarCurso(vetResultId);
+                    cursoView.mostrarIdCurso(vetResult);
                     ;
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());

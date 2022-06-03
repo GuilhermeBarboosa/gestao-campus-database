@@ -5,11 +5,13 @@
  */
 package view;
 
+import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import model.Orientacao;
+import model.Servidor;
 
 /**
  *
@@ -18,22 +20,24 @@ import model.Orientacao;
 public class OrientacaoView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    ServidorView servV = new ServidorView();
     Scanner ler = new Scanner(System.in);
 
-    public Orientacao criarOrientacao(List<String> servidorVet) {
+    public Orientacao criarOrientacao(ServidorDAO servidorDAO) {
         try {
             Orientacao or = new Orientacao();
+
+            List<Servidor> servidorVet = servidorDAO.read();
 
             if (servidorVet.size() == 0) {
                 System.out.println("Nenhum campus cadastrado...");
                 return null;
             } else {
-                for (String string : servidorVet) {
-                    System.out.println(string);
-                }
+                servV.mostrarIdServidores(servidorVet);
             }
             System.out.println("Insira o ID: ");
-            or.setId_servidor(Integer.parseInt(ler.nextLine()));
+            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
+            or.setServidor(servidor);
 
             System.out.println("Tipo: ");
             or.setTipo(ler.nextLine());
@@ -53,18 +57,20 @@ public class OrientacaoView {
 
     }
 
-    public Orientacao modifOrientacao(Orientacao orAlt, List<String> servidorVet) {
+    public Orientacao modifOrientacao(Orientacao orAlt, ServidorDAO servidorDAO) {
         try {
+
+            List<Servidor> servidorVet = servidorDAO.read();
+
             if (servidorVet.size() == 0) {
                 System.out.println("Nenhum campus cadastrado...");
                 return null;
             } else {
-                for (String string : servidorVet) {
-                    System.out.println(string);
-                }
+                servV.mostrarIdServidores(servidorVet);
             }
             System.out.println("Insira o ID: ");
-            orAlt.setId_servidor(Integer.parseInt(ler.nextLine()));
+            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
+            orAlt.setServidor(servidor);
 
             System.out.println("Tipo: ");
             orAlt.setTipo(ler.nextLine());
@@ -83,12 +89,33 @@ public class OrientacaoView {
         }
     }
 
-    public void mostrarTodasOrientacoes(List<String> vetResult) {
+    public void mostrarTodasOrientacoes(List<Orientacao> vetResult) {
         if (vetResult.size() == 0) {
             System.out.println("Não há orientacões cadastrados");
         } else {
-            for (String string : vetResult) {
-                System.out.println(string);
+            for (Orientacao orientacao : vetResult) {
+                System.out.println("ID: " + orientacao.getId());
+                System.out.println("TIPO: " + orientacao.getTipo());
+                System.out.println("SERVIDOR: " + orientacao.getServidor().getNome());
+                System.out.println("ALUNO: " + orientacao.getNomeAluno());
+                System.out.println("HORAS SEMANAIS: " + orientacao.getHorasSemanais());
+                System.out.println("DATA DE INICIO: " + orientacao.getDtInicio());
+                System.out.println("DATA DE TERMINO: " + orientacao.getDtTermino());
+                System.out.println("DATA DE CRIAÇÃO: " + orientacao.getDtCriacao());
+                System.out.println("DATA DE MODIFICAÇÃO: " + orientacao.getDtModificacao());
+            }
+        }
+    }
+
+    public void mostrarIdTodasOrientacoes(List<Orientacao> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há orientacões cadastrados");
+        } else {
+            for (Orientacao orientacao : vetResult) {
+                System.out.println("ID: " + orientacao.getId());
+                System.out.println("TIPO: " + orientacao.getTipo());
+                System.out.println("SERVIDOR: " + orientacao.getServidor().getNome());
+                System.out.println("ALUNO: " + orientacao.getNomeAluno());
             }
         }
     }

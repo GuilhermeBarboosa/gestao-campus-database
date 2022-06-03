@@ -14,12 +14,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Orientacao;
+import model.Servidor;
 
 /**
  *
  * @author Gui
  */
-public class OrientacaoDAO implements Default{
+public class OrientacaoDAO implements Default {
 
     public void create(Orientacao orientacao) throws Exception {
         String sql = "INSERT INTO orientacoes (tipo, servidor, aluno, horas_semanais, dt_inicio, dt_termino, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -33,7 +34,7 @@ public class OrientacaoDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, orientacao.getTipo());
-            pstm.setInt(2, orientacao.getId_servidor());
+            pstm.setInt(2, orientacao.getServidor().getId());
             pstm.setString(3, orientacao.getNomeAluno());
             pstm.setDouble(4, orientacao.getHorasSemanais());
 
@@ -64,11 +65,11 @@ public class OrientacaoDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Orientacao> read() throws Exception {
 
         String sql = "SELECT *, s.nome FROM orientacoes AS o INNER JOIN servidores AS s ON o.servidor = s.id";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Orientacao> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -84,59 +85,36 @@ public class OrientacaoDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("o.id") + "\n"
-                        + "Tipo: " + rset.getString("o.tipo") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Aluno: " + rset.getString("o.aluno") + "\n"
-                        + "Horas Semanais: " + rset.getString("o.horas_semanais") + "\n"
-                        + "Data de Inicio: " + rset.getString("o.dt_inicio") + "\n"
-                        + "Data de Termino: " + rset.getString("o.dt_termino") + "\n"
-                        + "Cadastrado: " + rset.getString("o.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("o.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Orientacao orientacao = new Orientacao();
 
-    public List<String> readId() throws Exception {
+                orientacao.setId(rset.getInt("o.id"));
+                orientacao.setTipo(rset.getString("o.tipo"));
 
-        String sql = "SELECT *, s.nome FROM orientacoes AS o INNER JOIN servidores AS s ON o.servidor = s.id";
+                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                orientacao.setServidor(servidor);
 
-        List<String> vetResult = new ArrayList<>();
+                orientacao.setNomeAluno(rset.getString("o.aluno"));
+                orientacao.setHorasSemanais(rset.getDouble("o.horas_semanais"));
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                Date date = rset.getDate("o.dt_inicio");
+                LocalDate dataAtualizada = date.toLocalDate();
+                orientacao.setDtInicio(dataAtualizada);
 
-        ResultSet rset = null;
+                date = rset.getDate("o.dt_termino");
+                dataAtualizada = date.toLocalDate();
+                orientacao.setDtTermino(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                date = rset.getDate("o.cadstrado");
+                dataAtualizada = date.toLocalDate();
+                orientacao.setDtCriacao(dataAtualizada);
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+                date = rset.getDate("o.modificado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    orientacao.setDtModificacao(dataAtualizada);
+                }
 
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("o.id") + "\n"
-                        + "Tipo: " + rset.getString("o.tipo") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Aluno: " + rset.getString("o.aluno") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(orientacao);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,7 +146,7 @@ public class OrientacaoDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, altOrientacao.getTipo());
-            pstm.setInt(2, altOrientacao.getId_servidor());
+            pstm.setInt(2, altOrientacao.getServidor().getId());
             pstm.setString(3, altOrientacao.getNomeAluno());
             pstm.setDouble(4, altOrientacao.getHorasSemanais());
 
@@ -244,7 +222,10 @@ public class OrientacaoDAO implements Default{
 
                 orientacao.setId(rset.getInt("id"));
                 orientacao.setTipo(rset.getString("tipo"));
-                orientacao.setId_servidor(rset.getInt("servidor"));
+                
+                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                orientacao.setServidor(servidor);
+                
                 orientacao.setNomeAluno(rset.getString("aluno"));
                 orientacao.setHorasSemanais(rset.getDouble("horas_semanais"));
 

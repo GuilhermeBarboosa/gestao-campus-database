@@ -5,10 +5,12 @@
  */
 package view;
 
+import dao.CursoDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import model.Curso;
 import model.Disciplina;
 
 /**
@@ -18,10 +20,11 @@ import model.Disciplina;
 public class DisciplinaView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    CursoView cursoV = new CursoView();
     Scanner ler = new Scanner(System.in);
     int id = 0;
 
-    public Disciplina criarDisciplina(List<String> cursoVet) {
+    public Disciplina criarDisciplina(CursoDAO cursoDAO) {
         try {
             Disciplina disc = new Disciplina();
 
@@ -35,16 +38,18 @@ public class DisciplinaView {
             System.out.println("Periodo: ");
             disc.setPeriodo(Integer.parseInt(ler.nextLine()));
 
+            List<Curso> cursoVet = cursoDAO.read();
+
             if (cursoVet.size() == 0) {
                 System.out.println("Nenhum curso cadastrado...");
                 return null;
             } else {
-                for (String string : cursoVet) {
-                    System.out.println(string);
-                }
+                cursoV.mostrarIdCurso(cursoVet);
             }
-            System.out.println("Escolha pelo id um curso:");
-            disc.setId_curso(Integer.parseInt(ler.nextLine()));
+
+            System.out.println("Insira o ID: ");
+            Curso curso = cursoDAO.find(Integer.parseInt(ler.nextLine()));
+            disc.setCurso(curso);
 
             disc.setDtCriacao(LocalDate.now());
             return disc;
@@ -53,7 +58,7 @@ public class DisciplinaView {
         }
     }
 
-    public Disciplina modifDisciplina(Disciplina discAlt, List<String> cursoVet) {
+    public Disciplina modifDisciplina(Disciplina discAlt, CursoDAO cursoDAO) {
         try {
             System.out.println("Nome: ");
             discAlt.setNome(ler.nextLine());
@@ -62,17 +67,18 @@ public class DisciplinaView {
             System.out.println("Periodo: ");
             discAlt.setPeriodo(Integer.parseInt(ler.nextLine()));
 
+            List<Curso> cursoVet = cursoDAO.read();
+
             if (cursoVet.size() == 0) {
                 System.out.println("Nenhum curso cadastrado...");
                 return null;
             } else {
-                for (String string : cursoVet) {
-                    System.out.println(string);
-                }
+                cursoV.mostrarIdCurso(cursoVet);
             }
-            System.out.println("Escolha pelo id um curso:");
 
-            discAlt.setId_curso(Integer.parseInt(ler.nextLine()));
+            System.out.println("Insira o ID: ");
+            Curso curso = cursoDAO.find(Integer.parseInt(ler.nextLine()));
+            discAlt.setCurso(curso);
 
             discAlt.setDtModificacao(LocalDate.now());
 
@@ -82,12 +88,30 @@ public class DisciplinaView {
         }
     }
 
-    public void mostrarTodasDisciplinas(List<String> vetResult) {
+    public void mostrarTodasDisciplinas(List<Disciplina> vetResult) {
         if (vetResult.size() == 0) {
             System.out.println("Não há disciplinas cadastrados");
         } else {
-            for (String string : vetResult) {
-                System.out.println(string);
+            for (Disciplina disciplina : vetResult) {
+                System.out.println("ID: " + disciplina.getId());
+                System.out.println("DISCIPLINA: " + disciplina.getNome());
+                System.out.println("CURSO: " + disciplina.getCurso().getNome());
+                System.out.println("CARGA HORARIA: " + disciplina.getCargaHoraria());
+                System.out.println("PERIODO: " + disciplina.getPeriodo());
+                System.out.println("DATA DE CRIAÇÃO: " + disciplina.getDtCriacao());
+                System.out.println("DATA DE MODIFICAÇÃO: " + disciplina.getDtModificacao());
+            }
+        }
+    }
+
+    public void mostrarIdTodasDisciplinas(List<Disciplina> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há disciplinas cadastrados");
+        } else {
+            for (Disciplina disciplina : vetResult) {
+                System.out.println("ID: " + disciplina.getId());
+                System.out.println("DISCIPLINA: " + disciplina.getNome());
+                System.out.println("CURSO: " + disciplina.getCurso().getNome());
             }
         }
     }

@@ -23,38 +23,35 @@ public class OrientacaoController extends DefaultController implements Default{
         System.out.println("ORIENTAÇÃO");
         opcCrud = GUI.menu();
 
-        List<String> servidorVet = servidorDAO.readId();
-
-        List<String> vetResultId = orientacaoDAO.readId();
-        List<String> vetResult = orientacaoDAO.read();
+        List<Orientacao> vetResult = orientacaoDAO.read();
 
         try {
             switch (opcCrud) {
                 case 1:
-                    Orientacao or = orientacaoView.criarOrientacao(servidorVet);
+                    Orientacao or = orientacaoView.criarOrientacao(servidorDAO);
 
                     if (or != null) {
                         orientacaoDAO.create(or);
-                        Servidor servAux = servidorDAO.find(or.getId_servidor());
-                        servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getId_servidor());
+                        Servidor servAux = servidorDAO.find(or.getServidor().getId());
+                        servidorDAO.updateHours(servAux, or.getHorasSemanais(), or.getServidor().getId());
                     } else {
                         GUI.error();
                     }
                     break;
                 case 2:
-                    orientacaoView.mostrarTodasOrientacoes(vetResultId);
+                    orientacaoView.mostrarIdTodasOrientacoes(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Orientacao orAlt = orientacaoDAO.find(auxLoc);
 
                     if (orAlt != null) {
-                        Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
-                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(orAlt.getServidor().getId());
+                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getServidor().getId());
 
-                        orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorVet));
+                        orientacaoDAO.update(orientacaoView.modifOrientacao(orAlt, servidorDAO));
 
-                        servAux = servidorDAO.find(orAlt.getId_servidor());
-                        servidorDAO.updateHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                        servAux = servidorDAO.find(orAlt.getServidor().getId());
+                        servidorDAO.updateHours(servAux, orAlt.getHorasSemanais(), orAlt.getServidor().getId());
                         GUI.sucess();
                     } else {
                         GUI.error();
@@ -64,14 +61,14 @@ public class OrientacaoController extends DefaultController implements Default{
                     orientacaoView.mostrarTodasOrientacoes(vetResult);
                     break;
                 case 4:
-                    orientacaoView.mostrarTodasOrientacoes(vetResultId);
+                    orientacaoView.mostrarIdTodasOrientacoes(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
 
                     orAlt = orientacaoDAO.find(auxLoc);
                     if (orAlt != null) {
-                        Servidor servAux = servidorDAO.find(orAlt.getId_servidor());
-                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(orAlt.getServidor().getId());
+                        servidorDAO.removeHours(servAux, orAlt.getHorasSemanais(), orAlt.getServidor().getId());
 
                         orientacaoDAO.delete(auxLoc);
                         GUI.sucess();

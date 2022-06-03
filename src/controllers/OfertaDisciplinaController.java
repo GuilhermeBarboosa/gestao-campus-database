@@ -27,25 +27,20 @@ public class OfertaDisciplinaController extends DefaultController implements Def
         System.out.println("OFERTA DE DISCIPLINA");
         opcCrud = GUI.menu();
 
-        List<String> servidorVet = servidorDAO.readId();
-        List<String> disciplinaVet = disciplinaDAO.readId();
-        List<String> cursoVet = cursoDAO.readId();
-
-        List<String> vetResultId = ofertaDAO.readId();
-        List<String> vetResult = ofertaDAO.read();
+        List<Oferta> vetResult = ofertaDAO.read();
 
         try {
             switch (opcCrud) {
                 case 1:
-                    Oferta of = ofertaView.criarOferta(servidorVet, cursoVet, disciplinaVet);
+                    Oferta of = ofertaView.criarOferta(servidorDAO, cursoDAO, disciplinaDAO);
                     if (of != null) {
-                        Servidor servAux = servidorDAO.find(of.getId_servidor());
-                        Disciplina discAux = disciplinaDAO.find(of.getId_disciplina());
+                        Servidor servAux = servidorDAO.find(of.getServidor().getId());
+                        Disciplina discAux = disciplinaDAO.find(of.getDisciplina().getId());
 
                         Atividade atividadeAux = atividadeView.createAula(servAux, discAux);
                         atividadeDAO.create(atividadeAux);
 
-                        servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), of.getId_servidor());
+                        servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), of.getServidor().getId());
                         ofertaDAO.create(of);
 
                     } else {
@@ -53,20 +48,20 @@ public class OfertaDisciplinaController extends DefaultController implements Def
                     }
                     break;
                 case 2:
-                    ofertaView.mostrarTodasOfertas(vetResultId);
+                    ofertaView.mostrarIdTodasOfertas(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Oferta ofertaAlt = ofertaDAO.find(auxLoc);
                     if (ofertaAlt != null) {
-                        Servidor servAux = servidorDAO.find(ofertaAlt.getId_servidor());
-                        Disciplina discAux = disciplinaDAO.find(ofertaAlt.getId_disciplina());
-                        servidorDAO.removeHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(ofertaAlt.getServidor().getId());
+                        Disciplina discAux = disciplinaDAO.find(ofertaAlt.getDisciplina().getId());
+                        servidorDAO.removeHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getServidor().getId());
 
-                        ofertaAlt = ofertaView.modifOferta(ofertaAlt, servidorVet, cursoVet, disciplinaVet);
+                        ofertaAlt = ofertaView.modifOferta(ofertaAlt, servidorDAO, cursoDAO, disciplinaDAO);
 
-                        servAux = servidorDAO.find(ofertaAlt.getId_servidor());
-                        discAux = disciplinaDAO.find(ofertaAlt.getId_disciplina());
-                        servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getId_servidor());
+                        servAux = servidorDAO.find(ofertaAlt.getServidor().getId());
+                        discAux = disciplinaDAO.find(ofertaAlt.getDisciplina().getId());
+                        servidorDAO.updateHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getServidor().getId());
 
                         ofertaDAO.update(ofertaAlt);
                         GUI.sucess();
@@ -78,15 +73,15 @@ public class OfertaDisciplinaController extends DefaultController implements Def
                     ofertaView.mostrarTodasOfertas(vetResult);
                     break;
                 case 4:
-                    ofertaView.mostrarTodasOfertas(vetResultId);
+                    ofertaView.mostrarIdTodasOfertas(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
 
                     ofertaAlt = ofertaDAO.find(auxLoc);
                     if (ofertaAlt != null) {
-                        Servidor servAux = servidorDAO.find(ofertaAlt.getId_servidor());
-                        Disciplina discAux = disciplinaDAO.find(ofertaAlt.getId_disciplina());
-                        servidorDAO.removeHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getId_servidor());
+                        Servidor servAux = servidorDAO.find(ofertaAlt.getServidor().getId());
+                        Disciplina discAux = disciplinaDAO.find(ofertaAlt.getDisciplina().getId());
+                        servidorDAO.removeHours(servAux, discAux.getCargaHoraria(), ofertaAlt.getServidor().getId());
 
                         ofertaDAO.delete(auxLoc);
                         GUI.sucess();

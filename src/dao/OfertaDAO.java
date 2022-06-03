@@ -13,13 +13,16 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Curso;
+import model.Disciplina;
 import model.Oferta;
+import model.Servidor;
 
 /**
  *
  * @author Gui
  */
-public class OfertaDAO implements Default{
+public class OfertaDAO implements Default {
 
     public void create(Oferta oferta) throws Exception {
         String sql = "INSERT INTO ofertas (curso, disciplina, servidor, ano, semestre, aula_semanal, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -32,9 +35,9 @@ public class OfertaDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, oferta.getId_curso());
-            pstm.setInt(2, oferta.getId_disciplina());
-            pstm.setInt(3, oferta.getId_servidor());
+            pstm.setInt(1, oferta.getCurso().getId());
+            pstm.setInt(2, oferta.getDisciplina().getId());
+            pstm.setInt(3, oferta.getServidor().getId());
             pstm.setInt(4, oferta.getAno());
             pstm.setInt(5, oferta.getSemestre());
             pstm.setInt(6, oferta.getAulaSemanais());
@@ -60,12 +63,12 @@ public class OfertaDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Oferta> read() throws Exception {
 
         String sql = "SELECT *, s.nome, d.disciplina, c.curso FROM ofertas AS o INNER JOIN servidores AS s ON o.servidor = s.id "
                 + "INNER JOIN disciplinas AS d ON o.disciplina = d.id INNER JOIN cursos AS c ON o.curso = c.id;";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Oferta> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -81,16 +84,34 @@ public class OfertaDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("o.id") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "Ano: " + rset.getString("o.ano") + "\n"
-                        + "Semestre: " + rset.getString("o.semestre") + "\n"
-                        + "Aula semanal: " + rset.getString("o.aula_semanal") + "\n"
-                        + "Cadastrado: " + rset.getString("o.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("o.modificado") + "\n"
-                        + "--------------------------------------");
+                Oferta oferta = new Oferta();
+
+                oferta.setId(rset.getInt("o.id"));
+
+                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                oferta.setServidor(servidor);
+
+                Disciplina disciplina = disciplinaDAO.find(rset.getInt("o.disciplina"));
+                oferta.setDisciplina(disciplina);
+
+                Curso curso = cursoDAO.find(rset.getInt("o.curso"));
+                oferta.setCurso(curso);
+
+                oferta.setAno(rset.getInt("o.ano"));
+                oferta.setSemestre(rset.getInt("o.semestre"));
+                oferta.setAulaSemanais(rset.getInt("o.aula_semanal"));
+
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                oferta.setDtCriacao(dataAtualizada);
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    oferta.setDtMoficacao(dataAtualizada);
+                }
+
+                vetResult.add(oferta);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,9 +186,9 @@ public class OfertaDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altOferta.getId_curso());
-            pstm.setInt(2, altOferta.getId_disciplina());
-            pstm.setInt(3, altOferta.getId_servidor());
+            pstm.setInt(1, altOferta.getCurso().getId());
+            pstm.setInt(2, altOferta.getDisciplina().getId());
+            pstm.setInt(3, altOferta.getServidor().getId());
             pstm.setInt(4, altOferta.getAno());
             pstm.setInt(5, altOferta.getSemestre());
             pstm.setInt(6, altOferta.getAulaSemanais());
@@ -237,9 +258,14 @@ public class OfertaDAO implements Default{
                 Oferta oferta = new Oferta();
 
                 oferta.setId(rset.getInt("id"));
-                oferta.setId_curso(rset.getInt("curso"));
-                oferta.setId_disciplina(rset.getInt("disciplina"));
-                oferta.setId_servidor(rset.getInt("servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                oferta.setServidor(servidor);
+
+                Disciplina disciplina = disciplinaDAO.find(rset.getInt("o.disciplina"));
+                oferta.setDisciplina(disciplina);
+
+                Curso curso = cursoDAO.find(rset.getInt("o.curso"));
+                oferta.setCurso(curso);
                 oferta.setAno(rset.getInt("ano"));
                 oferta.setSemestre(rset.getInt("semestre"));
                 oferta.setAulaSemanais(rset.getInt("aula_semanal"));

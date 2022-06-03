@@ -15,13 +15,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Comissao;
+import model.Servidor;
 import model.Vinculo;
 
 /**
  *
  * @author Gui
  */
-public class VinculoDAO implements Default{
+public class VinculoDAO implements Default {
 
     public void create(Vinculo vinculo) throws Exception {
         String sql = "INSERT INTO vinculos (servidor, comissao, papel, dt_entrada, dt_saida, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -34,8 +35,8 @@ public class VinculoDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, vinculo.getId_servidor());
-            pstm.setInt(2, vinculo.getId_comissao());
+            pstm.setInt(1, vinculo.getServidor().getId());
+            pstm.setInt(2, vinculo.getComissao().getId());
             pstm.setString(3, vinculo.getPapel());
 
             Date date = Date.valueOf(vinculo.getDtEntrada());
@@ -65,11 +66,11 @@ public class VinculoDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Vinculo> read() throws Exception {
 
         String sql = "SELECT *, s.nome, c.comissao FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Vinculo> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -85,57 +86,37 @@ public class VinculoDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("v.id") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Papel: " + rset.getString("v.papel") + "\n"
-                        + "Data de entrada: " + rset.getString("v.dt_entrada") + "\n"
-                        + "Data de saida: " + rset.getString("v.dt_saida") + "\n"
-                        + "Cadastrado: " + rset.getString("v.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("v.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Vinculo vinculo = new Vinculo();
 
-    public List<String> readId() throws Exception {
+                vinculo.setId(rset.getInt("v.id"));
 
-        String sql = "SELECT *, s.nome, c.comissao FROM vinculos AS v INNER JOIN servidores AS s ON v.servidor = s.id INNER JOIN comissoes AS c ON v.comissao = c.id;";
+                Comissao comissao = comissaoDAO.find(rset.getInt("v.comissao"));
+                vinculo.setComissao(comissao);
 
-        List<String> vetResult = new ArrayList<>();
+                Servidor servidor = servidorDAO.find(rset.getInt("v.servidor"));
+                vinculo.setServidor(servidor);
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                vinculo.setPapel(rset.getString("v.papel"));
 
-        ResultSet rset = null;
+                Date date = rset.getDate("v.dt_entrada");
+                LocalDate dataAtualizada = date.toLocalDate();
+                vinculo.setDtEntrada(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                date = rset.getDate("v.dt_saida");
+                dataAtualizada = date.toLocalDate();
+                vinculo.setDtSaida(dataAtualizada);
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+                date = rset.getDate("v.cadastrado");
+                dataAtualizada = date.toLocalDate();
+                vinculo.setDtCriacao(dataAtualizada);
 
-            rset = pstm.executeQuery();
+                date = rset.getDate("v.cadastrado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    vinculo.setDtModificacao(dataAtualizada);
+                }
 
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("v.id") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(vinculo);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,8 +147,8 @@ public class VinculoDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altVinculo.getId_servidor());
-            pstm.setInt(2, altVinculo.getId_comissao());
+            pstm.setInt(1, altVinculo.getServidor().getId());
+            pstm.setInt(2, altVinculo.getComissao().getId());
             pstm.setString(3, altVinculo.getPapel());
 
             Date date = Date.valueOf(altVinculo.getDtEntrada());
@@ -241,8 +222,11 @@ public class VinculoDAO implements Default{
                 Vinculo vinculo = new Vinculo();
 
                 vinculo.setId(rset.getInt("id"));
-                vinculo.setId_servidor(rset.getInt("servidor"));
-                vinculo.setId_comissao(rset.getInt("comissao"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("v.comissao"));
+                vinculo.setComissao(comissao);
+
+                Servidor servidor = servidorDAO.find(rset.getInt("v.servidor"));
+                vinculo.setServidor(servidor);
                 vinculo.setPapel(rset.getString("papel"));
 
                 Date date = rset.getDate("dt_entrada");
@@ -282,7 +266,7 @@ public class VinculoDAO implements Default{
     }
 
     public void encerrarVinculos(Comissao comAux) throws SQLException {
-       String sql = "DELETE FROM vinculos WHERE comissao = ?";
+        String sql = "DELETE FROM vinculos WHERE comissao = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
 

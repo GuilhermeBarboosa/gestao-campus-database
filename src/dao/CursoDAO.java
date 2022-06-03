@@ -13,13 +13,14 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Campus;
 import model.Curso;
 
 /**
  *
  * @author Usuario
  */
-public class CursoDAO implements Default{
+public class CursoDAO implements Default {
 
     public void create(Curso curso) throws Exception {
         String sql = "INSERT INTO cursos(curso, campus, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -34,7 +35,7 @@ public class CursoDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, curso.getNome());
-            pstm.setInt(2, curso.getId_campus());
+            pstm.setInt(2, curso.getCampus().getId());
             pstm.setString(3, curso.getEstado());
             pstm.setInt(4, curso.getAnoInicio());
             pstm.setInt(5, curso.getAnoTermino());
@@ -60,10 +61,10 @@ public class CursoDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Curso> read() throws Exception {
         String sql = "SELECT *, cam.nome FROM cursos as c INNER JOIN campus AS cam ON c.campus = cam.id;";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Curso> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -78,55 +79,30 @@ public class CursoDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("c.id") + "\n"
-                        + "Nome do Curso: " + rset.getString("c.curso") + "\n"
-                        + "Campus: " + rset.getString("cam.nome") + "\n"
-                        + "Estado: " + rset.getString("c.estado") + "\n"
-                        + "Ano de inicio: " + rset.getString("c.ano_inicio") + "\n"
-                        + "Ano de termino: " + rset.getString("c.ano_termino") + "\n"
-                        + "Cadastrado: " + rset.getString("c.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("c.modificado") + "\n"
-                        + "----------------------------------------------------------");
-            }
+                Curso curso = new Curso();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                curso.setId(rset.getInt("c.id"));
+                curso.setNome(rset.getString("c.curso"));
 
-    public List<String> readId() throws Exception {
-        String sql = "SELECT *, cam.nome FROM cursos as c INNER JOIN campus AS cam ON c.campus = cam.id;";
+                Campus campus = campusDAO.find(rset.getInt("c.campus"));
+                curso.setCampus(campus);
 
-        List<String> vetResult = new ArrayList<>();
+                curso.setEstado(rset.getString("c.estado"));
+                curso.setAnoInicio(rset.getInt("c.ano_inicio"));
+                curso.setAnoTermino(rset.getInt("c.ano_termino"));
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
-        ResultSet rset = null;
+                Date date = rset.getDate("cadastrado");
+                LocalDate dataAtualizada = date.toLocalDate();
+                curso.setDtCriacao(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();;;
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                if (dataAtualizada != null) {
+                    curso.setDtModificacao(dataAtualizada);
+                }
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+                vetResult.add(curso);
 
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("Id: " + rset.getString("c.id") + "\n"
-                        + "Nome do Curso: " + rset.getString("c.curso") + "\n"
-                        + "Campus: " + rset.getString("cam.nome") + "\n"
-                        + "----------------------------------------------------------");
             }
 
         } catch (Exception e) {
@@ -159,7 +135,7 @@ public class CursoDAO implements Default{
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             pstm.setString(1, altCurso.getNome());
-            pstm.setInt(2, altCurso.getId_campus());
+            pstm.setInt(2, altCurso.getCampus().getId());
             pstm.setString(3, altCurso.getEstado());
 
             pstm.setInt(4, altCurso.getAnoInicio());
@@ -233,7 +209,10 @@ public class CursoDAO implements Default{
 
                 curso.setId(rset.getInt("id"));
                 curso.setNome(rset.getString("curso"));
-                curso.setId_campus(rset.getInt("campus"));
+                
+                Campus campus = campusDAO.find(rset.getInt("c.campus"));
+                curso.setCampus(campus);
+   
                 curso.setEstado(rset.getString("estado"));
                 curso.setAnoInicio(rset.getInt("ano_inicio"));
                 curso.setAnoTermino(rset.getInt("ano_termino"));

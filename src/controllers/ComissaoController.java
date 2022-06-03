@@ -21,9 +21,8 @@ public class ComissaoController extends DefaultController implements Default{
     public void menu() throws Exception {
         System.out.println("COMISSÃO");
         opcCrud = GUI.menu();
-
-        List<String> vetResultId = comissaoDAO.readId();
-        List<String> vetResult = comissaoDAO.read();
+        
+        List<Comissao> vetResult = comissaoDAO.read();
 
         try {
             switch (opcCrud) {
@@ -37,7 +36,7 @@ public class ComissaoController extends DefaultController implements Default{
 
                     break;
                 case 2:
-                    comissaoView.mostrarTodosComissao(vetResultId);
+                    comissaoView.mostrarIdTodosComissao(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Comissao comAlt = comissaoDAO.find(auxLoc);
@@ -53,7 +52,7 @@ public class ComissaoController extends DefaultController implements Default{
                     comissaoView.mostrarTodosComissao(vetResult);
                     break;
                 case 4:
-                    comissaoView.mostrarTodosComissao(vetResultId);
+                    comissaoView.mostrarIdTodosComissao(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     if (auxLoc != 0) {

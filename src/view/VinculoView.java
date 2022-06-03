@@ -5,11 +5,13 @@
  */
 package view;
 
+import dao.ComissaoDAO;
 import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
 
@@ -20,43 +22,45 @@ import model.Vinculo;
 public class VinculoView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    ComissaoView comissaoV = new ComissaoView();
+    ServidorView servidorV = new ServidorView();
     Scanner ler = new Scanner(System.in);
 
     int menu = 0;
     int auxOPC = 0;
 
-    public Vinculo criarVinculo(List<String> servidorVet, List<String> comissaoVet, ServidorDAO servidorDAO) {
+    public Vinculo criarVinculo(ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) {
         try {
             Vinculo vinc = new Vinculo();
 
+            List<Comissao> comissaoVet = comissaoDAO.read();
             if (comissaoVet.size() == 0) {
                 System.out.println("Nenhuma comissao cadastrado...");
                 return null;
             } else {
-                for (String string : comissaoVet) {
-                    System.out.println(string);
-                }
+                comissaoV.mostrarIdTodosComissao(comissaoVet);
             }
             System.out.println("Escolha pelo id uma comissao: ");
-            vinc.setId_comissao(Integer.parseInt(ler.nextLine()));
+            Comissao comissao = comissaoDAO.find(Integer.parseInt(ler.nextLine()));
+            vinc.setComissao(comissao);
 
             menu = tipoEscolha();
             if (menu == 1) {
-                Servidor servResponse = servidorMenorCarga(servidorDAO.getAll());
+                Servidor servResponse = servidorMenorCarga(servidorDAO.read());
                 System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
-                vinc.setId_servidor(servResponse.getId());
+                vinc.setServidor(servResponse);
             } else if (menu == 2) {
 
+                List<Servidor> servidorVet = servidorDAO.read();
                 if (servidorVet.size() == 0) {
                     System.out.println("Nenhum servidor cadastrado...");
                     return null;
                 } else {
-                    for (String string : servidorVet) {
-                        System.out.println(string);
-                    }
+                    servidorV.mostrarIdServidores(servidorVet);
                 }
                 System.out.println("Escolha pelo id um Servidor:");
-                vinc.setId_servidor(Integer.parseInt(ler.nextLine()));
+                Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
+                vinc.setServidor(servidor);
 
             }
 
@@ -74,38 +78,38 @@ public class VinculoView {
 
     }
 
-    public Vinculo modifVinculo(Vinculo vinAlt, List<String> servidorVet, List<String> comissaoVet, ServidorDAO servidorDAO) {
+    public Vinculo modifVinculo(Vinculo vinAlt, ServidorDAO servidorDAO, ComissaoDAO comissaoDAO) {
 
         try {
 
+            List<Comissao> comissaoVet = comissaoDAO.read();
             if (comissaoVet.size() == 0) {
                 System.out.println("Nenhuma comissao cadastrado...");
                 return null;
             } else {
-                for (String string : comissaoVet) {
-                    System.out.println(string);
-                }
+                comissaoV.mostrarIdTodosComissao(comissaoVet);
             }
             System.out.println("Escolha pelo id uma comissao: ");
-            vinAlt.setId_comissao(Integer.parseInt(ler.nextLine()));
+            Comissao comissao = comissaoDAO.find(Integer.parseInt(ler.nextLine()));
+            vinAlt.setComissao(comissao);
 
             menu = tipoEscolha();
             if (menu == 1) {
-                Servidor servResponse = servidorMenorCarga(servidorDAO.getAll());
+                Servidor servResponse = servidorMenorCarga(servidorDAO.read());
                 System.out.println("O servidor " + servResponse.getNome() + " foi selecionado");
-                vinAlt.setId_servidor(servResponse.getId());
+                vinAlt.setServidor(servResponse);
             } else if (menu == 2) {
 
+                List<Servidor> servidorVet = servidorDAO.read();
                 if (servidorVet.size() == 0) {
                     System.out.println("Nenhum servidor cadastrado...");
                     return null;
                 } else {
-                    for (String string : servidorVet) {
-                        System.out.println(string);
-                    }
+                    servidorV.mostrarIdServidores(servidorVet);
                 }
                 System.out.println("Escolha pelo id um Servidor:");
-                vinAlt.setId_servidor(Integer.parseInt(ler.nextLine()));
+                Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
+                vinAlt.setServidor(servidor);
 
             }
 
@@ -119,16 +123,6 @@ public class VinculoView {
             return vinAlt;
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    public void mostrarTodosVinculos(List<String> vetResult) {
-        if (vetResult.size() == 0) {
-            System.out.println("Não há vinculo cadastrados");
-        } else {
-            for (String string : vetResult) {
-                System.out.println(string);
-            }
         }
     }
 
@@ -152,6 +146,35 @@ public class VinculoView {
             }
         }
         return servidorMenor;
+    }
+
+    public void mostrarTodosVinculos(List<Vinculo> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há vinculo cadastrados");
+        } else {
+            for (Vinculo vinculo : vetResult) {
+                System.out.println("ID: " + vinculo.getId());
+                System.out.println("COMISSAO: " + vinculo.getComissao().getNameComissao());
+                System.out.println("SERVIDOR: " + vinculo.getServidor().getNome());
+                System.out.println("PAPEL: " + vinculo.getPapel());
+                System.out.println("DATA DE ENTRADA: " + vinculo.getDtEntrada());
+                System.out.println("DATA DE SAIDA: " + vinculo.getDtSaida());
+                System.out.println("DATA DE CRIAÇÃO: " + vinculo.getDtCriacao());
+                System.out.println("DATA DE MODIFICAÇÃO: " + vinculo.getDtModificacao());
+            }
+        }
+    }
+
+    public void mostrarIdTodosVinculos(List<Vinculo> vetResult) {
+        if (vetResult.size() == 0) {
+            System.out.println("Não há vinculo cadastrados");
+        } else {
+            for (Vinculo vinculo : vetResult) {
+                System.out.println("ID: " + vinculo.getId());
+                System.out.println("COMISSAO: " + vinculo.getComissao().getNameComissao());
+                System.out.println("SERVIDOR: " + vinculo.getServidor().getNome());
+            }
+        }
     }
 
 }

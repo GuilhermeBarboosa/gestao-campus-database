@@ -22,9 +22,9 @@ public class EncerrarComissaoController extends DefaultController implements Def
         try {
             System.out.println("ENCERRAR COMISSAO");
 
-            List<String> vetResultId = comissaoDAO.readId();
+            List<Comissao> vetResult = comissaoDAO.read();
 
-            comissaoView.mostrarTodosComissao(vetResultId);
+            comissaoView.mostrarIdTodosComissao(vetResult);
 
             GUI.printID();
             System.out.println("Insira a comissao que deseja encerrar: ");

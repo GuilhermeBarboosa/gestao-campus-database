@@ -23,15 +23,12 @@ public class AtividadeController extends DefaultController implements Default{
         System.out.println("ATIVIDADE");
         opcCrud = GUI.menu();
 
-        List<Servidor> servidorVet = servidorDAO.read();
-
-        List<String> vetResultId = atividadeDAO.readId();
-        List<String> vetResult = atividadeDAO.read();
+        List<Atividade> vetResult = atividadeDAO.read();
 
         try {
             switch (opcCrud) {
                 case 1:
-                    Atividade at = atividadeView.criarAtividade(servidorVet);
+                    Atividade at = atividadeView.criarAtividade(servidorDAO);
 
                     if (at != null) {
                         Servidor servAux = servidorDAO.find(at.getServidor().getId());
@@ -43,7 +40,7 @@ public class AtividadeController extends DefaultController implements Default{
                     }
                     break;
                 case 2:
-                    atividadeView.mostrarAtividades(vetResultId);
+                    atividadeView.mostrarIdAtividades(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Atividade atAlt = atividadeDAO.find(auxLoc);
@@ -52,7 +49,7 @@ public class AtividadeController extends DefaultController implements Default{
                         Servidor servAux = servidorDAO.find(atAlt.getServidor().getId());
                         servidorDAO.removeHours(servAux, atAlt.getHorasSemanais(), atAlt.getServidor().getId());
 
-                        atAlt = atividadeView.modifAtividade(atAlt, servidorVet);
+                        atAlt = atividadeView.modifAtividade(atAlt, servidorDAO);
 
                         servAux = servidorDAO.find(atAlt.getServidor().getId());
                         servidorDAO.updateHours(servAux, atAlt.getHorasSemanais(), atAlt.getServidor().getId());
@@ -67,7 +64,7 @@ public class AtividadeController extends DefaultController implements Default{
                     atividadeView.mostrarAtividades(vetResult);
                     break;
                 case 4:
-                    atividadeView.mostrarAtividades(vetResultId);
+                    atividadeView.mostrarIdAtividades(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
 

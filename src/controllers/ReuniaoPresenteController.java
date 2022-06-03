@@ -22,16 +22,12 @@ public class ReuniaoPresenteController extends DefaultController implements Defa
         System.out.println("REUNIÃO E PRESENTES");
         opcCrud = GUI.menu();
 
-        List<String> servidorVet = servidorDAO.readId();
-        List<String> comissaoVet = comissaoDAO.readId();
-
-        List<String> vetResultId = reuniaoPresenteDAO.readId();
-        List<String> vetResult = reuniaoPresenteDAO.read();
+        List<ReuniaoPresente> vetResult = reuniaoPresenteDAO.read();
 
         try {
              switch (opcCrud) {
             case 1:
-                ReuniaoPresente reuniaoPresente = reuniaoPresenteView.criarReuniaoPresente(servidorVet, comissaoVet);
+                ReuniaoPresente reuniaoPresente = reuniaoPresenteView.criarReuniaoPresente(servidorDAO, comissaoDAO);
                 if (reuniaoPresente != null) {
                     reuniaoPresenteDAO.create(reuniaoPresente);
                 } else {
@@ -39,12 +35,12 @@ public class ReuniaoPresenteController extends DefaultController implements Defa
                 }
                 break;
             case 2:
-                reuniaoPresenteView.mostrarTodosReunioesPresente(vetResultId);
+                reuniaoPresenteView.mostrarIdTodosReunioesPresente(vetResult);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 ReuniaoPresente reunPresenteAlt = reuniaoPresenteDAO.find(auxLoc);
                 if (reunPresenteAlt != null) {
-                    reuniaoPresenteDAO.update(reuniaoPresenteView.modifReuniaoPresente(reunPresenteAlt, servidorVet, comissaoVet));
+                    reuniaoPresenteDAO.update(reuniaoPresenteView.modifReuniaoPresente(reunPresenteAlt, servidorDAO, comissaoDAO));
                     GUI.sucess();
                 } else {
                     GUI.error();
@@ -54,7 +50,7 @@ public class ReuniaoPresenteController extends DefaultController implements Defa
                 reuniaoPresenteView.mostrarTodosReunioesPresente(vetResult);
                 break;
             case 4:
-                reuniaoPresenteView.mostrarTodosReunioesPresente(vetResultId);
+                reuniaoPresenteView.mostrarIdTodosReunioesPresente(vetResult);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 if (auxLoc != 0) {

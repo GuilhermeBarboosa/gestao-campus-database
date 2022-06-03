@@ -20,17 +20,14 @@ public class DisciplinaController extends DefaultController implements Default{
 
     public void menu() throws Exception {
         System.out.println("DISCIPLINA");
-
-        List<String> cursoVet = cursoDAO.readId();
-
-        List<String> vetResultId = disciplinaDAO.readId();
-        List<String> vetResult = disciplinaDAO.read();
+ 
+        List<Disciplina> vetResult = disciplinaDAO.read();
 
         opcCrud = GUI.menu();
         try {
             switch (opcCrud) {
                 case 1:
-                    Disciplina disc = disciplinaView.criarDisciplina(cursoVet);
+                    Disciplina disc = disciplinaView.criarDisciplina(cursoDAO);
                     if (disc != null) {
                         disciplinaDAO.create(disc);
                     } else {
@@ -39,12 +36,12 @@ public class DisciplinaController extends DefaultController implements Default{
 
                     break;
                 case 2:
-                    disciplinaView.mostrarTodasDisciplinas(vetResultId);
+                    disciplinaView.mostrarIdTodasDisciplinas(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     Disciplina discAlt = disciplinaDAO.find(auxLoc);
                     if (discAlt != null) {
-                        disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoVet));
+                        disciplinaDAO.update(disciplinaView.modifDisciplina(discAlt, cursoDAO));
                         GUI.sucess();
                     } else {
                         GUI.error();
@@ -54,7 +51,7 @@ public class DisciplinaController extends DefaultController implements Default{
                     disciplinaView.mostrarTodasDisciplinas(vetResult);
                     break;
                 case 4:
-                    disciplinaView.mostrarTodasDisciplinas(vetResultId);
+                    disciplinaView.mostrarIdTodasDisciplinas(vetResult);
                     GUI.printID();
                     auxLoc = Integer.parseInt(ler.nextLine());
                     if (auxLoc != 0) {

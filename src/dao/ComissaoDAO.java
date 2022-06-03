@@ -20,7 +20,7 @@ import model.Comissao;
  *
  * @author Gui
  */
-public class ComissaoDAO implements Default{
+public class ComissaoDAO implements Default {
 
     public void create(Comissao comissao) throws Exception {
         String sql = "INSERT INTO comissoes (comissao, horas_semanais, dt_inicio, dt_termino, estado, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -65,11 +65,11 @@ public class ComissaoDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Comissao> read() throws Exception {
 
         String sql = "SELECT * FROM comissoes AS c";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Comissao> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -85,56 +85,31 @@ public class ComissaoDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("c.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Horas semanais: " + rset.getString("c.horas_semanais") + "\n"
-                        + "Data de inicio: " + rset.getString("c.dt_inicio") + "\n"
-                        + "Data de termino: " + rset.getString("c.dt_termino") + "\n"
-                        + "Estado: " + rset.getString("c.estado") + "\n"
-                        + "Cadastrado: " + rset.getString("c.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("c.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Comissao comissao = new Comissao();
 
-    public List<String> readId() throws Exception {
+                comissao.setId(rset.getInt("c.id"));
+                comissao.setNameComissao(rset.getString("c.comissao"));
+                comissao.setHorasSemanais(rset.getDouble("c.horas_semanais"));
 
-        String sql = "SELECT * FROM comissoes AS c";
+                Date date = rset.getDate("c.dt_inicio");
+                LocalDate dataAtualizada = date.toLocalDate();
+                comissao.setDtInicio(dataAtualizada);
 
-        List<String> vetResult = new ArrayList<>();
+                date = rset.getDate("c.dt_termino");
+                dataAtualizada = date.toLocalDate();
+                comissao.setDtTermino(dataAtualizada);
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                comissao.setEstado(rset.getString("c.estado"));
 
-        ResultSet rset = null;
+                date = rset.getDate("c.cadastrado");
+                dataAtualizada = date.toLocalDate();
+                comissao.setDtCriacao(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                date = rset.getDate("c.modificado");
+                dataAtualizada = date.toLocalDate();
+                comissao.setDtModificacao(dataAtualizada);
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("c.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(comissao);
             }
         } catch (Exception e) {
             e.printStackTrace();

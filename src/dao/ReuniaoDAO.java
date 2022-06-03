@@ -13,13 +13,15 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Comissao;
 import model.Reuniao;
+import model.Servidor;
 
 /**
  *
  * @author Gui
  */
-public class ReuniaoDAO implements Default{
+public class ReuniaoDAO implements Default {
 
     public void create(Reuniao reuniao) throws Exception {
         String sql = "INSERT INTO reunioes (comissao, servidor_secre, conteudo_ata, dt_reuniao, cadastrado) VALUES (?,?,?,?,?)";
@@ -32,8 +34,8 @@ public class ReuniaoDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, reuniao.getId_comissao());
-            pstm.setInt(2, reuniao.getId_servidorSecre());
+            pstm.setInt(1, reuniao.getComissao().getId());
+            pstm.setInt(2, reuniao.getServidorSecre().getId());
             pstm.setString(3, reuniao.getConteudoAta());
 
             Date date = Date.valueOf(reuniao.getDtReuniao());
@@ -60,11 +62,11 @@ public class ReuniaoDAO implements Default{
         }
     }
 
-    public List<String> read() throws Exception {
+    public List<Reuniao> read() throws Exception {
 
         String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id";
 
-        List<String> vetResult = new ArrayList<>();
+        List<Reuniao> vetResult = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -80,56 +82,32 @@ public class ReuniaoDAO implements Default{
 
             while (rset.next()) {
 
-                vetResult.add("Id: " + rset.getString("r.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Conteudo da ata: " + rset.getString("r.conteudo_ata") + "\n"
-                        + "Data da reunião: " + rset.getString("r.dt_reuniao") + "\n"
-                        + "Cadastrado: " + rset.getString("r.cadastrado") + "\n"
-                        + "Modificado: " + rset.getString("r.modificado") + "\n"
-                        + "--------------------------------------");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
+                Reuniao reuniao = new Reuniao();
 
-    public List<String> readId() throws Exception {
+                reuniao.setId(0);
 
-        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id";
+                Comissao comissao = comissaoDAO.find(rset.getInt("r.comissao"));
+                reuniao.setComissao(comissao);
 
-        List<String> vetResult = new ArrayList<>();
+                Servidor servidor = servidorDAO.find(rset.getInt("r.servidor_secre"));
+                reuniao.setServidorSecre(servidor);
 
-        Connection conn = null;
-        PreparedStatement pstm = null;
+                reuniao.setConteudoAta(rset.getString("r.conteudo_ata"));
 
-        ResultSet rset = null;
+                Date date = rset.getDate("r.dt_reuniao");
+                LocalDate dataAtualizada = date.toLocalDate();
+                reuniao.setDtReuniao(dataAtualizada);
 
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
+                date = rset.getDate("r.cadastrado");
+                dataAtualizada = date.toLocalDate();
+                reuniao.setDtCriacao(dataAtualizada);
+                reuniao.setId(0);
 
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+                date = rset.getDate("r.modificado");
+                dataAtualizada = date.toLocalDate();
+                reuniao.setDtModificacao(dataAtualizada);
 
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("r.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "=========================" + "\n");
+                vetResult.add(reuniao);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -160,8 +138,8 @@ public class ReuniaoDAO implements Default{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altReuniao.getId_comissao());
-            pstm.setInt(2, altReuniao.getId_servidorSecre());
+            pstm.setInt(1, altReuniao.getComissao().getId());
+            pstm.setInt(2, altReuniao.getServidorSecre().getId());
             pstm.setString(3, altReuniao.getConteudoAta());
 
             Date date = Date.valueOf(altReuniao.getDtReuniao());
@@ -232,8 +210,12 @@ public class ReuniaoDAO implements Default{
                 Reuniao reuniao = new Reuniao();
 
                 reuniao.setId(rset.getInt("id"));
-                reuniao.setId_comissao(rset.getInt("comissao"));
-                reuniao.setId_servidorSecre(rset.getInt("servidor_secre"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("r.comissao"));
+                reuniao.setComissao(comissao);
+
+                Servidor servidor = servidorDAO.find(rset.getInt("r.servidor_secre"));
+                reuniao.setServidorSecre(servidor);
+
                 reuniao.setConteudoAta(rset.getString("conteudo_ata"));
 
                 Date date = rset.getDate("dt_reuniao");
@@ -268,5 +250,4 @@ public class ReuniaoDAO implements Default{
         return null;
     }
 
-    
 }
