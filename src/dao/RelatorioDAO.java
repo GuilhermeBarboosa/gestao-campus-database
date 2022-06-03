@@ -16,7 +16,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Campus;
 import model.Comissao;
+import model.Oferta;
 import model.Reuniao;
 import model.Servidor;
 
@@ -41,7 +43,7 @@ public class RelatorioDAO implements Default {
 
             Date date = Date.valueOf(dtIncial);
             pstm.setDate(1, date);
-            
+
             date = Date.valueOf(dtFinal);
             pstm.setDate(2, date);
             pstm.execute();
@@ -145,46 +147,22 @@ public class RelatorioDAO implements Default {
         return vetResult;
     }
 
-    public List<String> relatorioAulas(int idCampus) throws SQLException {
-        String sql = "SELECT * FROM ofertas AS of INNER JOIN cursos AS c ON of.curso = c.id INNER JOIN disciplinas AS d ON of.disciplina = d.id "
-                + "INNER JOIN servidores AS s ON of.servidor = s.id INNER JOIN campus AS camp ON c.campus = camp.id WHERE camp.id = '" + idCampus + "'";
+    public List<String> relatorioAulas(int idCampus) throws SQLException, Exception {
 
         List<String> vetResult = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement pstm = null;
+        Campus campus = campusDAO.find(idCampus);
+        
+        List<Oferta> ofertaVet = ofertaDAO.read();
 
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                
-                vetResult.add("Campus: " + rset.getString("camp.nome") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "----------------------------------------------------------");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
+        for (Oferta oferta : ofertaVet) {
+            if (oferta.getCurso().getCampus().getId() == campus.getId()) {
+                vetResult.add("DISCIPLINA: " + oferta.getDisciplina().getNome() + "\n"
+                        + "CURSO: " + oferta.getCurso().getNome() + "\n"
+                        + "SERVIDOR: " + oferta.getServidor().getNome() + "\n");
             }
         }
+
         return vetResult;
+        
     }
 }

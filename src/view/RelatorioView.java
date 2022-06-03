@@ -80,7 +80,6 @@ public class RelatorioView {
 //            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
 //            cel1.setPadding(5);
 //            table.addCell(cel1);
-
             if (reunioes.isEmpty()) {
                 System.out.println("Sem reunioes cadastradas...");
             } else {
@@ -151,13 +150,15 @@ public class RelatorioView {
 
     public void relat3(CampusDAO campusDAO, RelatorioDAO relatorioDAO) throws Exception {
 
-        List<Campus> campus = campusDAO.read();
+        List<Campus> campusVet = campusDAO.read();
+        CampusView campusV = new CampusView();
 
-        for (Campus cam : campus) {
-            System.out.println(cam);
-        }
+        campusV.mostrarIdTodosCampos(campusVet);
+
         System.out.println("Insira o id: ");
         int aux = Integer.parseInt(ler.nextLine());
+
+        Campus campus = campusDAO.find(aux);
 
         List<String> aulas = relatorioDAO.relatorioAulas(aux);
 
@@ -170,7 +171,7 @@ public class RelatorioView {
 
             doc.open();
             Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.RED);
-            Paragraph p = new Paragraph("RELATORIO DO TIPO 2\n\n", f);
+            Paragraph p = new Paragraph("CAMPUS " + campus.getAbreviacao()+ "\n\n\n", f);
             p.setAlignment(1);
             doc.add(p);
 
