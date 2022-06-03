@@ -94,6 +94,7 @@ public class OrientacaoView {
             System.out.println("Não há orientacões cadastrados");
         } else {
             for (Orientacao orientacao : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + orientacao.getId());
                 System.out.println("TIPO: " + orientacao.getTipo());
                 System.out.println("SERVIDOR: " + orientacao.getServidor().getNome());
@@ -102,7 +103,10 @@ public class OrientacaoView {
                 System.out.println("DATA DE INICIO: " + orientacao.getDtInicio());
                 System.out.println("DATA DE TERMINO: " + orientacao.getDtTermino());
                 System.out.println("DATA DE CRIAÇÃO: " + orientacao.getDtCriacao());
-                System.out.println("DATA DE MODIFICAÇÃO: " + orientacao.getDtModificacao());
+                if (orientacao.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + orientacao.getDtModificacao());
+                }
+                System.out.println("-----------------------------------");
             }
         }
     }
@@ -112,10 +116,12 @@ public class OrientacaoView {
             System.out.println("Não há orientacões cadastrados");
         } else {
             for (Orientacao orientacao : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + orientacao.getId());
                 System.out.println("TIPO: " + orientacao.getTipo());
                 System.out.println("SERVIDOR: " + orientacao.getServidor().getNome());
                 System.out.println("ALUNO: " + orientacao.getNomeAluno());
+                System.out.println("-----------------------------------");
             }
         }
     }

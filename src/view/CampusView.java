@@ -82,6 +82,7 @@ public class CampusView {
             System.out.println("Não há campus cadastrados");
         } else {
             for (Campus campus : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + campus.getId());
                 System.out.println("NOME: " + campus.getNome());
                 System.out.println("ABREVIAÇÃO: " + campus.getAbreviacao());
@@ -92,7 +93,10 @@ public class CampusView {
                 System.out.println("RUA: " + campus.getRua());
                 System.out.println("CEP: " + campus.getCep());
                 System.out.println("CRIAÇÃO: " + campus.getDtCriacao());
-                System.out.println("MODIFICAÇÃO: " + campus.getDtModificacao());
+                if (campus.getDtModificacao() != null) {
+                    System.out.println("MODIFICAÇÃO: " + campus.getDtModificacao());
+                }
+                System.out.println("--------------------------------------");
             }
         }
     }
@@ -102,9 +106,11 @@ public class CampusView {
             System.out.println("Não há campus cadastrados");
         } else {
             for (Campus campus : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + campus.getId());
                 System.out.println("NOME: " + campus.getNome());
                 System.out.println("ABREVIAÇÃO: " + campus.getAbreviacao());
+                System.out.println("--------------------------------------");
             }
         }
     }

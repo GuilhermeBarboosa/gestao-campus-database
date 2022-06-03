@@ -210,7 +210,7 @@ public class CursoDAO implements Default {
                 curso.setId(rset.getInt("id"));
                 curso.setNome(rset.getString("curso"));
                 
-                Campus campus = campusDAO.find(rset.getInt("c.campus"));
+                Campus campus = campusDAO.find(rset.getInt("campus"));
                 curso.setCampus(campus);
    
                 curso.setEstado(rset.getString("estado"));

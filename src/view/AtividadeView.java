@@ -111,6 +111,7 @@ public class AtividadeView {
             System.out.println("Não há atividades cadastradas");
         } else {
             for (Atividade atividade : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + atividade.getId());
                 System.out.println("DESCRIÇÃO: " + atividade.getDescricao());
                 System.out.println("SERVIDOR: " + atividade.getServidor().getNome());
@@ -118,7 +119,10 @@ public class AtividadeView {
                 System.out.println("DATA DE INICIO: " + atividade.getDtInicio());
                 System.out.println("DATA DE TERMINO: " + atividade.getDtTermino());
                 System.out.println("DATA DE CRIAÇÃO: " + atividade.getDtCriacao());
-                System.out.println("DATA DE MODIFCAÇÃO: " + atividade.getDtModificacao());
+                if (atividade.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFCAÇÃO: " + atividade.getDtModificacao());
+                }
+                System.out.println("--------------------------------------");
             }
         }
     }
@@ -128,9 +132,11 @@ public class AtividadeView {
             System.out.println("Não há atividades cadastradas");
         } else {
             for (Atividade atividade : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + atividade.getId());
                 System.out.println("DESCRIÇÃO: " + atividade.getDescricao());
                 System.out.println("SERVIDOR: " + atividade.getServidor().getNome());
+                System.out.println("--------------------------------------");
             }
         }
     }

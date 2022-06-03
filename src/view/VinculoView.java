@@ -153,6 +153,7 @@ public class VinculoView {
             System.out.println("Não há vinculo cadastrados");
         } else {
             for (Vinculo vinculo : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + vinculo.getId());
                 System.out.println("COMISSAO: " + vinculo.getComissao().getNameComissao());
                 System.out.println("SERVIDOR: " + vinculo.getServidor().getNome());
@@ -160,7 +161,10 @@ public class VinculoView {
                 System.out.println("DATA DE ENTRADA: " + vinculo.getDtEntrada());
                 System.out.println("DATA DE SAIDA: " + vinculo.getDtSaida());
                 System.out.println("DATA DE CRIAÇÃO: " + vinculo.getDtCriacao());
-                System.out.println("DATA DE MODIFICAÇÃO: " + vinculo.getDtModificacao());
+                if (vinculo.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + vinculo.getDtModificacao());
+                }
+                System.out.println("-----------------------------------");
             }
         }
     }
@@ -170,9 +174,11 @@ public class VinculoView {
             System.out.println("Não há vinculo cadastrados");
         } else {
             for (Vinculo vinculo : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + vinculo.getId());
                 System.out.println("COMISSAO: " + vinculo.getComissao().getNameComissao());
                 System.out.println("SERVIDOR: " + vinculo.getServidor().getNome());
+                System.out.println("-----------------------------------");
             }
         }
     }

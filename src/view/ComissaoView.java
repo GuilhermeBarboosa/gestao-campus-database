@@ -79,14 +79,18 @@ public class ComissaoView {
             System.out.println("Não há servidores cadastrados");
         } else {
             for (Comissao comissao : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + comissao.getId());
-                System.out.println("COMISSAO: " + comissao.getId());
-                System.out.println("HORAS SEMANAIS: " + comissao.getId());
-                System.out.println("DATA DE INICIO: " + comissao.getId());
-                System.out.println("DATA DE TERMINO: " + comissao.getId());
-                System.out.println("ESTADO: " + comissao.getId());
-                System.out.println("DATA DE CRIAÇÃO: " + comissao.getId());
-                System.out.println("DATA DE MODIFICAÇÃO: " + comissao.getId());
+                System.out.println("COMISSAO: " + comissao.getNameComissao());
+                System.out.println("HORAS SEMANAIS: " + comissao.getHorasSemanais());
+                System.out.println("DATA DE INICIO: " + comissao.getDtInicio());
+                System.out.println("DATA DE TERMINO: " + comissao.getDtTermino());
+                System.out.println("ESTADO: " + comissao.getEstado());
+                System.out.println("DATA DE CRIAÇÃO: " + comissao.getDtCriacao());
+                if (comissao.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + comissao.getDtModificacao());
+                }
+                System.out.println("--------------------------------------");
             }
         }
     }
@@ -96,8 +100,10 @@ public class ComissaoView {
             System.out.println("Não há servidores cadastrados");
         } else {
             for (Comissao comissao : vetResult) {
+                System.out.println("--------------------------------------");
                 System.out.println("ID: " + comissao.getId());
                 System.out.println("COMISSAO: " + comissao.getId());
+                System.out.println("--------------------------------------");
             }
         }
     }

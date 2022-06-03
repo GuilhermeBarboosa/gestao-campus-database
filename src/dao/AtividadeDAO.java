@@ -107,7 +107,7 @@ public class AtividadeDAO implements Default {
                 atividade.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("a.modificado");
-                if (dataAtualizada != null) {
+                if (date != null) {
                 dataAtualizada = date.toLocalDate();
                     atividade.setDtModificacao(dataAtualizada);
                 }

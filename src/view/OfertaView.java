@@ -144,6 +144,7 @@ public class OfertaView {
             System.out.println("Não há ofertas cadastradas");
         } else {
             for (Oferta oferta : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + oferta.getId());
                 System.out.println("CURSO: " + oferta.getCurso().getNome());
                 System.out.println("DISCIPLINA: " + oferta.getDisciplina().getNome());
@@ -152,7 +153,10 @@ public class OfertaView {
                 System.out.println("SEMESTRE: " + oferta.getSemestre());
                 System.out.println("AULA SEMANAL: " + oferta.getAulaSemanais());
                 System.out.println("DATA DE CRIAÇÃO: " + oferta.getDtCriacao());
-                System.out.println("DATA DE MODIFICAÇÃO: " + oferta.getDtMoficacao());
+                if (oferta.getDtMoficacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + oferta.getDtMoficacao());
+                }
+                System.out.println("-----------------------------------");
             }
         }
     }
@@ -162,10 +166,12 @@ public class OfertaView {
             System.out.println("Não há ofertas cadastradas");
         } else {
             for (Oferta oferta : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + oferta.getId());
                 System.out.println("CURSO: " + oferta.getCurso().getNome());
                 System.out.println("DISCIPLINA: " + oferta.getDisciplina().getNome());
                 System.out.println("SERVIDOR: " + oferta.getServidor().getNome());
+                System.out.println("-----------------------------------");
             }
         }
     }

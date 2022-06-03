@@ -108,17 +108,6 @@ public class CursoView {
 
     }
 
-    public void mostrarIdCurso(List<Curso> vetResult) {
-        for (Curso curso : vetResult) {
-            
-            System.out.println("-----------------------------------");
-            System.out.println("ID: " + curso.getId());
-            System.out.println("CURSO: " + curso.getNome());
-            System.out.println("CAMPUS: " + curso.getCampus().getNome());
-            System.out.println("-----------------------------------");
-        }
-    }
-
     public void mostrarCurso(List<Curso> vetResult) {
         for (Curso curso : vetResult) {
             System.out.println("-----------------------------------");
@@ -129,9 +118,20 @@ public class CursoView {
             System.out.println("ANO DE INICIO: " + curso.getAnoInicio());
             System.out.println("ANO DE TERMINO: " + curso.getAnoTermino());
             System.out.println("DATA DE CRIAÇÂO: " + curso.getDtCriacao());
-            System.out.println("DATA DE MODIFICAÇÂO: " + curso.getDtModificacao());
+            if (curso.getDtModificacao() != null) {
+                System.out.println("DATA DE MODIFICAÇÂO: " + curso.getDtModificacao());
+            }
             System.out.println("-----------------------------------");
         }
     }
 
+    public void mostrarIdCurso(List<Curso> vetResult) {
+        for (Curso curso : vetResult) {
+            System.out.println("-----------------------------------");
+            System.out.println("ID: " + curso.getId());
+            System.out.println("CURSO: " + curso.getNome());
+            System.out.println("CAMPUS: " + curso.getCampus().getNome());
+            System.out.println("-----------------------------------");
+        }
+    }
 }

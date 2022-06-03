@@ -93,13 +93,17 @@ public class DisciplinaView {
             System.out.println("Não há disciplinas cadastrados");
         } else {
             for (Disciplina disciplina : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + disciplina.getId());
                 System.out.println("DISCIPLINA: " + disciplina.getNome());
                 System.out.println("CURSO: " + disciplina.getCurso().getNome());
                 System.out.println("CARGA HORARIA: " + disciplina.getCargaHoraria());
                 System.out.println("PERIODO: " + disciplina.getPeriodo());
                 System.out.println("DATA DE CRIAÇÃO: " + disciplina.getDtCriacao());
-                System.out.println("DATA DE MODIFICAÇÃO: " + disciplina.getDtModificacao());
+                if (disciplina.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + disciplina.getDtModificacao());
+                }
+                System.out.println("-----------------------------------");
             }
         }
     }
@@ -109,9 +113,11 @@ public class DisciplinaView {
             System.out.println("Não há disciplinas cadastrados");
         } else {
             for (Disciplina disciplina : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + disciplina.getId());
                 System.out.println("DISCIPLINA: " + disciplina.getNome());
                 System.out.println("CURSO: " + disciplina.getCurso().getNome());
+                System.out.println("-----------------------------------");
             }
         }
     }

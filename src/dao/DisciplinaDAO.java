@@ -60,7 +60,7 @@ public class DisciplinaDAO implements Default {
 
     public List<Disciplina> read() throws Exception {
 
-        String sql = "SELECT *, c.curso FROM disciplinas as d INNER JOIN cursos AS c ON d.curso = c.id;";
+        String sql = "SELECT * FROM disciplinas as d";
 
         List<Disciplina> vetResult = new ArrayList<>();
 
@@ -80,24 +80,26 @@ public class DisciplinaDAO implements Default {
 
                 Disciplina disciplina = new Disciplina();
 
-                disciplina.setId(rset.getInt("d.id"));
-                disciplina.setNome(rset.getString("d.disciplina"));
+                disciplina.setId(rset.getInt("id"));
+                disciplina.setNome(rset.getString("disciplina"));
 
-                Curso curso = cursoDAO.find(rset.getInt("c.curso"));
+                Curso curso = cursoDAO.find(rset.getInt("curso"));
                 disciplina.setCurso(curso);
 
-                disciplina.setCargaHoraria(rset.getDouble("d.carga_horaria"));
-                disciplina.setPeriodo(rset.getInt("d.periodo"));
+                disciplina.setCargaHoraria(rset.getDouble("carga_horaria"));
+                disciplina.setPeriodo(rset.getInt("periodo"));
 
                 Date date = rset.getDate("cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
                 disciplina.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("modificado");
-                if (dataAtualizada != null) {
+                if (date != null) {
                 dataAtualizada = date.toLocalDate();
                     disciplina.setDtModificacao(dataAtualizada);
                 }
+                
+                vetResult.add(disciplina);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -103,12 +103,16 @@ public class ReuniaoPresenteView {
             System.out.println("Não há reunião e presente cadastrados");
         } else {
             for (ReuniaoPresente reuniaoPresente : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + reuniaoPresente.getId());
                 System.out.println("COMISSAO: " + reuniaoPresente.getComissao().getNameComissao());
                 System.out.println("SERVIDOR: " + reuniaoPresente.getServidor().getNome());
                 System.out.println("ATA DA REUNIÃO: " + reuniaoPresente.getAtaReuniao());
                 System.out.println("DATA DE CRIAÇÃO: " + reuniaoPresente.getDtCriacao());
-                System.out.println("DATA DE MODIFICAÇÃO: " + reuniaoPresente.getDtModificacao());
+                if (reuniaoPresente.getDtModificacao() != null) {
+                    System.out.println("DATA DE MODIFICAÇÃO: " + reuniaoPresente.getDtModificacao());
+                }
+                System.out.println("-----------------------------------");
             }
         }
     }
@@ -118,9 +122,11 @@ public class ReuniaoPresenteView {
             System.out.println("Não há reunião e presente cadastrados");
         } else {
             for (ReuniaoPresente reuniaoPresente : vetResult) {
+                System.out.println("-----------------------------------");
                 System.out.println("ID: " + reuniaoPresente.getId());
                 System.out.println("COMISSAO: " + reuniaoPresente.getComissao().getNameComissao());
                 System.out.println("SERVIDOR: " + reuniaoPresente.getServidor().getNome());
+                System.out.println("-----------------------------------");
             }
         }
     }

@@ -67,7 +67,7 @@ public class OrientacaoDAO implements Default {
 
     public List<Orientacao> read() throws Exception {
 
-        String sql = "SELECT *, s.nome FROM orientacoes AS o INNER JOIN servidores AS s ON o.servidor = s.id";
+        String sql = "SELECT * FROM orientacoes ";
 
         List<Orientacao> vetResult = new ArrayList<>();
 
@@ -87,29 +87,29 @@ public class OrientacaoDAO implements Default {
 
                 Orientacao orientacao = new Orientacao();
 
-                orientacao.setId(rset.getInt("o.id"));
-                orientacao.setTipo(rset.getString("o.tipo"));
+                orientacao.setId(rset.getInt("id"));
+                orientacao.setTipo(rset.getString("tipo"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 orientacao.setServidor(servidor);
 
-                orientacao.setNomeAluno(rset.getString("o.aluno"));
-                orientacao.setHorasSemanais(rset.getDouble("o.horas_semanais"));
+                orientacao.setNomeAluno(rset.getString("aluno"));
+                orientacao.setHorasSemanais(rset.getDouble("horas_semanais"));
 
-                Date date = rset.getDate("o.dt_inicio");
+                Date date = rset.getDate("dt_inicio");
                 LocalDate dataAtualizada = date.toLocalDate();
                 orientacao.setDtInicio(dataAtualizada);
 
-                date = rset.getDate("o.dt_termino");
+                date = rset.getDate("dt_termino");
                 dataAtualizada = date.toLocalDate();
                 orientacao.setDtTermino(dataAtualizada);
 
-                date = rset.getDate("o.cadstrado");
+                date = rset.getDate("cadastrado");
                 dataAtualizada = date.toLocalDate();
                 orientacao.setDtCriacao(dataAtualizada);
 
-                date = rset.getDate("o.modificado");
-                if (dataAtualizada != null) {
+                date = rset.getDate("modificado");
+                if (date != null) {
                 dataAtualizada = date.toLocalDate();
                     orientacao.setDtModificacao(dataAtualizada);
                 }
