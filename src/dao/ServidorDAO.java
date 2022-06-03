@@ -21,19 +21,19 @@ import model.Servidor;
  *
  * @author Aluno
  */
-public class ServidorDAO implements Default{
-    
+public class ServidorDAO implements Default {
+
     public void create(Servidor servidor) throws Exception {
         String sql = "INSERT INTO servidores (nome, campus, email, cargo, login, senha, perfil, horas_totais, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             pstm.setString(1, servidor.getNome());
             pstm.setInt(2, servidor.getCampus().getId());
             pstm.setString(3, servidor.getEmail());
@@ -44,12 +44,12 @@ public class ServidorDAO implements Default{
             pstm.setDouble(8, servidor.getHorasTotais());
             Date date = Date.valueOf(servidor.getDtCriacao());
             pstm.setDate(9, date);
-            
+
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            
+
             try {
                 if (pstm != null) {
                     pstm.close();
@@ -62,52 +62,51 @@ public class ServidorDAO implements Default{
             }
         }
     }
-    
+
     public List<Servidor> read() throws Exception {
-        
-        String sql = "SELECT *, c.nome FROM servidores AS s INNER JOIN campus c ON c.id = s.campus";
-        
-        List<Servidor> vetResult = new ArrayList<>();
-        
+
+        String sql = "SELECT * FROM servidores";
+
+        List<Servidor> vetResult = new ArrayList();
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         ResultSet rset = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             rset = pstm.executeQuery();
-            
+
             while (rset.next()) {
-                
                 Servidor servidor = new Servidor();
-                
-                servidor.setId(rset.getInt("s.id"));
-                servidor.setNome(rset.getString("s.nome"));
-                
+
+                servidor.setId(rset.getInt("id"));
+                servidor.setNome(rset.getString("nome"));
+
                 Campus campus = campusDAO.find(rset.getInt("campus"));
                 servidor.setCampus(campus);
-                
-                servidor.setEmail(rset.getString("s.email"));
-                servidor.setCargo(rset.getString("s.cargo"));
-                servidor.setLogin(rset.getString("s.login"));
-                servidor.setSenha(rset.getString("s.senha"));
-                servidor.setPerfil(rset.getInt("s.perfil"));
-                servidor.setHorasTotais(rset.getDouble("s.horas_totais"));
-                
-                Date date = rset.getDate("s.cadastrado");
+
+                servidor.setEmail(rset.getString("email"));
+                servidor.setCargo(rset.getString("cargo"));
+                servidor.setLogin(rset.getString("login"));
+                servidor.setSenha(rset.getString("senha"));
+                servidor.setPerfil(rset.getInt("perfil"));
+                servidor.setHorasTotais(rset.getDouble("horas_totais"));
+
+                Date date = rset.getDate("cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
                 servidor.setDtCriacao(dataAtualizada);
-                
-                date = rset.getDate("s.modificado");
-                dataAtualizada = date.toLocalDate();
-                if (dataAtualizada != null) {
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
                     servidor.setDtModificacao(dataAtualizada);
-                }                
-                
+                }
+
                 vetResult.add(servidor);
             }
         } catch (Exception e) {
@@ -125,20 +124,20 @@ public class ServidorDAO implements Default{
         }
         return vetResult;
     }
-    
+
     public void update(Servidor altServidor) throws Exception {;
         String sql = "UPDATE servidores SET nome=?, campus=?, email=?, "
                 + "cargo=?, login=?, senha=?, perfil=?, horas_totais=?, modificado=?"
                 + "where id = ?";
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             pstm.setString(1, altServidor.getNome());
             pstm.setInt(2, altServidor.getCampus().getId());
             pstm.setString(3, altServidor.getEmail());
@@ -147,14 +146,14 @@ public class ServidorDAO implements Default{
             pstm.setString(6, altServidor.getSenha());
             pstm.setInt(7, altServidor.getPerfil());
             pstm.setDouble(8, altServidor.getHorasTotais());
-            
+
             Date date = Date.valueOf(altServidor.getDtModificacao());
             pstm.setDate(9, date);
-            
+
             pstm.setInt(10, altServidor.getId());
-            
+
             pstm.execute();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -166,24 +165,24 @@ public class ServidorDAO implements Default{
             }
         }
     }
-    
+
     public void delete(int idServidor) throws Exception {
         String sql = "DELETE FROM servidores WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             pstm.setInt(1, idServidor);
-            
+
             pstm.execute();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            
+
             if (pstm != null) {
                 pstm.close();
             }
@@ -192,50 +191,50 @@ public class ServidorDAO implements Default{
             }
         }
     }
-    
+
     public Servidor find(int idServidor) throws Exception {
         String sql = "SELECT * FROM servidores WHERE id = '" + idServidor + "'";
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         ResultSet rset = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             rset = pstm.executeQuery();
-            
+
             while (rset.next()) {
-                
+
                 Servidor servidor = new Servidor();
-                
+
                 servidor.setId(rset.getInt("id"));
                 servidor.setNome(rset.getString("nome"));
-                
+
                 Campus campus = campusDAO.find(rset.getInt("campus"));
                 servidor.setCampus(campus);
-                
+
                 servidor.setEmail(rset.getString("email"));
                 servidor.setCargo(rset.getString("cargo"));
                 servidor.setLogin(rset.getString("login"));
                 servidor.setSenha(rset.getString("senha"));
                 servidor.setPerfil(rset.getInt("perfil"));
                 servidor.setHorasTotais(rset.getDouble("horas_totais"));
-                
+
                 Date date = rset.getDate("cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
                 servidor.setDtCriacao(dataAtualizada);
-                
+
                 date = rset.getDate("modificado");
                 if (date != null) {
                     dataAtualizada = date.toLocalDate();
                     servidor.setDtModificacao(dataAtualizada);
                 }
                 return servidor;
-                
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,24 +251,24 @@ public class ServidorDAO implements Default{
         }
         return null;
     }
-  
+
     public void updateHours(Servidor servAux, double horasSemanais, int idServidor) throws SQLException {
         String sql = "UPDATE servidores SET horas_totais=?"
                 + "where id = ?";
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             pstm.setDouble(1, (servAux.getHorasTotais() + horasSemanais));
             pstm.setInt(2, idServidor);
-            
+
             pstm.execute();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -281,24 +280,24 @@ public class ServidorDAO implements Default{
             }
         }
     }
-    
+
     public void removeHours(Servidor servAux, double horasSemanais, int idServidor) throws SQLException {
         String sql = "UPDATE servidores SET horas_totais=?"
                 + "where id = ?";
-        
+
         Connection conn = null;
         PreparedStatement pstm = null;
-        
+
         try {
             conn = ConnectionFactory.createConnectionToMySql();
-            
+
             pstm = (PreparedStatement) conn.prepareStatement(sql);
-            
+
             pstm.setDouble(1, (servAux.getHorasTotais() - horasSemanais));
             pstm.setInt(2, idServidor);
-            
+
             pstm.execute();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -310,5 +309,5 @@ public class ServidorDAO implements Default{
             }
         }
     }
-    
+
 }

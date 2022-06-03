@@ -107,8 +107,8 @@ public class CampusDAO implements Default{
                 campus.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("cadastrado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     campus.setDtModificacao(dataAtualizada);
                 }
 

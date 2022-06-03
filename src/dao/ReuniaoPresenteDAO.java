@@ -96,8 +96,8 @@ public class ReuniaoPresenteDAO implements Default {
                 reuniaoPresente.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("rp.modificado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     reuniaoPresente.setDtModificacao(dataAtualizada);
                 }
 

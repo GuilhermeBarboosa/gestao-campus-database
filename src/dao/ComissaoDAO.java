@@ -106,8 +106,10 @@ public class ComissaoDAO implements Default {
                 comissao.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("c.modificado");
-                dataAtualizada = date.toLocalDate();
-                comissao.setDtModificacao(dataAtualizada);
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    comissao.setDtModificacao(dataAtualizada);
+                }
 
                 vetResult.add(comissao);
             }

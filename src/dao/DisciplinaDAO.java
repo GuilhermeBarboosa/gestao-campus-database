@@ -94,8 +94,8 @@ public class DisciplinaDAO implements Default {
                 disciplina.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("modificado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     disciplina.setDtModificacao(dataAtualizada);
                 }
             }

@@ -106,8 +106,8 @@ public class OfertaDAO implements Default {
                 oferta.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("cadastrado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     oferta.setDtMoficacao(dataAtualizada);
                 }
 

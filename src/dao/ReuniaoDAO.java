@@ -104,8 +104,10 @@ public class ReuniaoDAO implements Default {
                 reuniao.setId(0);
 
                 date = rset.getDate("r.modificado");
-                dataAtualizada = date.toLocalDate();
-                reuniao.setDtModificacao(dataAtualizada);
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    reuniao.setDtModificacao(dataAtualizada);
+                }
 
                 vetResult.add(reuniao);
             }

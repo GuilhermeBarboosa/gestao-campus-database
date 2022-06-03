@@ -111,8 +111,8 @@ public class VinculoDAO implements Default {
                 vinculo.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("v.cadastrado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     vinculo.setDtModificacao(dataAtualizada);
                 }
 

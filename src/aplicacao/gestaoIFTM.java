@@ -8,11 +8,11 @@ package aplicacao;
 import view.Gui;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Servidor;
 import dao.Default;
+import view.ServidorView;
 
 public class gestaoIFTM implements Default {
 
@@ -49,6 +49,7 @@ public class gestaoIFTM implements Default {
         } catch (Exception e) {
             System.err.println(e);
         }
+        sistemaAdm();
     }
 
     public void sistemaComum() throws Exception {
@@ -112,6 +113,7 @@ public class gestaoIFTM implements Default {
 
         List<Servidor> vetServidor = servidorDAO.read();
 
+   
         for (Servidor servidor : vetServidor) {
             if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
                 responseLogin = servidor;
@@ -121,4 +123,6 @@ public class gestaoIFTM implements Default {
 
         return responseLogin;
     }
+    
+    
 }

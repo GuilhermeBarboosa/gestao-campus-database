@@ -96,8 +96,8 @@ public class CursoDAO implements Default {
                 curso.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("cadastrado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     curso.setDtModificacao(dataAtualizada);
                 }
 

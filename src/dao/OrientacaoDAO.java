@@ -109,8 +109,8 @@ public class OrientacaoDAO implements Default {
                 orientacao.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("o.modificado");
-                dataAtualizada = date.toLocalDate();
                 if (dataAtualizada != null) {
+                dataAtualizada = date.toLocalDate();
                     orientacao.setDtModificacao(dataAtualizada);
                 }
 

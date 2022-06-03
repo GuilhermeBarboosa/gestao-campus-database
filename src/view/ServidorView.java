@@ -26,7 +26,6 @@ public class ServidorView {
     public Servidor criarServ(CampusDAO campusDAO) {
         try {
             Servidor serv = new Servidor();
-            
 
             serv.setId(id);
             id++;
@@ -72,7 +71,7 @@ public class ServidorView {
 
     public Servidor modifServ(Servidor servAlt, CampusDAO campusDAO) {
         try {
-         
+
             System.out.println("Nome: ");
             servAlt.setNome(ler.nextLine());
             System.out.println("Email: ");
@@ -130,7 +129,11 @@ public class ServidorView {
                 System.out.println("PERFIL: " + servidor.getPerfil());
                 System.out.println("HORAS TOTAIS: " + servidor.getHorasTotais());
                 System.out.println("CRIAÇÃO: " + servidor.getDtCriacao());
-                System.out.println("MODIFICAÇÃO: " + servidor.getDtModificacao());
+ 
+                if (servidor.getDtModificacao() != null) {
+                    System.out.println("MODIFICAÇÃO: " + servidor.getDtModificacao());
+                }
+                
                 System.out.println("-----------------------------------------");
             }
         }
