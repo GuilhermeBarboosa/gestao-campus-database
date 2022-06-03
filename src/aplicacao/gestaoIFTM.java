@@ -7,12 +7,8 @@ package aplicacao;
 
 import view.Gui;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import model.Servidor;
 import dao.Default;
-import view.ServidorView;
 
 public class gestaoIFTM implements Default {
 

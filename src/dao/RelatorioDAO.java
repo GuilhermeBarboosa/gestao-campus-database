@@ -5,6 +5,8 @@
  */
 package dao;
 
+import static dao.Default.comissaoDAO;
+import static dao.Default.servidorDAO;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -14,45 +16,67 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import model.Comissao;
+import model.Reuniao;
+import model.Servidor;
 
 /**
  *
  * @author Usuario
  */
-public class RelatorioDAO implements Default{
+public class RelatorioDAO implements Default {
 
-    public List<String> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
-        String sql = "SELECT *, s.nome, c.comissao FROM reunioes AS r INNER JOIN servidores AS s ON r.servidor_secre = s.id INNER JOIN comissoes AS c ON r.comissao = c.id WHERE r.dt_reuniao BETWEEN ? AND ?;";
+    public List<Reuniao> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
+        String sql = "SELECT * FROM reunioes WHERE dt_reuniao BETWEEN ? AND ?;";
 
         Connection conn = null;
         PreparedStatement pstm = null;
         ResultSet rset = null;
 
-        List<String> vetResult = new ArrayList<>();
+        List<Reuniao> vetResult = new ArrayList<>();
         try {
             conn = ConnectionFactory.createConnectionToMySql();
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             Date date = Date.valueOf(dtIncial);
-
             pstm.setDate(1, date);
+            
             date = Date.valueOf(dtFinal);
-
             pstm.setDate(2, date);
             pstm.execute();
 
             rset = pstm.executeQuery();
 
             while (rset.next()) {
+                Reuniao reuniao = new Reuniao();
 
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("r.id") + "\n"
-                        + "Comissao: " + rset.getString("c.comissao") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Conteudo da ata: " + rset.getString("r.conteudo_ata") + "\n"
-                        + "Data da reuniao: " + rset.getString("r.dt_reuniao") + "\n"
-                        + "=========================" + "\n");
+                reuniao.setId(rset.getInt("id"));
+
+                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
+                reuniao.setComissao(comissao);
+
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor_secre"));
+                reuniao.setServidorSecre(servidor);
+
+                reuniao.setConteudoAta(rset.getString("conteudo_ata"));
+
+                date = rset.getDate("dt_reuniao");
+                LocalDate dataAtualizada = date.toLocalDate();
+                reuniao.setDtReuniao(dataAtualizada);
+
+                date = rset.getDate("cadastrado");
+                dataAtualizada = date.toLocalDate();
+                reuniao.setDtCriacao(dataAtualizada);
+                reuniao.setId(0);
+
+                date = rset.getDate("modificado");
+                if (date != null) {
+                    dataAtualizada = date.toLocalDate();
+                    reuniao.setDtModificacao(dataAtualizada);
+                }
+
+                vetResult.add(reuniao);
 
             }
         } catch (Exception e) {
@@ -140,6 +164,7 @@ public class RelatorioDAO implements Default{
 
             while (rset.next()) {
 
+                
                 vetResult.add("Campus: " + rset.getString("camp.nome") + "\n"
                         + "Curso: " + rset.getString("c.curso") + "\n"
                         + "Disciplina: " + rset.getString("d.disciplina") + "\n"

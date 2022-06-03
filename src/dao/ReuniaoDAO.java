@@ -84,7 +84,7 @@ public class ReuniaoDAO implements Default {
 
                 Reuniao reuniao = new Reuniao();
 
-                reuniao.setId(0);
+                reuniao.setId(rset.getInt("r.id"));
 
                 Comissao comissao = comissaoDAO.find(rset.getInt("r.comissao"));
                 reuniao.setComissao(comissao);
