@@ -101,7 +101,6 @@ public class ReuniaoDAO implements Default {
                 date = rset.getDate("r.cadastrado");
                 dataAtualizada = date.toLocalDate();
                 reuniao.setDtCriacao(dataAtualizada);
-                reuniao.setId(0);
 
                 date = rset.getDate("r.modificado");
                 if (date != null) {

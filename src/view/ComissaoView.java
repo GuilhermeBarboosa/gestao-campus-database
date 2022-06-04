@@ -102,7 +102,7 @@ public class ComissaoView {
             for (Comissao comissao : vetResult) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + comissao.getId());
-                System.out.println("COMISSAO: " + comissao.getId());
+                System.out.println("COMISSAO: " + comissao.getNameComissao());
                 System.out.println("--------------------------------------");
             }
         }
