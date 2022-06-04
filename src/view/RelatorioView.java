@@ -42,7 +42,7 @@ public class RelatorioView {
     public int opMenuRelat() {
         System.out.println("Escolha um tipo de relatório: ");
         System.out.println("1- Relatório das atas por período");
-        System.out.println("2- Relatório de servidor cadastrado");
+        System.out.println("2- Relatório de servidores");
         System.out.println("3- Relatório de aulas do campus");
         return Integer.parseInt(ler.nextLine());
     }

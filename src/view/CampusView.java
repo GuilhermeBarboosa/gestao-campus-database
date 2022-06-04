@@ -26,7 +26,6 @@ public class CampusView {
             Campus campus = new Campus();
             campus.setId(id);
             id++;
-
             System.out.println("Nome: ");
             campus.setNome(ler.nextLine());
             System.out.println("Abreviacao:  ");
