@@ -7,7 +7,6 @@ package view;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
@@ -30,8 +29,6 @@ import java.util.List;
 import java.util.Scanner;
 import model.Atividade;
 import model.Campus;
-import model.Comissao;
-import model.Disciplina;
 import model.Reuniao;
 import model.Oferta;
 import model.Orientacao;
@@ -168,7 +165,7 @@ public class RelatorioView implements Default {
 
             doc.add(p);
 
-            PdfPTable table = new PdfPTable(5);
+            PdfPTable table = new PdfPTable(6);
 
             PdfPCell cel1 = new PdfPCell(new Paragraph("SERVIDOR"));
             cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -186,70 +183,87 @@ public class RelatorioView implements Default {
             cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             cel1.setPadding(5);
 
+            PdfPCell cel6 = new PdfPCell(new Paragraph("HORAS TOTAIS"));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
+
             table.addCell(cel1);
             table.addCell(cel2);
             table.addCell(cel3);
             table.addCell(cel4);
             table.addCell(cel5);
+            table.addCell(cel6);
             if (servidorVet.isEmpty()) {
                 System.out.println("Sem servidores cadastradas...");
             } else {
                 for (Servidor servidor : servidorVet) {
                     String servidorString = "";
                     servidorString += servidor.getNome();
-                    
+
                     String atividadeString = "";
                     String vinculoString = "";
                     String orientacaoString = "";
                     String ofertaString = "";
+                    double horasTotais = 0;
                     for (Atividade atividade : atividadeVet) {
                         if (atividade.getServidor().getId() == servidor.getId()) {
-                              atividadeString += " - " + atividade.getDescricao()+ "\n\n";
+                            atividadeString += " - " + atividade.getDescricao() + " "
+                                    + atividade.getHorasSemanais() + "h \n\n";
+                            horasTotais += atividade.getHorasSemanais();
                         }
                     }
                     for (Vinculo vinculo : vinculoVet) {
                         if (vinculo.getServidor().getId() == servidor.getId()) {
-                            vinculoString +=  " - " + vinculo.getComissao().getNameComissao() + "\n\n";
+                            vinculoString += " - " + vinculo.getComissao().getNameComissao() + " "
+                                    + vinculo.getComissao().getHorasSemanais() + "h \n\n";
+                            horasTotais += vinculo.getComissao().getHorasSemanais();
                         }
                     }
                     for (Orientacao orientacao : orientacaoVet) {
                         if (orientacao.getServidor().getId() == servidor.getId()) {
-                            orientacaoString +=  " - " + orientacao.getTipo() + "\n\n";
+                            orientacaoString += " - " + orientacao.getTipo() + " "
+                                    + orientacao.getHorasSemanais() + "h \n\n";
+                            horasTotais += orientacao.getHorasSemanais();
                         }
                     }
                     for (Oferta oferta : ofertaVet) {
                         if (oferta.getServidor().getId() == servidor.getId()) {
-                            ofertaString +=  " - " +oferta.getDisciplina().getNome() + "\n\n";
+                            ofertaString += " - " + oferta.getDisciplina().getNome() + " "
+                                    + oferta.getDisciplina().getCargaHoraria() + "h \n\n";
+                            horasTotais += oferta.getDisciplina().getCargaHoraria();
                         }
                     }
-                    
-                    
+
                     cel1 = new PdfPCell(new Paragraph(servidorString));
                     table.addCell(cel1);
-                    
-                    if(atividadeString.equals("")){
+
+                    if (atividadeString.equals("")) {
                         atividadeString = "N/A";
                     }
                     cel2 = new PdfPCell(new Paragraph(atividadeString));
                     table.addCell(cel2);
-                    
-                    if(vinculoString.equals("")){
+
+                    if (vinculoString.equals("")) {
                         vinculoString = "N/A";
                     }
                     cel3 = new PdfPCell(new Paragraph(vinculoString));
                     table.addCell(cel3);
-                    
-                    if(orientacaoString.equals("")){
+
+                    if (orientacaoString.equals("")) {
                         orientacaoString = "N/A";
                     }
                     cel4 = new PdfPCell(new Paragraph(orientacaoString));
                     table.addCell(cel4);
-                    
-                    if(ofertaString.equals("")){
+
+                    if (ofertaString.equals("")) {
                         ofertaString = "N/A";
                     }
                     cel5 = new PdfPCell(new Paragraph(ofertaString));
                     table.addCell(cel5);
+
+                    String horas = Double.toString(horasTotais);
+                    cel6 = new PdfPCell(new Paragraph(horas));
+                    table.addCell(cel6);
                 }
                 doc.add(table);
                 doc.close();
