@@ -145,8 +145,6 @@ public class RelatorioView implements Default {
 
     public void relat2(ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws SQLException, Exception {
 
-        List<String> relatorioServidor = relatorioDAO.relatorioCompleto();
-
         List<Servidor> servidorVet = servidorDAO.read();
         List<Vinculo> vinculoVet = vinculoDAO.read();
         List<Atividade> atividadeVet = atividadeDAO.read();
@@ -197,43 +195,61 @@ public class RelatorioView implements Default {
                 System.out.println("Sem servidores cadastradas...");
             } else {
                 for (Servidor servidor : servidorVet) {
-                    cel1 = new PdfPCell(new Paragraph(servidor.getNome()));
-                    cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel1.setPadding(10);
-                    table.addCell(cel1);
+                    String servidorString = "";
+                    servidorString += servidor.getNome();
+                    
+                    String atividadeString = "";
+                    String vinculoString = "";
+                    String orientacaoString = "";
+                    String ofertaString = "";
                     for (Atividade atividade : atividadeVet) {
                         if (atividade.getServidor().getId() == servidor.getId()) {
-                            cel2 = new PdfPCell(new Paragraph(atividade.getDescricao()));
-                            cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                            cel2.setPadding(10);
-                            table.addCell(cel2);
+                              atividadeString += " - " + atividade.getDescricao()+ "\n\n";
                         }
                     }
                     for (Vinculo vinculo : vinculoVet) {
                         if (vinculo.getServidor().getId() == servidor.getId()) {
-                            cel3 = new PdfPCell(new Paragraph(vinculo.getComissao().getNameComissao()));
-                            cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                            cel3.setPadding(10);
-                            table.addCell(cel3);
+                            vinculoString +=  " - " + vinculo.getComissao().getNameComissao() + "\n\n";
                         }
                     }
                     for (Orientacao orientacao : orientacaoVet) {
                         if (orientacao.getServidor().getId() == servidor.getId()) {
-                            cel4 = new PdfPCell(new Paragraph(orientacao.getTipo()));
-                            cel4.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                            cel4.setPadding(10);
-                            table.addCell(cel4);
+                            orientacaoString +=  " - " + orientacao.getTipo() + "\n\n";
                         }
                     }
                     for (Oferta oferta : ofertaVet) {
                         if (oferta.getServidor().getId() == servidor.getId()) {
-                            cel5 = new PdfPCell(new Paragraph(oferta.getDisciplina().getNome()));
-                            cel5.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                            cel5.setPadding(10);
-                            table.addCell(cel5);
+                            ofertaString +=  " - " +oferta.getDisciplina().getNome() + "\n\n";
                         }
                     }
-
+                    
+                    
+                    cel1 = new PdfPCell(new Paragraph(servidorString));
+                    table.addCell(cel1);
+                    
+                    if(atividadeString.equals("")){
+                        atividadeString = "N/A";
+                    }
+                    cel2 = new PdfPCell(new Paragraph(atividadeString));
+                    table.addCell(cel2);
+                    
+                    if(vinculoString.equals("")){
+                        vinculoString = "N/A";
+                    }
+                    cel3 = new PdfPCell(new Paragraph(vinculoString));
+                    table.addCell(cel3);
+                    
+                    if(orientacaoString.equals("")){
+                        orientacaoString = "N/A";
+                    }
+                    cel4 = new PdfPCell(new Paragraph(orientacaoString));
+                    table.addCell(cel4);
+                    
+                    if(ofertaString.equals("")){
+                        ofertaString = "N/A";
+                    }
+                    cel5 = new PdfPCell(new Paragraph(ofertaString));
+                    table.addCell(cel5);
                 }
                 doc.add(table);
                 doc.close();
