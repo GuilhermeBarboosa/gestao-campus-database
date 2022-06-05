@@ -61,7 +61,7 @@ public class ReuniaoPresenteDAO implements Default {
 
     public List<ReuniaoPresente> read() throws Exception {
 
-        String sql = "SELECT *, s.nome, c.comissao FROM reuniao_presente AS rp INNER JOIN servidores AS s ON rp.servidor = s.id INNER JOIN comissoes AS c ON rp.comissao = c.id";
+        String sql = "SELECT *  FROM reuniao_presente";
 
         List<ReuniaoPresente> vetResult = new ArrayList<>();
 
@@ -81,22 +81,22 @@ public class ReuniaoPresenteDAO implements Default {
 
                 ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
-                reuniaoPresente.setId(rset.getInt("rp.id"));
+                reuniaoPresente.setId(rset.getInt("id"));
 
-                Comissao comissao = comissaoDAO.find(rset.getInt("rp.comissao"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
                 reuniaoPresente.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("rp.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 reuniaoPresente.setServidor(servidor);
 
-                reuniaoPresente.setAtaReuniao(rset.getString("rp.ata_reuniao"));
+                reuniaoPresente.setAtaReuniao(rset.getString("ata_reuniao"));
 
-                Date date = rset.getDate("rp.cadastrado");
+                Date date = rset.getDate("cadastrado");
                 LocalDate dataAtualizada = date.toLocalDate();
                 reuniaoPresente.setDtCriacao(dataAtualizada);
 
-                date = rset.getDate("rp.modificado");
-                if (dataAtualizada != null) {
+                date = rset.getDate("modificado");
+                if (date != null) {
                 dataAtualizada = date.toLocalDate();
                     reuniaoPresente.setDtModificacao(dataAtualizada);
                 }
@@ -200,10 +200,10 @@ public class ReuniaoPresenteDAO implements Default {
                 ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
                 reuniaoPresente.setId(rset.getInt("id"));
-                Comissao comissao = comissaoDAO.find(rset.getInt("rp.comissao"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
                 reuniaoPresente.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("rp.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 reuniaoPresente.setServidor(servidor);
 
                 reuniaoPresente.setAtaReuniao(rset.getString("ata_reuniao"));

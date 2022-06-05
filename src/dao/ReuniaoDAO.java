@@ -211,10 +211,10 @@ public class ReuniaoDAO implements Default {
                 Reuniao reuniao = new Reuniao();
 
                 reuniao.setId(rset.getInt("id"));
-                Comissao comissao = comissaoDAO.find(rset.getInt("r.comissao"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
                 reuniao.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("r.servidor_secre"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor_secre"));
                 reuniao.setServidorSecre(servidor);
 
                 reuniao.setConteudoAta(rset.getString("conteudo_ata"));

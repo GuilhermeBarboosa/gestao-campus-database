@@ -7,6 +7,7 @@ package view;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
@@ -14,6 +15,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import dao.CampusDAO;
+import dao.Default;
 import dao.RelatorioDAO;
 import dao.ServidorDAO;
 import java.awt.Desktop;
@@ -26,15 +28,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+import model.Atividade;
 import model.Campus;
+import model.Comissao;
+import model.Disciplina;
 import model.Reuniao;
 import model.Oferta;
+import model.Orientacao;
+import model.Servidor;
+import model.Vinculo;
 
 /**
  *
  * @author Aluno
  */
-public class RelatorioView {
+public class RelatorioView implements Default {
 
     Scanner ler = new Scanner(System.in);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -135,9 +143,15 @@ public class RelatorioView {
 
     }
 
-    public void relat2(ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws SQLException {
+    public void relat2(ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws SQLException, Exception {
 
         List<String> relatorioServidor = relatorioDAO.relatorioCompleto();
+
+        List<Servidor> servidorVet = servidorDAO.read();
+        List<Vinculo> vinculoVet = vinculoDAO.read();
+        List<Atividade> atividadeVet = atividadeDAO.read();
+        List<Orientacao> orientacaoVet = orientacaoDAO.read();
+        List<Oferta> ofertaVet = ofertaDAO.read();
 
         Document doc = new Document();
 
@@ -156,21 +170,70 @@ public class RelatorioView {
 
             doc.add(p);
 
-            PdfPTable table = new PdfPTable(1);
+            PdfPTable table = new PdfPTable(5);
 
-            PdfPCell cel1 = new PdfPCell(new Paragraph(""));
+            PdfPCell cel1 = new PdfPCell(new Paragraph("SERVIDOR"));
             cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             cel1.setPadding(5);
-            table.addCell(cel1);
+            PdfPCell cel2 = new PdfPCell(new Paragraph("ATIVIDADE"));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
+            PdfPCell cel3 = new PdfPCell(new Paragraph("COMISSAO"));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
+            PdfPCell cel4 = new PdfPCell(new Paragraph("ORIENTACAO"));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
+            PdfPCell cel5 = new PdfPCell(new Paragraph("AULA"));
+            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel1.setPadding(5);
 
-            if (relatorioServidor.isEmpty()) {
+            table.addCell(cel1);
+            table.addCell(cel2);
+            table.addCell(cel3);
+            table.addCell(cel4);
+            table.addCell(cel5);
+            if (servidorVet.isEmpty()) {
                 System.out.println("Sem servidores cadastradas...");
             } else {
-                for (String reuniao : relatorioServidor) {
-                    cel1 = new PdfPCell(new Paragraph(reuniao));
+                for (Servidor servidor : servidorVet) {
+                    cel1 = new PdfPCell(new Paragraph(servidor.getNome()));
                     cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
                     cel1.setPadding(10);
                     table.addCell(cel1);
+                    for (Atividade atividade : atividadeVet) {
+                        if (atividade.getServidor().getId() == servidor.getId()) {
+                            cel2 = new PdfPCell(new Paragraph(atividade.getDescricao()));
+                            cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                            cel2.setPadding(10);
+                            table.addCell(cel2);
+                        }
+                    }
+                    for (Vinculo vinculo : vinculoVet) {
+                        if (vinculo.getServidor().getId() == servidor.getId()) {
+                            cel3 = new PdfPCell(new Paragraph(vinculo.getComissao().getNameComissao()));
+                            cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                            cel3.setPadding(10);
+                            table.addCell(cel3);
+                        }
+                    }
+                    for (Orientacao orientacao : orientacaoVet) {
+                        if (orientacao.getServidor().getId() == servidor.getId()) {
+                            cel4 = new PdfPCell(new Paragraph(orientacao.getTipo()));
+                            cel4.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                            cel4.setPadding(10);
+                            table.addCell(cel4);
+                        }
+                    }
+                    for (Oferta oferta : ofertaVet) {
+                        if (oferta.getServidor().getId() == servidor.getId()) {
+                            cel5 = new PdfPCell(new Paragraph(oferta.getDisciplina().getNome()));
+                            cel5.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                            cel5.setPadding(10);
+                            table.addCell(cel5);
+                        }
+                    }
+
                 }
                 doc.add(table);
                 doc.close();

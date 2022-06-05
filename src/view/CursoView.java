@@ -81,9 +81,9 @@ public class CursoView {
             } else {
                 cursoAlt.setEstado("inativo");
             }
-            System.out.println("Data de inicio: ");
+            System.out.println("Ano de inicio: ");
             cursoAlt.setAnoInicio(Integer.parseInt(ler.nextLine()));
-            System.out.println("Data de término: ");
+            System.out.println("Ano de término: ");
             cursoAlt.setAnoTermino(Integer.parseInt(ler.nextLine()));
 
             List<Campus> campusVet = campusDAO.read();

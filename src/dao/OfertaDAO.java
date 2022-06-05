@@ -129,50 +129,6 @@ public class OfertaDAO implements Default {
         return vetResult;
     }
 
-    public List<String> readId() throws Exception {
-
-        String sql = "SELECT *, s.nome, d.disciplina, c.curso FROM ofertas AS o INNER JOIN servidores AS s ON o.servidor = s.id "
-                + "INNER JOIN disciplinas AS d ON o.disciplina = d.id INNER JOIN cursos AS c ON o.curso = c.id;";
-
-        List<String> vetResult = new ArrayList<>();
-
-        Connection conn = null;
-        PreparedStatement pstm = null;
-
-        ResultSet rset = null;
-
-        try {
-            conn = ConnectionFactory.createConnectionToMySql();
-
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
-
-            rset = pstm.executeQuery();
-
-            while (rset.next()) {
-
-                vetResult.add("=========================\n"
-                        + "Id: " + rset.getString("o.id") + "\n"
-                        + "Servidor: " + rset.getString("s.nome") + "\n"
-                        + "Disciplina: " + rset.getString("d.disciplina") + "\n"
-                        + "Curso: " + rset.getString("c.curso") + "\n"
-                        + "=========================" + "\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rset != null) {
-                rset.close();
-            }
-            if (pstm != null) {
-                pstm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return vetResult;
-    }
-
     public void update(Oferta altOferta) throws Exception {;
         String sql = "UPDATE ofertas SET curso=?, disciplina=?, servidor=?, "
                 + "ano=?, semestre=?, aula_semanal=?, modificado=?"
@@ -258,13 +214,13 @@ public class OfertaDAO implements Default {
                 Oferta oferta = new Oferta();
 
                 oferta.setId(rset.getInt("id"));
-                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 oferta.setServidor(servidor);
 
-                Disciplina disciplina = disciplinaDAO.find(rset.getInt("o.disciplina"));
+                Disciplina disciplina = disciplinaDAO.find(rset.getInt("disciplina"));
                 oferta.setDisciplina(disciplina);
 
-                Curso curso = cursoDAO.find(rset.getInt("o.curso"));
+                Curso curso = cursoDAO.find(rset.getInt("curso"));
                 oferta.setCurso(curso);
                 oferta.setAno(rset.getInt("ano"));
                 oferta.setSemestre(rset.getInt("semestre"));

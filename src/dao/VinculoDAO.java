@@ -222,10 +222,10 @@ public class VinculoDAO implements Default {
                 Vinculo vinculo = new Vinculo();
 
                 vinculo.setId(rset.getInt("id"));
-                Comissao comissao = comissaoDAO.find(rset.getInt("v.comissao"));
+                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
                 vinculo.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("v.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 vinculo.setServidor(servidor);
                 vinculo.setPapel(rset.getString("papel"));
 

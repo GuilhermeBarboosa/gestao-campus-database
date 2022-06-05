@@ -220,7 +220,7 @@ public class AtividadeDAO implements Default {
                 atividade.setId(rset.getInt("id"));
                 atividade.setDescricao(rset.getString("atividade"));
                 
-                Servidor servidor = servidorDAO.find(rset.getInt("a.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 atividade.setServidor(servidor);
 
                 atividade.setHorasSemanais(rset.getDouble("horas_semanais"));

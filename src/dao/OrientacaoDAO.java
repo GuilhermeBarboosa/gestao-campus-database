@@ -223,7 +223,7 @@ public class OrientacaoDAO implements Default {
                 orientacao.setId(rset.getInt("id"));
                 orientacao.setTipo(rset.getString("tipo"));
                 
-                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 orientacao.setServidor(servidor);
                 
                 orientacao.setNomeAluno(rset.getString("aluno"));
