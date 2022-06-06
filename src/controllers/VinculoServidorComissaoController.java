@@ -10,7 +10,7 @@ import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
 import view.VinculoView;
-import dao.Default;
+import model.Default;
 
 /**
  *

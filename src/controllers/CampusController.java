@@ -10,7 +10,7 @@ import java.util.List;
 import model.Campus;
 import view.CampusView;
 import view.Gui;
-import dao.Default;
+import model.Default;
 
 /**
  *

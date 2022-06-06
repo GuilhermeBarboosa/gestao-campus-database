@@ -9,7 +9,7 @@ import java.util.List;
 import model.Campus;
 import model.Servidor;
 import view.ServidorView;
-import dao.Default;
+import model.Default;
 /**
  *
  * @author Aluno
@@ -28,7 +28,7 @@ public class ServidorController extends DefaultController implements Default{
         try {
             switch (opcCrud) {
             case 1:
-                Servidor servidor = servV.criarServ(campusDAO);
+                Servidor servidor = servidorView.criarServ(campusDAO);
                 if(servidor != null){
                      servidorDAO.create(servidor);
                 }else{
@@ -36,23 +36,23 @@ public class ServidorController extends DefaultController implements Default{
                 }
                 break;
             case 2:
-                servV.mostrarIdServidores(vetResult);
+                servidorView.mostrarIdServidores(vetResult);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 Servidor servAlt = servidorDAO.find(auxLoc);
 
                 if (servAlt != null) {
-                    servidorDAO.update(servV.modifServ(servAlt, campusDAO));
+                    servidorDAO.update(servidorView.modifServ(servAlt, campusDAO));
                     GUI.sucess();
                 } else {
                     GUI.error();
                 }
                 break;
             case 3:
-                servV.mostrarServidores(vetResult);
+                servidorView.mostrarServidores(vetResult);
                 break;
             case 4:
-                servV.mostrarIdServidores(vetResult);
+                servidorView.mostrarIdServidores(vetResult);
                 GUI.printID();
                 auxLoc = Integer.parseInt(ler.nextLine());
                 if (auxLoc != 0) {

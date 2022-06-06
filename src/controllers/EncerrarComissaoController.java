@@ -8,7 +8,7 @@ package controllers;
 import java.util.List;
 import model.Comissao;
 import view.ComissaoView;
-import dao.Default;
+import model.Default;
 
 /**
  *

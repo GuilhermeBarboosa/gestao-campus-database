@@ -5,8 +5,9 @@
  */
 package dao;
 
-import static dao.Default.comissaoDAO;
-import static dao.Default.servidorDAO;
+import model.Default;
+import static model.Default.comissaoDAO;
+import static model.Default.servidorDAO;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;

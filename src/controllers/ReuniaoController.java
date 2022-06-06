@@ -8,7 +8,7 @@ package controllers;
 import java.util.List;
 import model.Reuniao;
 import view.ReuniaoView;
-import dao.Default;
+import model.Default;
 
 /**
  *

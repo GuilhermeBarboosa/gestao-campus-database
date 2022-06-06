@@ -8,7 +8,7 @@ package controllers;
 import java.util.List;
 import model.Curso;
 import view.CursoView;
-import dao.Default;
+import model.Default;
 import model.Campus;
 
 /**

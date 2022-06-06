@@ -8,7 +8,7 @@ package controllers;
 import java.util.List;
 import model.Disciplina;
 import view.DisciplinaView;
-import dao.Default;
+import model.Default;
 
 /**
  *

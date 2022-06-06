@@ -2,7 +2,7 @@ package controllers;
 
 import java.time.LocalDate;
 import view.RelatorioView;
-import dao.Default;
+import model.Default;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,13 +26,13 @@ public class RelatorioController extends DefaultController implements Default{
             switch (opRelat) {
                 case 1:
                     filtro = relatView.opMenuRelat1();
-                    relatView.relat1(filtro, relatorioDAO);
+                    relatView.relat1(filtro);
                     break;
                 case 2:
-                    relatView.relat2(servidorDAO, relatorioDAO);
+                    relatView.relat2();
                     break;
                 case 3:
-                    relatView.relat3(campusDAO, relatorioDAO);
+                    relatView.relat3();
                     break;
                 default:
                     break;

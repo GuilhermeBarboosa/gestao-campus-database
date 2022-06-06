@@ -9,7 +9,7 @@ import java.util.List;
 import model.Atividade;
 import model.Servidor;
 import view.AtividadeView;
-import dao.Default;
+import model.Default;
 
 /**
  *

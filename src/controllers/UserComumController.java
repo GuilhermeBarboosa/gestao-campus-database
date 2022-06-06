@@ -8,7 +8,7 @@ package controllers;
 import java.util.List;
 import model.Campus;
 import model.Servidor;
-import dao.Default;
+import model.Default;
 import model.Atividade;
 import model.Comissao;
 import model.Curso;
@@ -32,52 +32,52 @@ public class UserComumController extends DefaultController implements Default{
             switch (opcCrud) {
                 case 1:
                     List<Campus> responseCampus = campusDAO.read();
-                    campV.mostrarTodosCampos(responseCampus);
+                    campusView.mostrarTodosCampos(responseCampus);
                     break;
 
                 case 2:
                     List<Servidor> responseServidor = servidorDAO.read();
-                    servV.mostrarServidores(responseServidor);
+                    servidorView.mostrarServidores(responseServidor);
                     break;
 
                 case 3:
                     List<Curso> responseCurso = cursoDAO.read();
-                    cursoV.mostrarCurso(responseCurso);
+                    cursoView.mostrarCurso(responseCurso);
                     break;
 
                 case 4:
                     List<Disciplina> responseDisciplina = disciplinaDAO.read();
-                    discV.mostrarTodasDisciplinas(responseDisciplina);
+                    disciplinaView.mostrarTodasDisciplinas(responseDisciplina);
                     break;
 
                 case 5:
                     List<Oferta> responseOferta = ofertaDAO.read();
-                    ofertaV.mostrarTodasOfertas(responseOferta);
+                    ofertaView.mostrarTodasOfertas(responseOferta);
                     break;
 
                 case 6:
                     List<Orientacao> responseOrientacao = orientacaoDAO.read();
-                    orientacaoV.mostrarTodasOrientacoes(responseOrientacao);
+                    orientacaoView.mostrarTodasOrientacoes(responseOrientacao);
                     break;
 
                 case 7:
                     List<Atividade> responseAtividade = atividadeDAO.read();
-                    atV.mostrarAtividades(responseAtividade);
+                    atividadeView.mostrarAtividades(responseAtividade);
                     break;
 
                 case 8:
                     List<Comissao> responseComissao = comissaoDAO.read();
-                    comV.mostrarTodosComissao(responseComissao);
+                    comissaoView.mostrarTodosComissao(responseComissao);
                     break;
 
                 case 9:
                     List<Vinculo> responseVinculo = vinculoDAO.read();
-                    vincV.mostrarTodosVinculos(responseVinculo);
+                    vinculoView.mostrarTodosVinculos(responseVinculo);
                     break;
 
                 case 10:
                     List<Reuniao> responseReuniao = reuniaoDAO.read();
-                    reunV.mostrarTodosReunioes(responseReuniao);
+                    reuniaoView.mostrarTodosReunioes(responseReuniao);
                     break;
                 case 11:
                     List<ReuniaoPresente> responseReuniaoPresente = reuniaoPresenteDAO.read();

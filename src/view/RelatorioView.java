@@ -13,10 +13,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import dao.CampusDAO;
-import dao.Default;
-import dao.RelatorioDAO;
-import dao.ServidorDAO;
+import model.Default;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,7 +58,7 @@ public class RelatorioView implements Default {
         return filtro;
     }
 
-    public void relat1(LocalDate[] filtro, RelatorioDAO relatorioDAO) throws Exception {
+    public void relat1(LocalDate[] filtro) throws Exception {
 
         List<Reuniao> reunioes = relatorioDAO.relatorioData(filtro[0], filtro[1]);
 
@@ -140,7 +137,7 @@ public class RelatorioView implements Default {
 
     }
 
-    public void relat2(ServidorDAO servidorDAO, RelatorioDAO relatorioDAO) throws SQLException, Exception {
+    public void relat2() throws SQLException, Exception {
 
         List<Servidor> servidorVet = servidorDAO.read();
         List<Vinculo> vinculoVet = vinculoDAO.read();
@@ -276,7 +273,7 @@ public class RelatorioView implements Default {
 
     }
 
-    public void relat3(CampusDAO campusDAO, RelatorioDAO relatorioDAO) throws Exception {
+    public void relat3() throws Exception {
 
         List<Campus> campusVet = campusDAO.read();
         CampusView campusV = new CampusView();

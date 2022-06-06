@@ -9,7 +9,7 @@ import java.util.List;
 import model.Orientacao;
 import model.Servidor;
 import view.OrientacaoView;
-import dao.Default;
+import model.Default;
 
 /**
  *

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;

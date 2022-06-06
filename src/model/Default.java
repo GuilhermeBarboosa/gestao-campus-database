@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package model;
 
 import controllers.AtividadeController;
 import controllers.CampusController;
@@ -19,6 +19,18 @@ import controllers.ReuniaoPresenteController;
 import controllers.ServidorController;
 import controllers.UserComumController;
 import controllers.VinculoServidorComissaoController;
+import dao.AtividadeDAO;
+import dao.CampusDAO;
+import dao.ComissaoDAO;
+import dao.CursoDAO;
+import dao.DisciplinaDAO;
+import dao.OfertaDAO;
+import dao.OrientacaoDAO;
+import dao.RelatorioDAO;
+import dao.ReuniaoDAO;
+import dao.ReuniaoPresenteDAO;
+import dao.ServidorDAO;
+import dao.VinculoDAO;
 import view.AtividadeView;
 import view.CampusView;
 import view.ComissaoView;
@@ -65,15 +77,15 @@ public interface Default {
     public final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
     public final RelatorioDAO relatorioDAO = new RelatorioDAO();
 
-    public final CampusView campV = new CampusView();
-    public final ServidorView servV = new ServidorView();
-    public final CursoView cursoV = new CursoView();
-    public final DisciplinaView discV = new DisciplinaView();
-    public final OfertaView ofertaV = new OfertaView();
-    public final OrientacaoView orientacaoV = new OrientacaoView();
-    public final AtividadeView atV = new AtividadeView();
-    public final ComissaoView comV = new ComissaoView();
-    public final VinculoView vincV = new VinculoView();
-    public final ReuniaoView reunV = new ReuniaoView();
+    public final CampusView campusView = new CampusView();
+    public final ServidorView servidorView = new ServidorView();
+    public final CursoView cursoView = new CursoView();
+    public final DisciplinaView disciplinaView = new DisciplinaView();
+    public final OfertaView ofertaView = new OfertaView();
+    public final OrientacaoView orientacaoView = new OrientacaoView();
+    public final AtividadeView atividadeView = new AtividadeView();
+    public final ComissaoView comissaoView = new ComissaoView();
+    public final VinculoView vinculoView = new VinculoView();
+    public final ReuniaoView reuniaoView = new ReuniaoView();
     public final ReuniaoPresenteView reunPresenteV = new ReuniaoPresenteView();
 }

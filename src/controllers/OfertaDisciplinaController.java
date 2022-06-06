@@ -12,7 +12,7 @@ import model.Oferta;
 import model.Servidor;
 import view.AtividadeView;
 import view.OfertaView;
-import dao.Default;
+import model.Default;
 
 /**
  *

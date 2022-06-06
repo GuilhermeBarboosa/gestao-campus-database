@@ -8,7 +8,7 @@ package aplicacao;
 import view.Gui;
 
 import model.Servidor;
-import dao.Default;
+import model.Default;
 
 public class gestaoIFTM implements Default {
 
