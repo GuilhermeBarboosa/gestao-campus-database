@@ -5,6 +5,8 @@
  */
 package aplicacao;
 
+import java.sql.SQLException;
+import java.util.List;
 import view.Gui;
 
 import model.Servidor;
@@ -28,26 +30,25 @@ public class gestaoIFTM implements Default {
     }
 
     private void principal() throws Exception {
-//        try {
-//            do {
-//                String[] loginSenha = GUI.login();
-//                servidorLogin = login(loginSenha[0], loginSenha[1]);
-//                if (servidorLogin != null) {
-//                    if (servidorLogin.getPerfil() == 1) {
-//                        sistemaAdm();
-//                    } else {
-//                        sistemaComum();
-//                    }
-//                } else {
-//                    System.err.println("Usuario não encontrado");
-//                }
-//            } while (servidorLogin == null);
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-
+        try {
+            do {
+                String[] loginSenha = GUI.login();
+                servidorLogin = login(loginSenha[0], loginSenha[1]);
+                if (servidorLogin != null) {
+                    if (servidorLogin.getPerfil() == 1) {
+                        sistemaAdm();
+                    } else {
+                        sistemaComum();
+                    }
+                } else {
+                    System.err.println("Usuario não encontrado");
+                }
+            } while (servidorLogin == null);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
         //RETIRAR ISSO
-        sistemaAdm();
+        //sistemaAdm();
         //----------
     }
 
@@ -107,21 +108,19 @@ public class gestaoIFTM implements Default {
         principal();
     }
 
-//    public Servidor login(String login, String senha) throws SQLException, Exception {
-//        Servidor responseLogin = new Servidor();
-//
-//        List<Servidor> vetServidor = servidorDAO.read();
-//
-//   
-//        for (Servidor servidor : vetServidor) {
-//            if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
-//                responseLogin = servidor;
-//                return responseLogin;
-//            }
-//        }
-//
-//        return responseLogin;
-//    }
-    
-    
+    public Servidor login(String login, String senha) throws SQLException, Exception {;
+        Servidor responseLogin = new Servidor();
+
+        List<Servidor> vetServidor = servidorDAO.read();
+
+        for (Servidor servidor : vetServidor) {
+            if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
+                responseLogin = servidor;
+                return responseLogin;
+            }
+        }
+
+        return null;
+    }
+
 }
