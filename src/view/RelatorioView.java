@@ -296,7 +296,7 @@ public class RelatorioView implements Default {
 
             doc.open();
             Font f = new Font(FontFamily.TIMES_ROMAN, 20.0f, Font.BOLD, BaseColor.GREEN);
-            Paragraph p = new Paragraph("CAMPUS: " + aulas.get(0).getCurso().getCampus().getNome() + "\n\n\n", f);
+            Paragraph p = new Paragraph("CAMPUS: " + campus.getNome() + "\n\n\n", f);
             p.setAlignment(1);
             doc.add(p);
 
