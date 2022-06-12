@@ -7,6 +7,7 @@ package view;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
@@ -21,11 +22,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import static java.time.LocalDate.now;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import model.Atividade;
 import model.Campus;
+import model.Comissao;
 import model.Reuniao;
 import model.Oferta;
 import model.Orientacao;
@@ -60,12 +63,17 @@ public class RelatorioView implements Default {
 
     public void relat1(LocalDate[] filtro) throws Exception {
 
+        List<Comissao> comissaoVet = comissaoDAO.read();
+        comissaoView.mostrarIdTodosComissao(comissaoVet);
+
+        System.out.println("Qual comissao deseja: ");
+        int aux = Integer.parseInt(ler.nextLine());
+
         List<Reuniao> reunioes = relatorioDAO.relatorioData(filtro[0], filtro[1]);
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo1.pdf";
-
+        String arquivoPdf = "relatorioTipo1" + LocalDate.now() + ".pdf";
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
 
@@ -101,30 +109,33 @@ public class RelatorioView implements Default {
             } else {
                 for (Reuniao reuniao : reunioes) {
 
-                    Date date = Date.valueOf(reuniao.getDtReuniao());
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                    String data = format.format(date);
+                    if (reuniao.getComissao().getId() == aux) {
+                        Date date = Date.valueOf(reuniao.getDtReuniao());
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                        String data = format.format(date);
 
-                    cel1 = new PdfPCell(new Paragraph(reuniao.getComissao().getNameComissao()));
-                    cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel1.setPadding(10);
+                        cel1 = new PdfPCell(new Paragraph(reuniao.getComissao().getNameComissao()));
+                        cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                        cel1.setPadding(10);
 
-                    cel2 = new PdfPCell(new Paragraph(reuniao.getConteudoAta()));
-                    cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel2.setPadding(10);
+                        cel2 = new PdfPCell(new Paragraph(reuniao.getConteudoAta()));
+                        cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                        cel2.setPadding(10);
 
-                    cel3 = new PdfPCell(new Paragraph(reuniao.getServidorSecre().getNome()));
-                    cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel3.setPadding(10);
+                        cel3 = new PdfPCell(new Paragraph(reuniao.getServidorSecre().getNome()));
+                        cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                        cel3.setPadding(10);
 
-                    cel4 = new PdfPCell(new Paragraph(data));
-                    cel4.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel4.setPadding(10);
+                        cel4 = new PdfPCell(new Paragraph(data));
+                        cel4.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
+                        cel4.setPadding(10);
 
-                    table.addCell(cel1);
-                    table.addCell(cel2);
-                    table.addCell(cel3);
-                    table.addCell(cel4);
+                        table.addCell(cel1);
+                        table.addCell(cel2);
+                        table.addCell(cel3);
+                        table.addCell(cel4);
+                    }
+
                 }
                 doc.add(table);
                 doc.close();
@@ -147,7 +158,7 @@ public class RelatorioView implements Default {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo2.pdf";
+        String arquivoPdf = "relatorioTipo" + LocalDate.now() + ".pdf";
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
@@ -275,6 +286,8 @@ public class RelatorioView implements Default {
 
     public void relat3() throws Exception {
 
+        List<Servidor> servidorVet = servidorDAO.read();
+
         List<Campus> campusVet = campusDAO.read();
         CampusView campusV = new CampusView();
 
@@ -289,7 +302,7 @@ public class RelatorioView implements Default {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo3.pdf";
+        String arquivoPdf = "relatorioTipo3" + LocalDate.now() + ".pdf";
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
@@ -304,9 +317,9 @@ public class RelatorioView implements Default {
 
             doc.add(p);
 
-            PdfPTable table = new PdfPTable(3);
+            PdfPTable table = new PdfPTable(2);
 
-            PdfPCell cel1 = new PdfPCell(new Paragraph("CURSO"));
+            PdfPCell cel1 = new PdfPCell(new Paragraph("PROFESSOR"));
             cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
             cel1.setPadding(10);
 
@@ -314,32 +327,38 @@ public class RelatorioView implements Default {
             cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
             cel2.setPadding(10);
 
-            PdfPCell cel3 = new PdfPCell(new Paragraph("PROFESSOR"));
-            cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-            cel3.setPadding(10);
-
             table.addCell(cel1);
             table.addCell(cel2);
-            table.addCell(cel3);
             if (aulas.isEmpty()) {
                 System.out.println("Sem aulas cadastradas...");
             } else {
-                for (Oferta aula : aulas) {
-                    cel1 = new PdfPCell(new Paragraph(aula.getCurso().getNome()));
+                for (Servidor servidor : servidorVet) {
+                    String disiciplinaString = "";
+                    String servidorString = servidor.getNome();
+                    for (Oferta aula : aulas) {
+
+                        if (servidor.getId() == aula.getServidor().getId()) {
+                            disiciplinaString += aula.getDisciplina().getNome() + "  "
+                                    + aula.getAulaSemanais() + " aulas \n\n";
+                        }
+
+                    }
+
+                    cel1 = new PdfPCell(new Paragraph(servidorString));
                     cel1.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
                     cel1.setPadding(10);
 
-                    cel2 = new PdfPCell(new Paragraph(aula.getDisciplina().getNome()));
+                    if (disiciplinaString.equals("")) {
+                        disiciplinaString = "N/A";
+                    }
+
+                    cel2 = new PdfPCell(new Paragraph(disiciplinaString));
                     cel2.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
                     cel2.setPadding(10);
 
-                    cel3 = new PdfPCell(new Paragraph(aula.getServidor().getNome()));
-                    cel3.setHorizontalAlignment(PdfPCell.ALIGN_JUSTIFIED);
-                    cel3.setPadding(10);
-
                     table.addCell(cel1);
                     table.addCell(cel2);
-                    table.addCell(cel3);
+
                 }
                 doc.add(table);
                 doc.close();
