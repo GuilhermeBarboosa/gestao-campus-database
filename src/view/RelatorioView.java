@@ -73,7 +73,7 @@ public class RelatorioView implements Default {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo1" + LocalDate.now() + ".pdf";
+        String arquivoPdf = "relatorioTipo1-" + LocalDate.now() + ".pdf";
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
 
@@ -158,7 +158,7 @@ public class RelatorioView implements Default {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo" + LocalDate.now() + ".pdf";
+        String arquivoPdf = "relatorioTipo2-" + LocalDate.now() + ".pdf";
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
@@ -302,7 +302,7 @@ public class RelatorioView implements Default {
 
         Document doc = new Document();
 
-        String arquivoPdf = "relatorioTipo3" + LocalDate.now() + ".pdf";
+        String arquivoPdf = "relatorioTipo3-" + LocalDate.now() + ".pdf";
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(arquivoPdf));
