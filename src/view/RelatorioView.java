@@ -179,21 +179,21 @@ public class RelatorioView implements Default {
             cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             cel1.setPadding(5);
             PdfPCell cel2 = new PdfPCell(new Paragraph("ATIVIDADE"));
-            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cel1.setPadding(5);
+            cel2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel2.setPadding(5);
             PdfPCell cel3 = new PdfPCell(new Paragraph("COMISSAO"));
-            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cel1.setPadding(5);
+            cel3.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel3.setPadding(5);
             PdfPCell cel4 = new PdfPCell(new Paragraph("ORIENTACAO"));
-            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cel1.setPadding(5);
+            cel4.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel4.setPadding(5);
             PdfPCell cel5 = new PdfPCell(new Paragraph("AULA"));
-            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cel1.setPadding(5);
+            cel5.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel5.setPadding(5);
 
             PdfPCell cel6 = new PdfPCell(new Paragraph("HORAS TOTAIS"));
-            cel1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            cel1.setPadding(5);
+            cel6.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cel6.setPadding(5);
 
             table.addCell(cel1);
             table.addCell(cel2);
