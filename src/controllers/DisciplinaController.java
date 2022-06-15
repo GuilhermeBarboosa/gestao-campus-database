@@ -5,22 +5,32 @@
  */
 package controllers;
 
+import dao.CursoDAO;
+import dao.DisciplinaDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Disciplina;
 import view.DisciplinaView;
-import model.Default;
+import view.Gui;
 
 /**
  *
  * @author Aluno
  */
-public class DisciplinaController extends DefaultController implements Default{
+public class DisciplinaController {
 
     private final DisciplinaView disciplinaView = new DisciplinaView();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private final CursoDAO cursoDAO = new CursoDAO();
+
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("DISCIPLINA");
- 
+
         List<Disciplina> vetResult = disciplinaDAO.read();
 
         opcCrud = GUI.menu();

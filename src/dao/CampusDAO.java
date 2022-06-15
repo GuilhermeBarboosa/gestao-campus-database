@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import static factory.ConnectionFactory.createConnectionToMySql;
@@ -22,7 +21,7 @@ import model.Campus;
  *
  * @author Gui
  */
-public class CampusDAO implements Default{
+public class CampusDAO {
 
     public void create(Campus camp) throws Exception {
         String sql = "INSERT INTO campus(nome, abreviacao, duracao_aula, dt_criacao_camp, cidade, bairro, rua, cep, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -103,7 +102,7 @@ public class CampusDAO implements Default{
                 campus.setRua(rset.getString("c.rua"));
                 campus.setCep(rset.getString("c.cep"));
 
-                date = rset.getDate("cadastrado");
+                date = rset.getDate("cadaastrado");
                 dataAtualizada = date.toLocalDate();
                 campus.setDtCriacao(dataAtualizada);
 

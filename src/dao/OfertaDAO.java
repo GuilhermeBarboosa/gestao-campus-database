@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -23,7 +22,11 @@ import model.Servidor;
  *
  * @author Gui
  */
-public class OfertaDAO implements Default {
+public class OfertaDAO{
+
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final CursoDAO cursoDAO = new CursoDAO();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
     public void create(Oferta oferta) throws Exception {
         String sql = "INSERT INTO ofertas (curso, disciplina, servidor, ano, semestre, aula_semanal, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -108,7 +111,7 @@ public class OfertaDAO implements Default {
 
                 date = rset.getDate("cadastrado");
                 if (dataAtualizada != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     oferta.setDtMoficacao(dataAtualizada);
                 }
 

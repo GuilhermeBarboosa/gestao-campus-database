@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -21,7 +20,9 @@ import model.Curso;
  *
  * @author Usuario
  */
-public class CursoDAO implements Default {
+public class CursoDAO {
+
+    private final CampusDAO campusDAO = new CampusDAO();
 
     public void create(Curso curso) throws Exception {
         String sql = "INSERT INTO cursos(curso, campus, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -98,7 +99,7 @@ public class CursoDAO implements Default {
 
                 date = rset.getDate("cadastrado");
                 if (dataAtualizada != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     curso.setDtModificacao(dataAtualizada);
                 }
 
@@ -210,10 +211,10 @@ public class CursoDAO implements Default {
 
                 curso.setId(rset.getInt("id"));
                 curso.setNome(rset.getString("curso"));
-                
+
                 Campus campus = campusDAO.find(rset.getInt("campus"));
                 curso.setCampus(campus);
-   
+
                 curso.setEstado(rset.getString("estado"));
                 curso.setAnoInicio(rset.getInt("ano_inicio"));
                 curso.setAnoTermino(rset.getInt("ano_termino"));

@@ -5,19 +5,29 @@
  */
 package controllers;
 
+import dao.AtividadeDAO;
+import dao.ServidorDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Atividade;
 import model.Servidor;
 import view.AtividadeView;
-import model.Default;
+import view.Gui;
 
 /**
  *
  * @author Aluno
  */
-public class AtividadeController extends DefaultController implements Default{
+public class AtividadeController {
 
+    private final ServidorDAO servidorDAO = new ServidorDAO();
     private final AtividadeView atividadeView = new AtividadeView();
+    private final AtividadeDAO atividadeDAO = new AtividadeDAO();
+    
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("ATIVIDADE");

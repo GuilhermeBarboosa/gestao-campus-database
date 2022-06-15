@@ -5,19 +5,29 @@
  */
 package controllers;
 
+import dao.OrientacaoDAO;
+import dao.ServidorDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Orientacao;
 import model.Servidor;
+import view.Gui;
 import view.OrientacaoView;
-import model.Default;
 
 /**
  *
  * @author Aluno
  */
-public class OrientacaoController extends DefaultController implements Default{
+public class OrientacaoController {
 
     private final OrientacaoView orientacaoView = new OrientacaoView();
+    private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("ORIENTAÇÃO");

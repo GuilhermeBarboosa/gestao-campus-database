@@ -5,23 +5,30 @@
  */
 package controllers;
 
+import dao.ComissaoDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Comissao;
 import view.ComissaoView;
-import model.Default;
+import view.Gui;
 
 /**
  *
  * @author Aluno
  */
-public class ComissaoController extends DefaultController implements Default{
+public class ComissaoController {
 
+    public final ComissaoDAO comissaoDAO = new ComissaoDAO();
     private final ComissaoView comissaoView = new ComissaoView();
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("COMISSÃO");
         opcCrud = GUI.menu();
-        
+
         List<Comissao> vetResult = comissaoDAO.read();
 
         try {

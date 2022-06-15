@@ -87,25 +87,4 @@ public class Atividade {
         this.dtModificacao = dtModificacao;
     }
 
-//    @Override
-//    public String toString() {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//
-//        String aux = "";
-//        aux += "ID: " + this.getId() + "\n";
-//        aux += "Descrição: " + this.getDescricao() + "\n";
-//    
-//;
-//       
-//        aux += "Horas semanais: " + this.getHorasSemanais() + "\n";
-//        aux += "Data de inicio: " + this.getDtInicio() + "\n";
-//        aux += "Data de termino: " + this.getDtTermino() + "\n";
-//        aux += "Data de criacao: " + this.getDtCriacao().format(formatter) + "\n";
-//        if (this.getDtModificacao() != null) {
-//            aux += "Data de termino: " + this.getDtModificacao().format(formatter) + "\n";
-//        }
-//        aux += "\n\n";
-//        return aux;
-//    }
-
 }

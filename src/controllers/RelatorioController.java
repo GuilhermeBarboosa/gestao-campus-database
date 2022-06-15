@@ -1,8 +1,9 @@
 package controllers;
 
 import java.time.LocalDate;
+import java.util.Scanner;
+import view.Gui;
 import view.RelatorioView;
-import model.Default;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,10 +14,15 @@ import model.Default;
  *
  * @author Aluno
  */
-public class RelatorioController extends DefaultController implements Default{
+public class RelatorioController{
 
     private final RelatorioView relatView = new RelatorioView();
-
+    
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
+    
     public void gerarRelat() throws Exception {
         int opRelat = 0;
         LocalDate[] filtro;

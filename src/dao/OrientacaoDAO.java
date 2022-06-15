@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -21,7 +20,9 @@ import model.Servidor;
  *
  * @author Gui
  */
-public class OrientacaoDAO implements Default {
+public class OrientacaoDAO {
+
+    private final ServidorDAO servidorDAO = new ServidorDAO();
 
     public void create(Orientacao orientacao) throws Exception {
         String sql = "INSERT INTO orientacoes (tipo, servidor, aluno, horas_semanais, dt_inicio, dt_termino, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -111,7 +112,7 @@ public class OrientacaoDAO implements Default {
 
                 date = rset.getDate("modificado");
                 if (date != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     orientacao.setDtModificacao(dataAtualizada);
                 }
 
@@ -223,10 +224,10 @@ public class OrientacaoDAO implements Default {
 
                 orientacao.setId(rset.getInt("id"));
                 orientacao.setTipo(rset.getString("tipo"));
-                
+
                 Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 orientacao.setServidor(servidor);
-                
+
                 orientacao.setNomeAluno(rset.getString("aluno"));
                 orientacao.setHorasSemanais(rset.getDouble("horas_semanais"));
 

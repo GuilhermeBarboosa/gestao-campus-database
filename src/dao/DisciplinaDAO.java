@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -21,7 +20,9 @@ import model.Disciplina;
  *
  * @author Gui
  */
-public class DisciplinaDAO implements Default {
+public class DisciplinaDAO {
+
+    private final CursoDAO cursoDAO = new CursoDAO();
 
     public void create(Disciplina disc) throws Exception {
         String sql = "INSERT INTO disciplinas (disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";
@@ -96,10 +97,10 @@ public class DisciplinaDAO implements Default {
 
                 date = rset.getDate("modificado");
                 if (date != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     disciplina.setDtModificacao(dataAtualizada);
                 }
-                
+
                 vetResult.add(disciplina);
             }
         } catch (Exception e) {

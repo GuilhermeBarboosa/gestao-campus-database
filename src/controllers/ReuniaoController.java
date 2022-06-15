@@ -5,23 +5,35 @@
  */
 package controllers;
 
+import dao.ComissaoDAO;
+import dao.ReuniaoDAO;
+import dao.ServidorDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Reuniao;
+import view.Gui;
 import view.ReuniaoView;
-import model.Default;
 
 /**
  *
  * @author Aluno
  */
-public class ReuniaoController extends DefaultController implements Default {
+public class ReuniaoController {
 
     private final ReuniaoView reuniaoView = new ReuniaoView();
+    private final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("REUNIÃO");
         opcCrud = GUI.menu();
-        
+
         List<Reuniao> vetResult = reuniaoDAO.read();
 
         try {

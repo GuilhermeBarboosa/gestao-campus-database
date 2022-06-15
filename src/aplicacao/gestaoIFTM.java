@@ -5,15 +5,45 @@
  */
 package aplicacao;
 
+import controllers.AtividadeController;
+import controllers.CampusController;
+import controllers.ComissaoController;
+import controllers.CursoController;
+import controllers.DisciplinaController;
+import controllers.EncerrarComissaoController;
+import controllers.OfertaDisciplinaController;
+import controllers.OrientacaoController;
+import controllers.RelatorioController;
+import controllers.ReuniaoController;
+import controllers.ReuniaoPresenteController;
+import controllers.ServidorController;
+import controllers.UserComumController;
+import controllers.VinculoServidorComissaoController;
+import dao.ServidorDAO;
 import java.sql.SQLException;
 import java.util.List;
 import view.Gui;
 
 import model.Servidor;
-import model.Default;
 
-public class gestaoIFTM implements Default {
+public class gestaoIFTM {
 
+    public final CampusController campusController = new CampusController();
+    public final ServidorController servidorController = new ServidorController();
+    public final CursoController cursoController = new CursoController();
+    public final DisciplinaController disciplinaController = new DisciplinaController();
+    public final OfertaDisciplinaController ofertaDisciplinaController = new OfertaDisciplinaController();
+    public final OrientacaoController orientacaoController = new OrientacaoController();
+    public final AtividadeController atividadeController = new AtividadeController();
+    public final ComissaoController comissaoController = new ComissaoController();
+    public final VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
+    public final UserComumController userComController = new UserComumController();
+    public final ReuniaoController reuniaoController = new ReuniaoController();
+    public final ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
+    public final EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
+    public final RelatorioController relatorioController = new RelatorioController();
+
+    ServidorDAO servidorDAO = new ServidorDAO();
     int opcCrud;
     boolean sair = false;
     int auxLoc;
@@ -30,25 +60,25 @@ public class gestaoIFTM implements Default {
     }
 
     private void principal() throws Exception {
-        try {
-            do {
-                String[] loginSenha = GUI.login();
-                servidorLogin = login(loginSenha[0], loginSenha[1]);
-                if (servidorLogin != null) {
-                    if (servidorLogin.getPerfil() == 1) {
-                        sistemaAdm();
-                    } else {
-                        sistemaComum();
-                    }
-                } else {
-                    System.err.println("Usuario não encontrado");
-                }
-            } while (servidorLogin == null);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+//        try {
+//            do {
+//                String[] loginSenha = GUI.login();
+//                servidorLogin = login(loginSenha[0], loginSenha[1]);
+//                if (servidorLogin != null) {
+//                    if (servidorLogin.getPerfil() == 1) {
+//                        sistemaAdm();
+//                    } else {
+//                        sistemaComum();
+//                    }
+//                } else {
+//                    System.err.println("Usuario não encontrado");
+//                }
+//            } while (servidorLogin == null);
+//        } catch (Exception e) {
+//            System.err.println(e);
+//        }
         //RETIRAR ISSO
-        //sistemaAdm();
+        sistemaAdm();
         //----------
     }
 
@@ -110,7 +140,7 @@ public class gestaoIFTM implements Default {
 
     public Servidor login(String login, String senha) throws SQLException, Exception {;
         Servidor responseLogin = new Servidor();
-
+        
         List<Servidor> vetServidor = servidorDAO.read();
 
         for (Servidor servidor : vetServidor) {

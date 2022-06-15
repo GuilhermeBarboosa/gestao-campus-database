@@ -5,24 +5,33 @@
  */
 package controllers;
 
+import dao.CampusDAO;
+import dao.CursoDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Curso;
 import view.CursoView;
-import model.Default;
 import model.Campus;
+import view.Gui;
 
 /**
  *
  * @author Aluno
  */
-public class CursoController extends DefaultController implements Default{
+public class CursoController {
 
+    private final CursoDAO cursoDAO = new CursoDAO();
     private final CursoView cursoView = new CursoView();
+    private final CampusDAO campusDAO = new CampusDAO();
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("CURSO");
         opcCrud = GUI.menu();
-   
+
         List<Curso> vetResult = cursoDAO.read();
 
         try {
@@ -48,11 +57,10 @@ public class CursoController extends DefaultController implements Default{
                         GUI.error();
                     }
                     break;
-                case 3:
-            {
-                cursoView.mostrarCurso(vetResult);
-            }
-                    break;
+                case 3: {
+                    cursoView.mostrarCurso(vetResult);
+                }
+                break;
                 case 4:
                     cursoView.mostrarIdCurso(vetResult);
                     ;

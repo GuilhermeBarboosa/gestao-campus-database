@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -21,7 +20,7 @@ import model.Comissao;
  *
  * @author Gui
  */
-public class ComissaoDAO implements Default {
+public class ComissaoDAO {
 
     public void create(Comissao comissao) throws Exception {
         String sql = "INSERT INTO comissoes (comissao, horas_semanais, dt_inicio, dt_termino, estado, cadastrado) VALUES (?,?,?,?,?,?)";

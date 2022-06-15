@@ -7,26 +7,30 @@ package controllers;
 
 import dao.CampusDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Campus;
 import view.CampusView;
 import view.Gui;
-import model.Default;
 
 /**
  *
  * @author Aluno
  */
-public class CampusController extends DefaultController implements Default{
+public class CampusController {
 
     private final Gui GUI = new Gui();
     private final CampusView campusView = new CampusView();
+
+    public int opcCrud;
+    public int auxLoc;
+    public Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("CAMPUS");
         opcCrud = GUI.menu();
 
         CampusDAO campusDAO = new CampusDAO();
-      
+
         List<Campus> vetResult = campusDAO.read();
 
         try {

@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -23,7 +22,10 @@ import model.Vinculo;
  *
  * @author Gui
  */
-public class VinculoDAO implements Default {
+public class VinculoDAO {
+
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
 
     public void create(Vinculo vinculo) throws Exception {
         String sql = "INSERT INTO vinculos (servidor, comissao, papel, dt_entrada, dt_saida, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -113,7 +115,7 @@ public class VinculoDAO implements Default {
 
                 date = rset.getDate("v.cadastrado");
                 if (dataAtualizada != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     vinculo.setDtModificacao(dataAtualizada);
                 }
 

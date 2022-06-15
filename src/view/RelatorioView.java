@@ -7,14 +7,24 @@ package view;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import model.Default;
+import dao.AtividadeDAO;
+import dao.CampusDAO;
+import dao.ComissaoDAO;
+import dao.CursoDAO;
+import dao.DisciplinaDAO;
+import dao.OfertaDAO;
+import dao.OrientacaoDAO;
+import dao.RelatorioDAO;
+import dao.ReuniaoDAO;
+import dao.ReuniaoPresenteDAO;
+import dao.ServidorDAO;
+import dao.VinculoDAO;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +32,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import static java.time.LocalDate.now;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
@@ -39,7 +48,32 @@ import model.Vinculo;
  *
  * @author Aluno
  */
-public class RelatorioView implements Default {
+public class RelatorioView {
+
+    private final CampusDAO campusDAO = new CampusDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final CursoDAO cursoDAO = new CursoDAO();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private final OfertaDAO ofertaDAO = new OfertaDAO();
+    private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
+    private final AtividadeDAO atividadeDAO = new AtividadeDAO();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+    private final VinculoDAO vinculoDAO = new VinculoDAO();
+    private final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
+    private final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
+    private final RelatorioDAO relatorioDAO = new RelatorioDAO();
+
+    private final CampusView campusView = new CampusView();
+    private final ServidorView servidorView = new ServidorView();
+    private final CursoView cursoView = new CursoView();
+    private final DisciplinaView disciplinaView = new DisciplinaView();
+    private final OfertaView ofertaView = new OfertaView();
+    private final OrientacaoView orientacaoView = new OrientacaoView();
+    private final AtividadeView atividadeView = new AtividadeView();
+    private final ComissaoView comissaoView = new ComissaoView();
+    private final VinculoView vinculoView = new VinculoView();
+    private final ReuniaoView reuniaoView = new ReuniaoView();
+    private final ReuniaoPresenteView reunPresenteV = new ReuniaoPresenteView();
 
     Scanner ler = new Scanner(System.in);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

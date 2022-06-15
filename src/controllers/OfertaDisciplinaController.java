@@ -5,23 +5,39 @@
  */
 package controllers;
 
+import dao.AtividadeDAO;
+import dao.CursoDAO;
+import dao.DisciplinaDAO;
+import dao.OfertaDAO;
+import dao.ServidorDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Atividade;
 import model.Disciplina;
 import model.Oferta;
 import model.Servidor;
 import view.AtividadeView;
+import view.Gui;
 import view.OfertaView;
-import model.Default;
 
 /**
  *
  * @author Aluno
  */
-public class OfertaDisciplinaController extends DefaultController implements Default{
+public class OfertaDisciplinaController {
 
     private final OfertaView ofertaView = new OfertaView();
     private final AtividadeView atividadeView = new AtividadeView();
+    private final OfertaDAO ofertaDAO = new OfertaDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final CursoDAO cursoDAO = new CursoDAO();
+    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+private final AtividadeDAO atividadeDAO = new AtividadeDAO();
+
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("OFERTA DE DISCIPLINA");

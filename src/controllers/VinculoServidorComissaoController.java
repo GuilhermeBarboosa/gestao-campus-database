@@ -5,20 +5,33 @@
  */
 package controllers;
 
+import dao.ComissaoDAO;
+import dao.ServidorDAO;
+import dao.VinculoDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
+import view.Gui;
 import view.VinculoView;
-import model.Default;
 
 /**
  *
  * @author Aluno
  */
-public class VinculoServidorComissaoController extends DefaultController implements Default{
+public class VinculoServidorComissaoController {
 
     private final VinculoView vinculoView = new VinculoView();
+
+    private final VinculoDAO vinculoDAO = new VinculoDAO();
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+    
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         System.out.println("VINCULO DE SERVIDOR A COMISSÃO");

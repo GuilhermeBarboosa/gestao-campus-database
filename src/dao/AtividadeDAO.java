@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -21,7 +20,9 @@ import model.Servidor;
  *
  * @author Gui
  */
-public class AtividadeDAO implements Default {
+public class AtividadeDAO {
+
+    private final ServidorDAO servidorDAO = new ServidorDAO();
 
     public void create(Atividade atividade) throws Exception {
         String sql = "INSERT INTO atividades (atividade, servidor, horas_semanais, dt_inicio, dt_termino,"
@@ -109,7 +110,7 @@ public class AtividadeDAO implements Default {
 
                 date = rset.getDate("a.modificado");
                 if (date != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     atividade.setDtModificacao(dataAtualizada);
                 }
 
@@ -220,7 +221,7 @@ public class AtividadeDAO implements Default {
 
                 atividade.setId(rset.getInt("id"));
                 atividade.setDescricao(rset.getString("atividade"));
-                
+
                 Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
                 atividade.setServidor(servidor);
 

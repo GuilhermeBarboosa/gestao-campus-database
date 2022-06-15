@@ -5,7 +5,6 @@
  */
 package dao;
 
-import model.Default;
 import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
 import java.sql.Connection;
@@ -22,7 +21,10 @@ import model.Servidor;
  *
  * @author Aluno
  */
-public class ServidorDAO implements Default {
+public class ServidorDAO {
+
+    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final CampusDAO campusDAO = new CampusDAO();
 
     public void create(Servidor servidor) throws Exception {
         String sql = "INSERT INTO servidores (nome, campus, email, cargo, login, senha, perfil, horas_totais, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";

@@ -5,18 +5,27 @@
  */
 package controllers;
 
+import dao.ComissaoDAO;
+import dao.VinculoDAO;
 import java.util.List;
+import java.util.Scanner;
 import model.Comissao;
 import view.ComissaoView;
-import model.Default;
+import view.Gui;
 
 /**
  *
  * @author Aluno
  */
-public class EncerrarComissaoController extends DefaultController implements Default{
+public class EncerrarComissaoController {
 
     private final ComissaoView comissaoView = new ComissaoView();
+    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+    private final VinculoDAO vinculoDAO = new VinculoDAO();
+    private Gui GUI = new Gui();
+    private int opcCrud;
+    private int auxLoc;
+    private Scanner ler = new Scanner(System.in);
 
     public void menu() throws Exception {
         try {
