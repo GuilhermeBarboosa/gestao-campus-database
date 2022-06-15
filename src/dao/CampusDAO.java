@@ -93,7 +93,7 @@ public class CampusDAO {
                 campus.setAbreviacao(rset.getString("c.abreviacao"));
                 campus.setDuracaoAula(rset.getDouble("c.duracao_aula"));
 
-                Date date = rset.getDate("cadastrado");
+                Date date = rset.getDate("c.dt_criacao_camp");
                 LocalDate dataAtualizada = date.toLocalDate();
                 campus.setDtCriacaoCamp(dataAtualizada);
 
@@ -102,7 +102,7 @@ public class CampusDAO {
                 campus.setRua(rset.getString("c.rua"));
                 campus.setCep(rset.getString("c.cep"));
 
-                date = rset.getDate("cadaastrado");
+                date = rset.getDate("cadastrado");
                 dataAtualizada = date.toLocalDate();
                 campus.setDtCriacao(dataAtualizada);
 

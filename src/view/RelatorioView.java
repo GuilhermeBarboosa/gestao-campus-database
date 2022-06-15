@@ -371,7 +371,8 @@ public class RelatorioView {
                     String servidorString = servidor.getNome();
                     for (Oferta aula : aulas) {
 
-                        if (servidor.getId() == aula.getServidor().getId()) {
+                        if (servidor.getId() == aula.getServidor().getId()
+                                && servidor.getCampus().getId() == aula.getCurso().getCampus().getId()) {
                             disiciplinaString += aula.getDisciplina().getNome() + "  "
                                     + aula.getAulaSemanais() + " aulas \n\n";
                         }
