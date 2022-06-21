@@ -76,9 +76,13 @@ public class RelatorioView {
     public LocalDate[] opMenuRelat1() {
         LocalDate[] filtro = new LocalDate[2];
         System.out.println("Escolha data de inicio: ");
-        filtro[0] = LocalDate.parse("02/06/2022", formatter);
+        
+        //02/06/2022
+        filtro[0] = LocalDate.parse(ler.nextLine(), formatter);
         System.out.println("Escolha data do fim: ");
-        filtro[1] = LocalDate.parse("10/06/2022", formatter);
+        
+        //10/06/2022
+        filtro[1] = LocalDate.parse(ler.nextLine(), formatter);
         return filtro;
     }
 
