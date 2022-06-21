@@ -52,29 +52,16 @@ public class RelatorioView {
 
     private final CampusDAO campusDAO = new CampusDAO();
     private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final CursoDAO cursoDAO = new CursoDAO();
-    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
     private final OfertaDAO ofertaDAO = new OfertaDAO();
     private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
     private final AtividadeDAO atividadeDAO = new AtividadeDAO();
     private final ComissaoDAO comissaoDAO = new ComissaoDAO();
     private final VinculoDAO vinculoDAO = new VinculoDAO();
-    private final ReuniaoDAO reuniaoDAO = new ReuniaoDAO();
-    private final ReuniaoPresenteDAO reuniaoPresenteDAO = new ReuniaoPresenteDAO();
     private final RelatorioDAO relatorioDAO = new RelatorioDAO();
 
-    private final CampusView campusView = new CampusView();
-    private final ServidorView servidorView = new ServidorView();
-    private final CursoView cursoView = new CursoView();
-    private final DisciplinaView disciplinaView = new DisciplinaView();
-    private final OfertaView ofertaView = new OfertaView();
-    private final OrientacaoView orientacaoView = new OrientacaoView();
-    private final AtividadeView atividadeView = new AtividadeView();
     private final ComissaoView comissaoView = new ComissaoView();
-    private final VinculoView vinculoView = new VinculoView();
-    private final ReuniaoView reuniaoView = new ReuniaoView();
-    private final ReuniaoPresenteView reunPresenteV = new ReuniaoPresenteView();
-
+    private final CampusView campusView = new CampusView();
+    
     Scanner ler = new Scanner(System.in);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -323,9 +310,8 @@ public class RelatorioView {
         List<Servidor> servidorVet = servidorDAO.read();
 
         List<Campus> campusVet = campusDAO.read();
-        CampusView campusV = new CampusView();
 
-        campusV.mostrarIdTodosCampos(campusVet);
+        campusView.mostrarIdTodosCampos(campusVet);
 
         System.out.println("Insira o id: ");
         int aux = Integer.parseInt(ler.nextLine());
