@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 21-Jun-2022 às 00:27
+-- Tempo de geração: 24-Jun-2022 às 21:12
 -- Versão do servidor: 8.0.29
 -- versão do PHP: 7.4.26
 
@@ -238,7 +238,15 @@ CREATE TABLE IF NOT EXISTS `reuniao_presente` (
   PRIMARY KEY (`id`),
   KEY `comissao` (`comissao`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Extraindo dados da tabela `reuniao_presente`
+--
+
+INSERT INTO `reuniao_presente` (`id`, `comissao`, `ata_reuniao`, `servidor`, `cadastrado`, `modificado`) VALUES
+(1, 1, 'Comissao A', 2, '2022-06-24', NULL),
+(2, 1, 'Comissao R', 4, '2022-06-24', NULL);
 
 -- --------------------------------------------------------
 
@@ -296,8 +304,8 @@ CREATE TABLE IF NOT EXISTS `servidores` (
 --
 
 INSERT INTO `servidores` (`id`, `nome`, `campus`, `email`, `cargo`, `login`, `senha`, `perfil`, `horas_totais`, `cadastrado`, `modificado`) VALUES
-(2, 'Guilherme', 1, 'gui@gmail.com', 'tae', 'g', 'g', 1, 115, '2022-05-17', '2022-05-27'),
-(3, 'Julia', 1, 'julia@gmail.com', 'tae', 'j', 'j', 2, 0, '2022-05-28', '2022-05-28'),
+(2, 'Guilherme', 1, 'gui@gmail.com', 'tae', 'g', 'g', 1, 155, '2022-05-17', '2022-05-27'),
+(3, 'Julia', 1, 'julia@gmail.com', 'tae', 'j', 'j', 2, 40, '2022-05-28', '2022-05-28'),
 (4, 'Carol', 1, 'carol@gmail.com', 'tae', 'c', 'c', 1, 2, '2022-05-28', NULL);
 
 -- --------------------------------------------------------
@@ -319,7 +327,15 @@ CREATE TABLE IF NOT EXISTS `vinculos` (
   PRIMARY KEY (`id`),
   KEY `servidor` (`servidor`),
   KEY `comissao` (`comissao`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Extraindo dados da tabela `vinculos`
+--
+
+INSERT INTO `vinculos` (`id`, `servidor`, `comissao`, `papel`, `dt_entrada`, `dt_saida`, `cadastrado`, `modificado`) VALUES
+(2, 3, 1, 'presidente', '2022-06-24', '2022-06-25', '2022-06-24', NULL),
+(3, 2, 1, 'Ouvinte', '2022-06-24', '2022-07-10', '2022-06-24', NULL);
 
 --
 -- Restrições para despejos de tabelas
