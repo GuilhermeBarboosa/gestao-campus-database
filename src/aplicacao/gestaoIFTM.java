@@ -60,26 +60,23 @@ public class gestaoIFTM {
     }
 
     private void principal() throws Exception {
-//        try {
-//            do {
-//                String[] loginSenha = GUI.login();
-//                servidorLogin = login(loginSenha[0], loginSenha[1]);
-//                if (servidorLogin != null) {
-//                    if (servidorLogin.getPerfil() == 1) {
-//                        sistemaAdm();
-//                    } else {
-//                        sistemaComum();
-//                    }
-//                } else {
-//                    System.err.println("Usuario não encontrado");
-//                }
-//            } while (servidorLogin == null);
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-        //RETIRAR ISSO
-        sistemaAdm();
-        //----------
+        try {
+            do {
+                String[] loginSenha = GUI.login();
+                servidorLogin = login(loginSenha[0], loginSenha[1]);
+                if (servidorLogin != null) {
+                    if (servidorLogin.getPerfil() == 1) {
+                        sistemaAdm();
+                    } else {
+                        sistemaComum();
+                    }
+                } else {
+                    System.err.println("Usuario não encontrado");
+                }
+            } while (servidorLogin == null);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     public void sistemaComum() throws Exception {

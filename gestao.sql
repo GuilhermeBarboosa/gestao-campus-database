@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24-Jun-2022 às 21:12
+-- Tempo de geração: 28-Jun-2022 às 22:01
 -- Versão do servidor: 8.0.29
 -- versão do PHP: 7.4.26
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `atividades` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `atividades`
@@ -71,14 +71,15 @@ CREATE TABLE IF NOT EXISTS `campus` (
   `cadastrado` date NOT NULL,
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `campus`
 --
 
 INSERT INTO `campus` (`id`, `nome`, `abreviacao`, `duracao_aula`, `dt_criacao_camp`, `cidade`, `bairro`, `rua`, `cep`, `cadastrado`, `modificado`) VALUES
-(1, 'Instituto Federal de Uberaba', 'IFU', 40, '2000-05-20', 'Uberaba', 'Univerde', 'Rua 1', '2173128-34', '2022-05-17', NULL);
+(1, 'Instituto Federal de Uberaba', 'IFU', 40, '2000-05-20', 'Uberaba', 'Univerde', 'Rua 1', '2173128-34', '2022-05-17', NULL),
+(4, 'Faculdade de Talentos Humanos', 'Facthus', 45, '2022-06-28', 'Uberaba', 'Bairro Jardim', 'Rua V', '239132-34', '2022-06-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -97,14 +98,15 @@ CREATE TABLE IF NOT EXISTS `comissoes` (
   `cadastrado` date NOT NULL,
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `comissoes`
 --
 
 INSERT INTO `comissoes` (`id`, `comissao`, `horas_semanais`, `dt_inicio`, `dt_termino`, `estado`, `cadastrado`, `modificado`) VALUES
-(1, 'Comissao A', 40, '2022-07-25', '2022-07-26', 'Inativo', '2022-05-17', '2022-05-28');
+(1, 'Comissao A', 40, '2022-07-25', '2022-07-26', 'Inativo', '2022-05-17', '2022-05-28'),
+(2, 'Comissao B', 23, '2022-06-20', '2022-07-20', 'Ativo', '2022-06-28', '2022-06-28');
 
 -- --------------------------------------------------------
 
@@ -124,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `campus` (`campus`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `cursos`
@@ -151,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `disciplinas` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `curso` (`curso`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `disciplinas`
@@ -182,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `ofertas` (
   KEY `curso` (`curso`),
   KEY `disciplina` (`disciplina`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `ofertas`
@@ -211,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `orientacoes` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `orientacoes`
@@ -219,7 +221,8 @@ CREATE TABLE IF NOT EXISTS `orientacoes` (
 
 INSERT INTO `orientacoes` (`id`, `tipo`, `servidor`, `aluno`, `horas_semanais`, `dt_inicio`, `dt_termino`, `cadastrado`, `modificado`) VALUES
 (1, 'TCC', 2, 'Guilherme', 2, '2022-06-21', '2022-06-26', '2022-05-27', '2022-06-20'),
-(2, 'tcc', 4, 'caio', 2, '2022-06-20', '2022-06-21', '2022-06-20', NULL);
+(2, 'tcc', 4, 'caio', 2, '2022-06-20', '2022-06-21', '2022-06-20', NULL),
+(3, 'TCC', 3, 'Carla', 23, '2022-06-20', '2022-08-18', '2022-06-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -238,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `reuniao_presente` (
   PRIMARY KEY (`id`),
   KEY `comissao` (`comissao`),
   KEY `servidor` (`servidor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `reuniao_presente`
@@ -266,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `reunioes` (
   PRIMARY KEY (`id`),
   KEY `servidor_secre` (`servidor_secre`),
   KEY `comissao` (`comissao`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `reunioes`
@@ -274,7 +277,8 @@ CREATE TABLE IF NOT EXISTS `reunioes` (
 
 INSERT INTO `reunioes` (`id`, `comissao`, `servidor_secre`, `conteudo_ata`, `dt_reuniao`, `cadastrado`, `modificado`) VALUES
 (3, 1, 2, 'Reuniao 1 da Comissao', '2022-06-03', '2022-06-04', NULL),
-(4, 1, 3, 'Reuniao 2 da Comissao A', '2022-06-05', '2022-06-04', NULL);
+(4, 1, 3, 'Reuniao 2 da Comissao A', '2022-06-05', '2022-06-04', NULL),
+(5, 1, 2, 'Reuniao para definir data', '2022-06-06', '2022-06-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -297,15 +301,15 @@ CREATE TABLE IF NOT EXISTS `servidores` (
   `modificado` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `campus` (`campus`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `servidores`
 --
 
 INSERT INTO `servidores` (`id`, `nome`, `campus`, `email`, `cargo`, `login`, `senha`, `perfil`, `horas_totais`, `cadastrado`, `modificado`) VALUES
-(2, 'Guilherme', 1, 'gui@gmail.com', 'tae', 'g', 'g', 1, 155, '2022-05-17', '2022-05-27'),
-(3, 'Julia', 1, 'julia@gmail.com', 'tae', 'j', 'j', 2, 40, '2022-05-28', '2022-05-28'),
+(2, 'Guilherme', 1, 'gui@gmail.com', 'tae', 'g', 'g', 1, 151, '2022-05-17', '2022-05-27'),
+(3, 'Julia', 1, 'julia@gmail.com', 'tae', 'j', 'j', 2, 103, '2022-05-28', '2022-05-28'),
 (4, 'Carol', 1, 'carol@gmail.com', 'tae', 'c', 'c', 1, 2, '2022-05-28', NULL);
 
 -- --------------------------------------------------------
@@ -327,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `vinculos` (
   PRIMARY KEY (`id`),
   KEY `servidor` (`servidor`),
   KEY `comissao` (`comissao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `vinculos`
@@ -335,7 +339,8 @@ CREATE TABLE IF NOT EXISTS `vinculos` (
 
 INSERT INTO `vinculos` (`id`, `servidor`, `comissao`, `papel`, `dt_entrada`, `dt_saida`, `cadastrado`, `modificado`) VALUES
 (2, 3, 1, 'presidente', '2022-06-24', '2022-06-25', '2022-06-24', NULL),
-(3, 2, 1, 'Ouvinte', '2022-06-24', '2022-07-10', '2022-06-24', NULL);
+(3, 2, 1, 'Ouvinte', '2022-06-24', '2022-07-10', '2022-06-24', NULL),
+(4, 3, 1, 'Presida', '2000-06-10', '2000-07-10', '2022-06-28', '2022-06-28');
 
 --
 -- Restrições para despejos de tabelas
