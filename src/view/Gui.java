@@ -81,6 +81,7 @@ public class Gui {
             System.out.println("6 - ORIENTAÇÃO");
             System.out.println("7 - ATIVIDADE");
             System.out.println("8 - COMISSÕES");
+            System.out.println("9 - VINCULOS");
             System.out.println("10 - REUNIÃO");
             System.out.println("11 - REUNIÃO E PRESENTES");
             System.out.println("12 - SAIR");
