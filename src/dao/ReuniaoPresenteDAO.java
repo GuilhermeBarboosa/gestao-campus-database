@@ -5,27 +5,29 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
+import model.Comissao;
+import model.ReuniaoPresente;
+import model.Servidor;
+import service.ComissaoService;
+import service.ServidorService;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Comissao;
-import model.ReuniaoPresente;
-import model.Servidor;
 
 /**
- *
  * @author Gui
  */
-public class ReuniaoPresenteDAO{
+public class ReuniaoPresenteDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
-    
+    private final ServidorService servidorService = new ServidorService();
+    private final ComissaoService comissaoService = new ComissaoService();
+
     public void create(ReuniaoPresente reuniaoPresente) throws Exception {
         String sql = "INSERT INTO reuniao_presente (comissao, ata_reuniao, servidor, cadastrado) VALUES (?,?,?,?)";
 
@@ -86,10 +88,10 @@ public class ReuniaoPresenteDAO{
 
                 reuniaoPresente.setId(rset.getInt("id"));
 
-                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
+                Comissao comissao = comissaoService.getById(rset.getInt("comissao"));
                 reuniaoPresente.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 reuniaoPresente.setServidor(servidor);
 
                 reuniaoPresente.setAtaReuniao(rset.getString("ata_reuniao"));
@@ -100,7 +102,7 @@ public class ReuniaoPresenteDAO{
 
                 date = rset.getDate("modificado");
                 if (date != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     reuniaoPresente.setDtModificacao(dataAtualizada);
                 }
 
@@ -122,7 +124,8 @@ public class ReuniaoPresenteDAO{
         return vetResult;
     }
 
-    public void update(ReuniaoPresente altReuniaoPresente) throws Exception {;
+    public void update(ReuniaoPresente reuniaoPresente) throws Exception {
+        ;
         String sql = "UPDATE reuniao_presente SET comissao=?, ata_reuniao=?, servidor=?, modificado=?"
                 + "where id = ?";
 
@@ -134,14 +137,14 @@ public class ReuniaoPresenteDAO{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altReuniaoPresente.getComissao().getId());
-            pstm.setString(2, altReuniaoPresente.getAtaReuniao());
-            pstm.setInt(3, altReuniaoPresente.getServidor().getId());
+            pstm.setInt(1, reuniaoPresente.getComissao().getId());
+            pstm.setString(2, reuniaoPresente.getAtaReuniao());
+            pstm.setInt(3, reuniaoPresente.getServidor().getId());
 
-            Date date = Date.valueOf(altReuniaoPresente.getDtModificacao());
+            Date date = Date.valueOf(reuniaoPresente.getDtModificacao());
             pstm.setDate(4, date);
 
-            pstm.setInt(5, altReuniaoPresente.getId());
+            pstm.setInt(5, reuniaoPresente.getId());
 
             pstm.execute();
 
@@ -157,7 +160,7 @@ public class ReuniaoPresenteDAO{
         }
     }
 
-    public void delete(int idReuniaoPresente) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM reuniao_presente WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -167,7 +170,7 @@ public class ReuniaoPresenteDAO{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idReuniaoPresente);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -183,8 +186,8 @@ public class ReuniaoPresenteDAO{
         }
     }
 
-    public ReuniaoPresente find(int idReuniaoPresente) throws Exception {
-        String sql = "SELECT * FROM reuniao_presente WHERE id = '" + idReuniaoPresente + "'";
+    public ReuniaoPresente getById(int id) throws Exception {
+        String sql = "SELECT * FROM reuniao_presente WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -203,10 +206,10 @@ public class ReuniaoPresenteDAO{
                 ReuniaoPresente reuniaoPresente = new ReuniaoPresente();
 
                 reuniaoPresente.setId(rset.getInt("id"));
-                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
+                Comissao comissao = comissaoService.getById(rset.getInt("comissao"));
                 reuniaoPresente.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 reuniaoPresente.setServidor(servidor);
 
                 reuniaoPresente.setAtaReuniao(rset.getString("ata_reuniao"));

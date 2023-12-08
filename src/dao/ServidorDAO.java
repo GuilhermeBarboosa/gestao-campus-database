@@ -5,25 +5,22 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.Campus;
+import model.Servidor;
+import service.CampusService;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Campus;
-import model.Servidor;
 
 /**
- *
  * @author Aluno
  */
 public class ServidorDAO {
-    
-    private CampusDAO campusDAO = new CampusDAO();
+
+    private CampusService campusService = new CampusService();
 
     public void create(Servidor servidor) throws Exception {
         String sql = "INSERT INTO servidores (nome, campus, email, cargo, login, senha, perfil, horas_totais, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -89,7 +86,7 @@ public class ServidorDAO {
                 servidor.setId(rset.getInt("id"));
                 servidor.setNome(rset.getString("nome"));
 
-                Campus campus = campusDAO.find(rset.getInt("campus"));
+                Campus campus = campusService.getById(rset.getInt("campus"));
                 servidor.setCampus(campus);
 
                 servidor.setEmail(rset.getString("email"));
@@ -127,7 +124,8 @@ public class ServidorDAO {
         return vetResult;
     }
 
-    public void update(Servidor altServidor) throws Exception {;
+    public void update(Servidor servidor) throws Exception {
+        ;
         String sql = "UPDATE servidores SET nome=?, campus=?, email=?, "
                 + "cargo=?, login=?, senha=?, perfil=?, horas_totais=?, modificado=?"
                 + "where id = ?";
@@ -140,19 +138,19 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altServidor.getNome());
-            pstm.setInt(2, altServidor.getCampus().getId());
-            pstm.setString(3, altServidor.getEmail());
-            pstm.setString(4, altServidor.getCargo());
-            pstm.setString(5, altServidor.getLogin());
-            pstm.setString(6, altServidor.getSenha());
-            pstm.setInt(7, altServidor.getPerfil());
-            pstm.setDouble(8, altServidor.getHorasTotais());
+            pstm.setString(1, servidor.getNome());
+            pstm.setInt(2, servidor.getCampus().getId());
+            pstm.setString(3, servidor.getEmail());
+            pstm.setString(4, servidor.getCargo());
+            pstm.setString(5, servidor.getLogin());
+            pstm.setString(6, servidor.getSenha());
+            pstm.setInt(7, servidor.getPerfil());
+            pstm.setDouble(8, servidor.getHorasTotais());
 
-            Date date = Date.valueOf(altServidor.getDtModificacao());
+            Date date = Date.valueOf(servidor.getDtModificacao());
             pstm.setDate(9, date);
 
-            pstm.setInt(10, altServidor.getId());
+            pstm.setInt(10, servidor.getId());
 
             pstm.execute();
 
@@ -168,7 +166,7 @@ public class ServidorDAO {
         }
     }
 
-    public void delete(int idServidor) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM servidores WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -178,7 +176,7 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idServidor);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -194,8 +192,8 @@ public class ServidorDAO {
         }
     }
 
-    public Servidor find(int idServidor) throws Exception {
-        String sql = "SELECT * FROM servidores WHERE id = '" + idServidor + "'";
+    public Servidor getById(int id) throws Exception {
+        String sql = "SELECT * FROM servidores WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -216,7 +214,7 @@ public class ServidorDAO {
                 servidor.setId(rset.getInt("id"));
                 servidor.setNome(rset.getString("nome"));
 
-                Campus campus = campusDAO.find(rset.getInt("campus"));
+                Campus campus = campusService.getById(rset.getInt("campus"));
                 servidor.setCampus(campus);
 
                 servidor.setEmail(rset.getString("email"));
@@ -254,7 +252,7 @@ public class ServidorDAO {
         return null;
     }
 
-    public void updateHours(Servidor servAux, double horasSemanais, int idServidor) throws SQLException {
+    public void updateHours(Servidor servidor, double horasSemanais, int id) throws SQLException {
         String sql = "UPDATE servidores SET horas_totais=?"
                 + "where id = ?";
 
@@ -266,8 +264,8 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setDouble(1, (servAux.getHorasTotais() + horasSemanais));
-            pstm.setInt(2, idServidor);
+            pstm.setDouble(1, (servidor.getHorasTotais() + horasSemanais));
+            pstm.setInt(2, id);
 
             pstm.execute();
 
@@ -283,7 +281,7 @@ public class ServidorDAO {
         }
     }
 
-    public void removeHours(Servidor servAux, double horasSemanais, int idServidor) throws SQLException {
+    public void removeHours(Servidor servidor, double horasSemanais, int id) throws SQLException {
         String sql = "UPDATE servidores SET horas_totais=?"
                 + "where id = ?";
 
@@ -295,8 +293,8 @@ public class ServidorDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setDouble(1, (servAux.getHorasTotais() - horasSemanais));
-            pstm.setInt(2, idServidor);
+            pstm.setDouble(1, (servidor.getHorasTotais() - horasSemanais));
+            pstm.setInt(2, id);
 
             pstm.execute();
 

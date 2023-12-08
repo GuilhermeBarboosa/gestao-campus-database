@@ -5,95 +5,75 @@
  */
 package view;
 
-import dao.ServidorDAO;
+import model.Orientacao;
+import model.Servidor;
+import service.ServidorService;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Orientacao;
-import model.Servidor;
 
 /**
- *
  * @author Gui
  */
 public class OrientacaoView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    ServidorView servV = new ServidorView();
+    ServidorView servidorView = new ServidorView();
+
+    ServidorService servidorService = new ServidorService();
     Scanner ler = new Scanner(System.in);
 
-    public Orientacao criarOrientacao(ServidorDAO servidorDAO) {
+    public Orientacao create() {
         try {
-            Orientacao or = new Orientacao();
-
-            List<Servidor> servidorVet = servidorDAO.read();
-
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum campus cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-            System.out.println("Insira o ID: ");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            or.setServidor(servidor);
-
-            System.out.println("Tipo: ");
-            or.setTipo(ler.nextLine());
-            System.out.println("Nome do aluno:  ");
-            or.setNomeAluno(ler.nextLine());
-            System.out.println("Horas semanais: ");
-            or.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            or.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            or.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            or.setDtCriacao(LocalDate.now());
-            return or;
+            return inputInfoOrientacao(new Orientacao());
         } catch (Exception e) {
             return null;
         }
 
     }
 
-    public Orientacao modifOrientacao(Orientacao orAlt, ServidorDAO servidorDAO) {
+    public Orientacao update(Orientacao orientacao) {
         try {
-
-            List<Servidor> servidorVet = servidorDAO.read();
-
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum campus cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-            System.out.println("Insira o ID: ");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            orAlt.setServidor(servidor);
-
-            System.out.println("Tipo: ");
-            orAlt.setTipo(ler.nextLine());
-            System.out.println("Nome do aluno:  ");
-            orAlt.setNomeAluno(ler.nextLine());
-            System.out.println("Horas semanais: ");
-            orAlt.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            orAlt.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            orAlt.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            orAlt.setDtModificacao(LocalDate.now());
-            return orAlt;
+            return inputInfoOrientacao(orientacao);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public void mostrarTodasOrientacoes(List<Orientacao> vetResult) {
-        if (vetResult.size() == 0) {
+    private Orientacao inputInfoOrientacao(Orientacao orientacao) throws Exception {
+        List<Servidor> listServidor = servidorService.read();
+
+        if (listServidor.size() == 0) {
+            System.out.println("Nenhum campus cadastrado...");
+            return null;
+        } else {
+            servidorView.printId(listServidor);
+        }
+        System.out.println("Insira o ID: ");
+        Servidor servidor = servidorService.getById(Integer.parseInt(ler.nextLine()));
+        orientacao.setServidor(servidor);
+
+        System.out.println("Tipo: ");
+        orientacao.setTipo(ler.nextLine());
+        System.out.println("Nome do aluno:  ");
+        orientacao.setNomeAluno(ler.nextLine());
+        System.out.println("Horas semanais: ");
+        orientacao.setHorasSemanais(Double.parseDouble(ler.nextLine()));
+        System.out.println("Data de inicio: ");
+        orientacao.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Data de termino: ");
+        orientacao.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
+        orientacao.setDtCriacao(LocalDate.now());
+        return orientacao;
+    }
+
+    public void printAll(List<Orientacao> listOrientacao) {
+        if (listOrientacao.size() == 0) {
             System.out.println("Não há orientacões cadastrados");
         } else {
-            for (Orientacao orientacao : vetResult) {
+            for (Orientacao orientacao : listOrientacao) {
                 System.out.println("-----------------------------------");
                 System.out.println("ID: " + orientacao.getId());
                 System.out.println("TIPO: " + orientacao.getTipo());
@@ -111,11 +91,11 @@ public class OrientacaoView {
         }
     }
 
-    public void mostrarIdTodasOrientacoes(List<Orientacao> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printId(List<Orientacao> listOrientacao) {
+        if (listOrientacao.size() == 0) {
             System.out.println("Não há orientacões cadastrados");
         } else {
-            for (Orientacao orientacao : vetResult) {
+            for (Orientacao orientacao : listOrientacao) {
                 System.out.println("-----------------------------------");
                 System.out.println("ID: " + orientacao.getId());
                 System.out.println("TIPO: " + orientacao.getTipo());

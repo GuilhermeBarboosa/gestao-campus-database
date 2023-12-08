@@ -23,7 +23,7 @@ import model.Campus;
  */
 public class CampusDAO {
 
-    public void create(Campus camp) throws Exception {
+    public void create(Campus campus) throws Exception {
         String sql = "INSERT INTO campus(nome, abreviacao, duracao_aula, dt_criacao_camp, cidade, bairro, rua, cep, cadastrado) VALUES (?,?,?,?,?,?,?,?,?)";
 
         Connection conn = null;
@@ -35,19 +35,19 @@ public class CampusDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, camp.getNome());
-            pstm.setString(2, camp.getAbreviacao());
-            pstm.setDouble(3, camp.getDuracaoAula());
+            pstm.setString(1, campus.getNome());
+            pstm.setString(2, campus.getAbreviacao());
+            pstm.setDouble(3, campus.getDuracaoAula());
 
-            Date date = Date.valueOf(camp.getDtCriacaoCamp());
+            Date date = Date.valueOf(campus.getDtCriacaoCamp());
             pstm.setDate(4, date);
 
-            pstm.setString(5, camp.getCidade());
-            pstm.setString(6, camp.getBairro());
-            pstm.setString(7, camp.getRua());
-            pstm.setString(8, camp.getCep());
+            pstm.setString(5, campus.getCidade());
+            pstm.setString(6, campus.getBairro());
+            pstm.setString(7, campus.getRua());
+            pstm.setString(8, campus.getCep());
 
-            date = Date.valueOf(camp.getDtCriacao());
+            date = Date.valueOf(campus.getDtCriacao());
             pstm.setDate(9, date);
 
             pstm.execute();
@@ -108,7 +108,7 @@ public class CampusDAO {
 
                 date = rset.getDate("cadastrado");
                 if (dataAtualizada != null) {
-                dataAtualizada = date.toLocalDate();
+                    dataAtualizada = date.toLocalDate();
                     campus.setDtModificacao(dataAtualizada);
                 }
 
@@ -131,7 +131,7 @@ public class CampusDAO {
         return vetResult;
     }
 
-    public void update(Campus altCampus) throws Exception {;
+    public void update(Campus campus) throws Exception {;
         String sql = "UPDATE campus SET nome=?, abreviacao=?, duracao_aula=?, "
                 + "dt_criacao_camp=?, cidade=?, bairro=?, rua=?, cep=?, modificado=?"
                 + "where id = ?";
@@ -144,22 +144,22 @@ public class CampusDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altCampus.getNome());
-            pstm.setString(2, altCampus.getAbreviacao());
-            pstm.setDouble(3, altCampus.getDuracaoAula());
+            pstm.setString(1, campus.getNome());
+            pstm.setString(2, campus.getAbreviacao());
+            pstm.setDouble(3, campus.getDuracaoAula());
 
-            Date date = Date.valueOf(altCampus.getDtCriacaoCamp());
+            Date date = Date.valueOf(campus.getDtCriacaoCamp());
             pstm.setDate(4, date);
 
-            pstm.setString(5, altCampus.getCidade());
-            pstm.setString(6, altCampus.getBairro());
-            pstm.setString(7, altCampus.getRua());
-            pstm.setString(8, altCampus.getCep());
+            pstm.setString(5, campus.getCidade());
+            pstm.setString(6, campus.getBairro());
+            pstm.setString(7, campus.getRua());
+            pstm.setString(8, campus.getCep());
 
-            date = Date.valueOf(altCampus.getDtModificacao());
+            date = Date.valueOf(campus.getDtModificacao());
             pstm.setDate(9, date);
 
-            pstm.setInt(10, altCampus.getId());
+            pstm.setInt(10, campus.getId());
             pstm.execute();
 
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class CampusDAO {
         }
     }
 
-    public void delete(int idCampus) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM campus WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -184,7 +184,7 @@ public class CampusDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idCampus);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -200,8 +200,8 @@ public class CampusDAO {
         }
     }
 
-    public Campus find(int idCampus) throws Exception {
-        String sql = "SELECT * FROM campus WHERE id = '" + idCampus + "'";
+    public Campus getById(int id) throws Exception {
+        String sql = "SELECT * FROM campus WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -217,32 +217,32 @@ public class CampusDAO {
 
             while (rset.next()) {
 
-                Campus camp = new Campus();
+                Campus campus = new Campus();
 
-                camp.setId(rset.getInt("id"));
-                camp.setNome(rset.getString("nome"));
-                camp.setAbreviacao(rset.getString("abreviacao"));
-                camp.setDuracaoAula(rset.getDouble("duracao_aula"));
+                campus.setId(rset.getInt("id"));
+                campus.setNome(rset.getString("nome"));
+                campus.setAbreviacao(rset.getString("abreviacao"));
+                campus.setDuracaoAula(rset.getDouble("duracao_aula"));
 
                 Date date = rset.getDate("dt_criacao_camp");
                 LocalDate dataAtualizada = date.toLocalDate();
-                camp.setDtCriacaoCamp(dataAtualizada);
+                campus.setDtCriacaoCamp(dataAtualizada);
 
-                camp.setCidade(rset.getString("cidade"));
-                camp.setBairro(rset.getString("bairro"));
-                camp.setRua(rset.getString("rua"));
-                camp.setCep(rset.getString("cep"));
+                campus.setCidade(rset.getString("cidade"));
+                campus.setBairro(rset.getString("bairro"));
+                campus.setRua(rset.getString("rua"));
+                campus.setCep(rset.getString("cep"));
 
                 date = rset.getDate("cadastrado");
                 dataAtualizada = date.toLocalDate();
-                camp.setDtCriacao(dataAtualizada);
+                campus.setDtCriacao(dataAtualizada);
 
                 date = rset.getDate("modificado");
                 if (date != null) {
                     dataAtualizada = date.toLocalDate();
-                    camp.setDtModificacao(dataAtualizada);
+                    campus.setDtModificacao(dataAtualizada);
                 }
-                return camp;
+                return campus;
 
             }
         } catch (Exception e) {

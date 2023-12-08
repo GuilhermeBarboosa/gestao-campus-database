@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gestao-campus-database">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/itextg-5.5.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/mysql-connector-java-8.0.29.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

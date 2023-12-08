@@ -13,19 +13,10 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import dao.AtividadeDAO;
-import dao.CampusDAO;
-import dao.ComissaoDAO;
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.OfertaDAO;
-import dao.OrientacaoDAO;
-import dao.RelatorioDAO;
-import dao.ReuniaoDAO;
-import dao.ReuniaoPresenteDAO;
-import dao.ServidorDAO;
-import dao.VinculoDAO;
-import java.awt.Desktop;
+import model.*;
+import service.*;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Date;
@@ -35,37 +26,28 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Atividade;
-import model.Campus;
-import model.Comissao;
-import model.Reuniao;
-import model.Oferta;
-import model.Orientacao;
-import model.Servidor;
-import model.Vinculo;
 
 /**
- *
  * @author Aluno
  */
 public class RelatorioView {
 
-    private final CampusDAO campusDAO = new CampusDAO();
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final OfertaDAO ofertaDAO = new OfertaDAO();
-    private final OrientacaoDAO orientacaoDAO = new OrientacaoDAO();
-    private final AtividadeDAO atividadeDAO = new AtividadeDAO();
-    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
-    private final VinculoDAO vinculoDAO = new VinculoDAO();
-    private final RelatorioDAO relatorioDAO = new RelatorioDAO();
+    private final CampusService campusService = new CampusService();
+    private final ServidorService servidorService = new ServidorService();
+    private final OfertaService ofertaService = new OfertaService();
+    private final OrientacaoService orientacaoService = new OrientacaoService();
+    private final AtividadeService atividadeService = new AtividadeService();
+    private final ComissaoService comissaoService = new ComissaoService();
+    private final VinculoService vinculoService = new VinculoService();
+    private final RelatorioService relatorioService = new RelatorioService();
 
     private final ComissaoView comissaoView = new ComissaoView();
     private final CampusView campusView = new CampusView();
-    
+
     Scanner ler = new Scanner(System.in);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public int opMenuRelat() {
+    public int opcaoMenuRelatorio() {
         System.out.println("Escolha um tipo de relatório: ");
         System.out.println("1- Relatório das atas por período");
         System.out.println("2- Relatório de servidores");
@@ -73,28 +55,28 @@ public class RelatorioView {
         return Integer.parseInt(ler.nextLine());
     }
 
-    public LocalDate[] opMenuRelat1() {
+    public LocalDate[] paramsRelatorio() {
         LocalDate[] filtro = new LocalDate[2];
         System.out.println("Escolha data de inicio: ");
-        
+
         //02/06/2022
         filtro[0] = LocalDate.parse(ler.nextLine(), formatter);
         System.out.println("Escolha data do fim: ");
-        
+
         //10/06/2022
         filtro[1] = LocalDate.parse(ler.nextLine(), formatter);
         return filtro;
     }
 
-    public void relat1(LocalDate[] filtro) throws Exception {
+    public void relatorioTipo1(LocalDate[] filtro) throws Exception {
 
-        List<Comissao> comissaoVet = comissaoDAO.read();
-        comissaoView.mostrarIdTodosComissao(comissaoVet);
+        List<Comissao> comissaoVet = comissaoService.read();
+        comissaoView.printId(comissaoVet);
 
         System.out.println("Qual comissao deseja: ");
-        int aux = Integer.parseInt(ler.nextLine());
+        int id = Integer.parseInt(ler.nextLine());
 
-        List<Reuniao> reunioes = relatorioDAO.relatorioData(filtro[0], filtro[1]);
+        List<Reuniao> reunioes = relatorioService.relatorioData(filtro[0], filtro[1]);
 
         Document doc = new Document();
 
@@ -134,7 +116,7 @@ public class RelatorioView {
             } else {
                 for (Reuniao reuniao : reunioes) {
 
-                    if (reuniao.getComissao().getId() == aux) {
+                    if (reuniao.getComissao().getId() == id) {
                         Date date = Date.valueOf(reuniao.getDtReuniao());
                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                         String data = format.format(date);
@@ -173,13 +155,13 @@ public class RelatorioView {
 
     }
 
-    public void relat2() throws SQLException, Exception {
+    public void relatorioTipo2() throws SQLException, Exception {
 
-        List<Servidor> servidorVet = servidorDAO.read();
-        List<Vinculo> vinculoVet = vinculoDAO.read();
-        List<Atividade> atividadeVet = atividadeDAO.read();
-        List<Orientacao> orientacaoVet = orientacaoDAO.read();
-        List<Oferta> ofertaVet = ofertaDAO.read();
+        List<Servidor> listServidor = servidorService.read();
+        List<Vinculo> listVinculo = vinculoService.read();
+        List<Atividade> listAtividade = atividadeService.read();
+        List<Orientacao> listOrientacao = orientacaoService.read();
+        List<Oferta> listOferta = ofertaService.read();
 
         Document doc = new Document();
 
@@ -226,10 +208,10 @@ public class RelatorioView {
             table.addCell(cel4);
             table.addCell(cel5);
             table.addCell(cel6);
-            if (servidorVet.isEmpty()) {
+            if (listServidor.isEmpty()) {
                 System.out.println("Sem servidores cadastradas...");
             } else {
-                for (Servidor servidor : servidorVet) {
+                for (Servidor servidor : listServidor) {
                     String servidorString = "";
                     servidorString += servidor.getNome();
 
@@ -238,28 +220,28 @@ public class RelatorioView {
                     String orientacaoString = "";
                     String ofertaString = "";
                     double horasTotais = 0;
-                    for (Atividade atividade : atividadeVet) {
+                    for (Atividade atividade : listAtividade) {
                         if (atividade.getServidor().getId() == servidor.getId()) {
                             atividadeString += " - " + atividade.getDescricao() + " "
                                     + atividade.getHorasSemanais() + "h \n\n";
                             horasTotais += atividade.getHorasSemanais();
                         }
                     }
-                    for (Vinculo vinculo : vinculoVet) {
+                    for (Vinculo vinculo : listVinculo) {
                         if (vinculo.getServidor().getId() == servidor.getId()) {
                             vinculoString += " - " + vinculo.getComissao().getNameComissao() + " "
                                     + vinculo.getComissao().getHorasSemanais() + "h \n\n";
                             horasTotais += vinculo.getComissao().getHorasSemanais();
                         }
                     }
-                    for (Orientacao orientacao : orientacaoVet) {
+                    for (Orientacao orientacao : listOrientacao) {
                         if (orientacao.getServidor().getId() == servidor.getId()) {
                             orientacaoString += " - " + orientacao.getTipo() + " "
                                     + orientacao.getHorasSemanais() + "h \n\n";
                             horasTotais += orientacao.getHorasSemanais();
                         }
                     }
-                    for (Oferta oferta : ofertaVet) {
+                    for (Oferta oferta : listOferta) {
                         if (oferta.getServidor().getId() == servidor.getId()) {
                             ofertaString += " - " + oferta.getDisciplina().getNome() + " "
                                     + oferta.getDisciplina().getCargaHoraria() + "h \n\n";
@@ -309,20 +291,20 @@ public class RelatorioView {
 
     }
 
-    public void relat3() throws Exception {
+    public void relatorioTipo3() throws Exception {
 
-        List<Servidor> servidorVet = servidorDAO.read();
+        List<Servidor> listServidor = servidorService.read();
 
-        List<Campus> campusVet = campusDAO.read();
+        List<Campus> listCampus = campusService.read();
 
-        campusView.mostrarIdTodosCampos(campusVet);
+        campusView.printId(listCampus);
 
         System.out.println("Insira o id: ");
-        int aux = Integer.parseInt(ler.nextLine());
+        int id = Integer.parseInt(ler.nextLine());
 
-        Campus campus = campusDAO.find(aux);
+        Campus campus = campusService.getById(id);
 
-        List<Oferta> aulas = relatorioDAO.relatorioAulas(aux);
+        List<Oferta> aulas = relatorioService.relatorioAulas(id);
 
         Document doc = new Document();
 
@@ -356,7 +338,7 @@ public class RelatorioView {
             if (aulas.isEmpty()) {
                 System.out.println("Sem aulas cadastradas...");
             } else {
-                for (Servidor servidor : servidorVet) {
+                for (Servidor servidor : listServidor) {
                     String disiciplinaString = "";
                     String servidorString = servidor.getNome();
                     for (Oferta aula : aulas) {

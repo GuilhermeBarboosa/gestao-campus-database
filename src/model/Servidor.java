@@ -8,7 +8,6 @@ package model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Aluno
  */
 public class Servidor {

@@ -5,24 +5,25 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
+import model.Campus;
+import model.Curso;
+import service.CampusService;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Campus;
-import model.Curso;
 
 /**
- *
  * @author Usuario
  */
 public class CursoDAO {
 
-    private final CampusDAO campusDAO = new CampusDAO();
+    private final CampusService campusService = new CampusService();
 
     public void create(Curso curso) throws Exception {
         String sql = "INSERT INTO cursos(curso, campus, estado, ano_inicio, ano_termino, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -73,7 +74,9 @@ public class CursoDAO {
         ResultSet rset = null;
 
         try {
-            conn = ConnectionFactory.createConnectionToMySql();;;
+            conn = ConnectionFactory.createConnectionToMySql();
+            ;
+            ;
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
@@ -86,7 +89,7 @@ public class CursoDAO {
                 curso.setId(rset.getInt("c.id"));
                 curso.setNome(rset.getString("c.curso"));
 
-                Campus campus = campusDAO.find(rset.getInt("c.campus"));
+                Campus campus = campusService.getById(rset.getInt("c.campus"));
                 curso.setCampus(campus);
 
                 curso.setEstado(rset.getString("c.estado"));
@@ -123,7 +126,8 @@ public class CursoDAO {
         return vetResult;
     }
 
-    public void update(Curso altCurso) throws Exception {;
+    public void update(Curso curso) throws Exception {
+        ;
         String sql = "UPDATE cursos SET curso=?, campus=?, estado=?, "
                 + "ano_inicio=?, ano_termino=?, cadastrado=?, modificado=?"
                 + "where id = ?";
@@ -136,20 +140,20 @@ public class CursoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altCurso.getNome());
-            pstm.setInt(2, altCurso.getCampus().getId());
-            pstm.setString(3, altCurso.getEstado());
+            pstm.setString(1, curso.getNome());
+            pstm.setInt(2, curso.getCampus().getId());
+            pstm.setString(3, curso.getEstado());
 
-            pstm.setInt(4, altCurso.getAnoInicio());
-            pstm.setInt(5, altCurso.getAnoTermino());
+            pstm.setInt(4, curso.getAnoInicio());
+            pstm.setInt(5, curso.getAnoTermino());
 
-            Date date = Date.valueOf(altCurso.getDtCriacao());
+            Date date = Date.valueOf(curso.getDtCriacao());
             pstm.setDate(6, date);
 
-            date = Date.valueOf(altCurso.getDtModificacao());
+            date = Date.valueOf(curso.getDtModificacao());
             pstm.setDate(7, date);
 
-            pstm.setInt(8, altCurso.getId());
+            pstm.setInt(8, curso.getId());
             pstm.execute();
 
         } catch (Exception e) {
@@ -164,7 +168,7 @@ public class CursoDAO {
         }
     }
 
-    public void delete(int idCurso) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM cursos WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -174,7 +178,7 @@ public class CursoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idCurso);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -190,8 +194,8 @@ public class CursoDAO {
         }
     }
 
-    public Curso find(int idCurso) throws Exception {
-        String sql = "SELECT * FROM cursos WHERE id = '" + idCurso + "'";
+    public Curso getById(int id) throws Exception {
+        String sql = "SELECT * FROM cursos WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -212,7 +216,7 @@ public class CursoDAO {
                 curso.setId(rset.getInt("id"));
                 curso.setNome(rset.getString("curso"));
 
-                Campus campus = campusDAO.find(rset.getInt("campus"));
+                Campus campus = campusService.getById(rset.getInt("campus"));
                 curso.setCampus(campus);
 
                 curso.setEstado(rset.getString("estado"));

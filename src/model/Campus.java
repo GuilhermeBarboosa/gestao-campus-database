@@ -6,8 +6,8 @@
 package model;
 
 import java.time.LocalDate;
+
 /**
- *
  * @author Gui
  */
 public class Campus {

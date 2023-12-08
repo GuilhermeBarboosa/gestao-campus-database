@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 import model.Campus;
 import model.Curso;
+import service.CampusService;
 
 /**
  *
@@ -22,94 +23,65 @@ public class CursoView {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
     CampusView campusView = new CampusView();
-    int id = 0;
+    CampusService campusService = new CampusService();
 
-    public Curso criarCurso(CampusDAO campusDAO) {
+    public Curso create() {
         try {
 
-            Curso curso = new Curso();
-
-            curso.setId(id);
-            id++;
-
-            System.out.println("Nome: ");
-            curso.setNome(ler.nextLine());
-            System.out.println("Estado 1-ATIVO 2-INATIVO: ");
-            int aux = Integer.parseInt(ler.nextLine());
-
-            if (aux == 1) {
-                curso.setEstado("ativo");
-            } else {
-                curso.setEstado("inativo");
-            }
-
-            System.out.println("Ano de inicio: ");
-            curso.setAnoInicio(Integer.parseInt(ler.nextLine()));
-            System.out.println("Ano de término: ");
-            curso.setAnoTermino(Integer.parseInt(ler.nextLine()));
-
-            List<Campus> campusVet = campusDAO.read();
-
-            if (campusVet.size() == 0) {
-                System.out.println("Nenhum campus cadastrado...");
-                return null;
-            } else {
-                campusView.mostrarIdTodosCampos(campusVet);
-            }
-
-            System.out.println("Insira o ID: ");
-
-            Campus campus = campusDAO.find(Integer.parseInt(ler.nextLine()));
-            curso.setCampus(campus);
-
-            curso.setDtCriacao(LocalDate.now());
-            return curso;
+            return inputInfoCurso(new Curso());
         } catch (Exception e) {
             return null;
         }
 
     }
 
-    public Curso modifCurso(Curso cursoAlt, CampusDAO campusDAO) {
+    public Curso update(Curso curso) {
         try {
-            System.out.println("Nome: ");
-            cursoAlt.setNome(ler.nextLine());
-            System.out.println("Estado 1-ATIVO 2-INATIVO: ");
-            int aux = Integer.parseInt(ler.nextLine());
-            if (aux == 1) {
-                cursoAlt.setEstado("ativo");
-            } else {
-                cursoAlt.setEstado("inativo");
-            }
-            System.out.println("Ano de inicio: ");
-            cursoAlt.setAnoInicio(Integer.parseInt(ler.nextLine()));
-            System.out.println("Ano de término: ");
-            cursoAlt.setAnoTermino(Integer.parseInt(ler.nextLine()));
-
-            List<Campus> campusVet = campusDAO.read();
-
-            if (campusVet.size() == 0) {
-                System.out.println("Nenhum campus cadastrado...");
-                return null;
-            } else {
-                campusView.mostrarIdTodosCampos(campusVet);
-            }
-
-            System.out.println("Insira o ID: ");
-
-            Campus campus = campusDAO.find(Integer.parseInt(ler.nextLine()));
-            cursoAlt.setCampus(campus);
-
-            cursoAlt.setDtModificacao(LocalDate.now());
-            return cursoAlt;
+            return inputInfoCurso(curso);
         } catch (Exception e) {
             return null;
         }
 
     }
 
-    public void mostrarCurso(List<Curso> vetResult) {
-        for (Curso curso : vetResult) {
+    private Curso inputInfoCurso(Curso curso) throws Exception {
+        System.out.println("Nome: ");
+        curso.setNome(ler.nextLine());
+        System.out.println("Estado 1-ATIVO 2-INATIVO: ");
+        int aux = Integer.parseInt(ler.nextLine());
+
+        if (aux == 1) {
+            curso.setEstado("ativo");
+        } else {
+            curso.setEstado("inativo");
+        }
+
+        System.out.println("Ano de inicio: ");
+        curso.setAnoInicio(Integer.parseInt(ler.nextLine()));
+        System.out.println("Ano de término: ");
+        curso.setAnoTermino(Integer.parseInt(ler.nextLine()));
+
+        List<Campus> listCurso = campusService.read();
+
+        if (listCurso.size() == 0) {
+            System.out.println("Nenhum campus cadastrado...");
+            return null;
+        } else {
+            campusView.printId(listCurso);
+        }
+
+        System.out.println("Insira o ID: ");
+
+        Campus campus = campusService.getById(Integer.parseInt(ler.nextLine()));
+        curso.setCampus(campus);
+
+        curso.setDtCriacao(LocalDate.now());
+        return curso;
+    }
+
+
+    public void printAll(List<Curso> listCurso) {
+        for (Curso curso : listCurso) {
             System.out.println("-----------------------------------");
             System.out.println("ID: " + curso.getId());
             System.out.println("CURSO: " + curso.getNome());
@@ -125,8 +97,8 @@ public class CursoView {
         }
     }
 
-    public void mostrarIdCurso(List<Curso> vetResult) {
-        for (Curso curso : vetResult) {
+    public void printId(List<Curso> listCurso) {
+        for (Curso curso : listCurso) {
             System.out.println("-----------------------------------");
             System.out.println("ID: " + curso.getId());
             System.out.println("CURSO: " + curso.getNome());

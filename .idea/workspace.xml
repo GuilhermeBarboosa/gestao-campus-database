@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a769506f-be63-455b-9e44-ccb1db8365c9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/service/AtividadeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/CampusService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/ComissaoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/CursoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/DisciplinaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/EncerrarComissaoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/LoginService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/OfertaService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/OrientacaoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/RelatorioService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/ReuniaoPresenteService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/ReuniaoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/ServidorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/VinculoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aplicacao/gestaoIFTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/aplicacao/gestaoIFTM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/AtividadeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AtividadeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/CampusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/CampusController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/ComissaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ComissaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/CursoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/CursoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/DisciplinaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/DisciplinaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/EncerrarComissaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/EncerrarComissaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/OfertaDisciplinaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/OfertaDisciplinaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/OrientacaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/OrientacaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/RelatorioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/RelatorioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/ReuniaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ReuniaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/ReuniaoPresenteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ReuniaoPresenteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/ServidorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ServidorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/UserComumController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/UserComumController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/VinculoServidorComissaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/VinculoServidorComissaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/AtividadeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/AtividadeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/CampusDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CampusDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/ComissaoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ComissaoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/CursoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CursoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/DisciplinaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DisciplinaDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/OfertaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/OfertaDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/OrientacaoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/OrientacaoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/RelatorioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/RelatorioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/ReuniaoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ReuniaoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/ReuniaoPresenteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ReuniaoPresenteDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/ServidorDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ServidorDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/VinculoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/VinculoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/factory/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/factory/ConnectionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Atividade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Atividade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Campus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Campus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Comissao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Comissao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Curso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Curso.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Disciplina.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Disciplina.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Oferta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Oferta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Orientacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Orientacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Reuniao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Reuniao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/ReuniaoPresente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ReuniaoPresente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Servidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Servidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Vinculo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Vinculo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AtividadeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AtividadeView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/CampusView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CampusView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ComissaoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ComissaoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/CursoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CursoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/DisciplinaView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/DisciplinaView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/OfertaView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/OfertaView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/OrientacaoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/OrientacaoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/RelatorioView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/RelatorioView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ReuniaoPresenteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ReuniaoPresenteView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ReuniaoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ReuniaoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ServidorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ServidorView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/VinculoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/VinculoView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2Z873Mk8zmc6z3aSmCK53UN4MVZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/guilherme.rocha/Documents/Projetos/API's/educacao-api&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a769506f-be63-455b-9e44-ccb1db8365c9" name="Changes" comment="" />
+      <created>1701791653278</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701791653278</updated>
+      <workItem from="1701791654268" duration="705000" />
+      <workItem from="1701793837086" duration="6000" />
+      <workItem from="1701864919373" duration="6535000" />
+      <workItem from="1701952754858" duration="10509000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

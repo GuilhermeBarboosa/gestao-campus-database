@@ -8,7 +8,6 @@ package view;
 import java.util.Scanner;
 
 /**
- *
  * @author Gui
  */
 public class Gui {

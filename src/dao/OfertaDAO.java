@@ -5,28 +5,31 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import model.Curso;
 import model.Disciplina;
 import model.Oferta;
 import model.Servidor;
+import service.CursoService;
+import service.DisciplinaService;
+import service.ServidorService;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
  * @author Gui
  */
-public class OfertaDAO{
+public class OfertaDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final CursoDAO cursoDAO = new CursoDAO();
-    private final DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+    private final ServidorService servidorService = new ServidorService();
+    private final CursoService cursoService = new CursoService();
+    private final DisciplinaService disciplinaService = new DisciplinaService();
 
     public void create(Oferta oferta) throws Exception {
         String sql = "INSERT INTO ofertas (curso, disciplina, servidor, ano, semestre, aula_semanal, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -92,13 +95,13 @@ public class OfertaDAO{
 
                 oferta.setId(rset.getInt("o.id"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("o.servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("o.servidor"));
                 oferta.setServidor(servidor);
 
-                Disciplina disciplina = disciplinaDAO.find(rset.getInt("o.disciplina"));
+                Disciplina disciplina = disciplinaService.getById(rset.getInt("o.disciplina"));
                 oferta.setDisciplina(disciplina);
 
-                Curso curso = cursoDAO.find(rset.getInt("o.curso"));
+                Curso curso = cursoService.getById(rset.getInt("o.curso"));
                 oferta.setCurso(curso);
 
                 oferta.setAno(rset.getInt("o.ano"));
@@ -133,7 +136,8 @@ public class OfertaDAO{
         return vetResult;
     }
 
-    public void update(Oferta altOferta) throws Exception {;
+    public void update(Oferta altOferta) throws Exception {
+        ;
         String sql = "UPDATE ofertas SET curso=?, disciplina=?, servidor=?, "
                 + "ano=?, semestre=?, aula_semanal=?, modificado=?"
                 + "where id = ?";
@@ -172,7 +176,7 @@ public class OfertaDAO{
         }
     }
 
-    public void delete(int idOferta) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM ofertas WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -182,7 +186,7 @@ public class OfertaDAO{
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idOferta);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -198,8 +202,8 @@ public class OfertaDAO{
         }
     }
 
-    public Oferta find(int idOferta) throws Exception {
-        String sql = "SELECT * FROM ofertas WHERE id = '" + idOferta + "'";
+    public Oferta getById(int id) throws Exception {
+        String sql = "SELECT * FROM ofertas WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -218,13 +222,13 @@ public class OfertaDAO{
                 Oferta oferta = new Oferta();
 
                 oferta.setId(rset.getInt("id"));
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 oferta.setServidor(servidor);
 
-                Disciplina disciplina = disciplinaDAO.find(rset.getInt("disciplina"));
+                Disciplina disciplina = disciplinaService.getById(rset.getInt("disciplina"));
                 oferta.setDisciplina(disciplina);
 
-                Curso curso = cursoDAO.find(rset.getInt("curso"));
+                Curso curso = cursoService.getById(rset.getInt("curso"));
                 oferta.setCurso(curso);
                 oferta.setAno(rset.getInt("ano"));
                 oferta.setSemestre(rset.getInt("semestre"));

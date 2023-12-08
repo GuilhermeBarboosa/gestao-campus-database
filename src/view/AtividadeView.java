@@ -5,7 +5,6 @@
  */
 package view;
 
-import dao.ServidorDAO;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.Scanner;
 import model.Atividade;
 import model.Disciplina;
 import model.Servidor;
+import service.ServidorService;
 
 /**
  *
@@ -20,97 +20,78 @@ import model.Servidor;
  */
 public class AtividadeView {
 
+    private final ServidorService servidorService = new ServidorService();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
-    ServidorView servV = new ServidorView();
-    static int id = 1;
+    ServidorView servidorView = new ServidorView();
+//    static int id = 1;
 
-    public Atividade criarAtividade(ServidorDAO servidorDAO) {
+    public Atividade create() {
         try {
-            Atividade at = new Atividade();
-            at.setId(id);
-            id++;
+            Atividade atividade = new Atividade();
 
-            List<Servidor> servidorVet = servidorDAO.read();
+            List<Servidor> listServidor = servidorService.read();
 
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum servidor cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-
-            System.out.println("Insira o ID: ");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            at.setServidor(servidor);
-
-            System.out.println("Descricao: ");
-            at.setDescricao(ler.nextLine());
-            System.out.println("Horas Semanais:  ");
-            at.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            at.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            at.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            at.setDtCriacao(LocalDate.now());
-            return at;
+            return inputInfoAtividade(atividade, listServidor);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Atividade modifAtividade(Atividade atAlt, ServidorDAO servidorDAO) {
+    public Atividade update(Atividade atividade) {
         try {
+            List<Servidor> listServidor = servidorService.read();
 
-            List<Servidor> servidorVet = servidorDAO.read();
-
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum servidor cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-
-            System.out.println("Insira o ID: ");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            atAlt.setServidor(servidor);
-
-            System.out.println("Descricao: ");
-            atAlt.setDescricao(ler.nextLine());
-            System.out.println("Horas Semanais:  ");
-            atAlt.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            atAlt.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            atAlt.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            atAlt.setDtModificacao(LocalDate.now());
-            return atAlt;
-
+            return inputInfoAtividade(atividade, listServidor);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Atividade createAula(Servidor servAux, Disciplina discAux) throws Exception {
-        Atividade at = new Atividade();
-        ServidorDAO servidorDAO = new ServidorDAO();
-        Servidor servidor = servidorDAO.find(servAux.getId());
-        at.setServidor(servidor);
-        at.setDescricao("Preparação da aula " + discAux.getNome());
-        at.setHorasSemanais(discAux.getCargaHoraria());
+    private Atividade inputInfoAtividade(Atividade atividade, List<Servidor> listServidor) throws Exception {
+        if (listServidor.size() == 0) {
+            System.out.println("Nenhum servidor cadastrado...");
+            return null;
+        } else {
+            servidorView.printId(listServidor);
+        }
+
+        System.out.println("Insira o ID: ");
+        Servidor servidor = servidorService.getById(Integer.parseInt(ler.nextLine()));
+        atividade.setServidor(servidor);
+
+        System.out.println("Descricao: ");
+        atividade.setDescricao(ler.nextLine());
+        System.out.println("Horas Semanais:  ");
+        atividade.setHorasSemanais(Double.parseDouble(ler.nextLine()));
         System.out.println("Data de inicio: ");
-        at.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
+        atividade.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
         System.out.println("Data de termino: ");
-        at.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-        at.setDtCriacao(LocalDate.now());
-        return at;
+        atividade.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
+        atividade.setDtModificacao(LocalDate.now());
+        return atividade;
     }
 
-    public void mostrarAtividades(List<Atividade> vetResult) {
-        if (vetResult.size() == 0) {
+    public Atividade createAula(Servidor idServidor, Disciplina disciplina) throws Exception {
+        Atividade atividade = new Atividade();
+        ServidorService servidorService = new ServidorService();
+        Servidor servidor = servidorService.getById(idServidor.getId());
+        atividade.setServidor(servidor);
+        atividade.setDescricao("Preparação da aula " + disciplina.getNome());
+        atividade.setHorasSemanais(disciplina.getCargaHoraria());
+        System.out.println("Data de inicio: ");
+        atividade.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Data de termino: ");
+        atividade.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
+        atividade.setDtCriacao(LocalDate.now());
+        return atividade;
+    }
+
+    public void printAll(List<Atividade> listAtividade) {
+        if (listAtividade.size() == 0) {
             System.out.println("Não há atividades cadastradas");
         } else {
-            for (Atividade atividade : vetResult) {
+            for (Atividade atividade : listAtividade) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + atividade.getId());
                 System.out.println("DESCRIÇÃO: " + atividade.getDescricao());
@@ -127,11 +108,11 @@ public class AtividadeView {
         }
     }
 
-    public void mostrarIdAtividades(List<Atividade> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printId(List<Atividade> listAtividade) {
+        if (listAtividade.size() == 0) {
             System.out.println("Não há atividades cadastradas");
         } else {
-            for (Atividade atividade : vetResult) {
+            for (Atividade atividade : listAtividade) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + atividade.getId());
                 System.out.println("DESCRIÇÃO: " + atividade.getDescricao());

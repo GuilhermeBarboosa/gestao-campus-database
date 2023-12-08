@@ -69,35 +69,5 @@ public class ReuniaoPresente {
         this.dtModificacao = dtModificacao;
     }
 
-//    @Override
-//    public String toString() {
-//
-//        String aux = "";
-//        aux += "ID: " + this.id + "\n";
-//        Servidor[] servAll = this.getServidor();
-//
-//        if (comissao != null) {
-//            aux += "Comissao: " + comissao.getNameComissao() + "\n";
-//        }
-//
-//        aux += "Ata de reunião: " + this.ataReuniao + "\n";
-//
-//        for (Servidor servidorVet : servAll) {
-//            if (servidorVet != null) {
-//
-//                aux += "Servidor: " + servidorVet.getNome() + "\n";
-//
-//            }
-//        }
-//
-//        aux += "Data de criação: " + this.dtCriacao + "\n";
-//        if (this.getDtModificacao() != null) {
-//            aux += "Data de modificação: " + this.dtModificacao + "\n";
-//        }
-//        aux += "\n\n";
-//        return aux;
-//    }
-
-   
 
 }

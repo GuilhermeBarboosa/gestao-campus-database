@@ -8,7 +8,6 @@ package model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Usuario
  */
 public class Orientacao {
@@ -94,25 +93,6 @@ public class Orientacao {
     public void setDtModificacao(LocalDate dtModificacao) {
         this.dtModificacao = dtModificacao;
     }
-//
-//    @Override
-//    public String toString() {
-//        String aux = "";
-//        aux += "ID: " + this.id + "\n";
-//        aux += "Tipo: " + this.tipo + "\n";
-//
-//        if (servidor != null) {
-//            aux += "Servidor:" + servidor.getNome() + "\n";
-//        }
-//
-//        aux += "Nome do aluno: " + this.nomeAluno + "\n";
-//        aux += "Data de inicio: " + this.dtInicio + "\n";
-//        aux += "Data de termino: " + this.dtTermino + "\n";
-//        aux += "Data de criacao: " + this.dtCriacao + "\n";
-//        if (this.getDtModificacao() != null) {
-//            aux += "Data de modificacao: " + this.dtModificacao + "\n";
-//        }
-//        return aux;
-//    }
+
 
 }

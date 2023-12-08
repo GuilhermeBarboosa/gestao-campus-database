@@ -5,80 +5,62 @@
  */
 package view;
 
+import model.Comissao;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
-import model.Comissao;
 
 /**
- *
  * @author Gui
  */
 public class ComissaoView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
-    int id = 0;
-
-    public Comissao criarComissao() {
+    public Comissao create() {
         try {
-
-            Comissao com = new Comissao();
-            com.setId(id);
-            id++;
-            System.out.println("Comissao: ");
-            com.setNameComissao(ler.nextLine());
-            System.out.println("Horas Semanais:  ");
-            com.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            com.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            com.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Estado: 1-Ativo 2-Inativo: ");
-            int aux = Integer.parseInt(ler.nextLine());
-            if (aux == 1) {
-                com.setEstado("Ativo");
-            } else {
-                com.setEstado("Inativo");
-            }
-            com.setDtCriacao(LocalDate.now());
-            return com;
+            return inputInfoComissao(new Comissao());
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Comissao modifComissao(Comissao comAlt) {
+    private Comissao inputInfoComissao(Comissao comissao) {
+        System.out.println("Comissao: ");
+        comissao.setNameComissao(ler.nextLine());
+        System.out.println("Horas Semanais:  ");
+        comissao.setHorasSemanais(Double.parseDouble(ler.nextLine()));
+        System.out.println("Data de inicio: ");
+        comissao.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Data de termino: ");
+        comissao.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Estado: 1-Ativo 2-Inativo: ");
+        int aux = Integer.parseInt(ler.nextLine());
+        if (aux == 1) {
+            comissao.setEstado("Ativo");
+        } else {
+            comissao.setEstado("Inativo");
+        }
+        comissao.setDtCriacao(LocalDate.now());
+        return comissao;
+    }
+
+    public Comissao update(Comissao comissao) {
         try {
-            System.out.println("Comissao: ");
-            comAlt.setNameComissao(ler.nextLine());
-            System.out.println("Horas Semanais:  ");
-            comAlt.setHorasSemanais(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de inicio: ");
-            comAlt.setDtInicio(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Data de termino: ");
-            comAlt.setDtTermino(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Estado: 1-Ativo 2-Inativo: ");
-            int aux = Integer.parseInt(ler.nextLine());
-            if (aux == 1) {
-                comAlt.setEstado("Ativo");
-            } else {
-                comAlt.setEstado("Inativo");
-            }
-            comAlt.setDtModificacao(LocalDate.now());
-            return comAlt;
+            return inputInfoComissao(comissao);
         } catch (Exception e) {
             return null;
         }
 
     }
 
-    public void mostrarTodosComissao(List<Comissao> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printAll(List<Comissao> listComissao) {
+        if (listComissao.size() == 0) {
             System.out.println("Não há servidores cadastrados");
         } else {
-            for (Comissao comissao : vetResult) {
+            for (Comissao comissao : listComissao) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + comissao.getId());
                 System.out.println("COMISSAO: " + comissao.getNameComissao());
@@ -95,11 +77,11 @@ public class ComissaoView {
         }
     }
 
-    public void mostrarIdTodosComissao(List<Comissao> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printId(List<Comissao> listComissao) {
+        if (listComissao.size() == 0) {
             System.out.println("Não há servidores cadastrados");
         } else {
-            for (Comissao comissao : vetResult) {
+            for (Comissao comissao : listComissao) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + comissao.getId());
                 System.out.println("COMISSAO: " + comissao.getNameComissao());

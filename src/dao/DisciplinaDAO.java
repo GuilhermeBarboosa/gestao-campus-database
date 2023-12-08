@@ -5,26 +5,27 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
+import model.Curso;
+import model.Disciplina;
+import service.CursoService;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Curso;
-import model.Disciplina;
 
 /**
- *
  * @author Gui
  */
 public class DisciplinaDAO {
 
-    private final CursoDAO cursoDAO = new CursoDAO();
+    private final CursoService cursoService = new CursoService();
 
-    public void create(Disciplina disc) throws Exception {
+    public void create(Disciplina disciplina) throws Exception {
         String sql = "INSERT INTO disciplinas (disciplina, curso, carga_horaria, periodo, cadastrado) VALUES (?,?,?,?,?)";
 
         Connection conn = null;
@@ -35,11 +36,11 @@ public class DisciplinaDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, disc.getNome());
-            pstm.setInt(2, disc.getCurso().getId());
-            pstm.setDouble(3, disc.getCargaHoraria());
-            pstm.setInt(4, disc.getPeriodo());
-            Date date = Date.valueOf(disc.getDtCriacao());
+            pstm.setString(1, disciplina.getNome());
+            pstm.setInt(2, disciplina.getCurso().getId());
+            pstm.setDouble(3, disciplina.getCargaHoraria());
+            pstm.setInt(4, disciplina.getPeriodo());
+            Date date = Date.valueOf(disciplina.getDtCriacao());
             pstm.setDate(5, date);
 
             pstm.execute();
@@ -85,7 +86,7 @@ public class DisciplinaDAO {
                 disciplina.setId(rset.getInt("id"));
                 disciplina.setNome(rset.getString("disciplina"));
 
-                Curso curso = cursoDAO.find(rset.getInt("curso"));
+                Curso curso = cursoService.getById(rset.getInt("curso"));
                 disciplina.setCurso(curso);
 
                 disciplina.setCargaHoraria(rset.getDouble("carga_horaria"));
@@ -119,7 +120,7 @@ public class DisciplinaDAO {
         return vetResult;
     }
 
-    public void update(Disciplina altDisciplina) throws Exception {
+    public void update(Disciplina disciplina) throws Exception {
         String sql = "UPDATE disciplinas SET disciplina=?, curso=?, carga_horaria=?, "
                 + "periodo=?, modificado=?"
                 + "where id = ?";
@@ -132,15 +133,15 @@ public class DisciplinaDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altDisciplina.getNome());
-            pstm.setInt(2, altDisciplina.getCurso().getId());
-            pstm.setDouble(3, altDisciplina.getCargaHoraria());
-            pstm.setInt(4, altDisciplina.getPeriodo());
+            pstm.setString(1, disciplina.getNome());
+            pstm.setInt(2, disciplina.getCurso().getId());
+            pstm.setDouble(3, disciplina.getCargaHoraria());
+            pstm.setInt(4, disciplina.getPeriodo());
 
-            Date date = Date.valueOf(altDisciplina.getDtModificacao());
+            Date date = Date.valueOf(disciplina.getDtModificacao());
             pstm.setDate(5, date);
 
-            pstm.setInt(6, altDisciplina.getId());
+            pstm.setInt(6, disciplina.getId());
 
             pstm.execute();
 
@@ -156,7 +157,7 @@ public class DisciplinaDAO {
         }
     }
 
-    public void delete(int idDisciplina) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM disciplinas WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -166,7 +167,7 @@ public class DisciplinaDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idDisciplina);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -182,8 +183,8 @@ public class DisciplinaDAO {
         }
     }
 
-    public Disciplina find(int idDisciplina) throws Exception {
-        String sql = "SELECT * FROM disciplinas WHERE id = '" + idDisciplina + "'";
+    public Disciplina getById(int id) throws Exception {
+        String sql = "SELECT * FROM disciplinas WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -204,7 +205,7 @@ public class DisciplinaDAO {
                 disciplina.setId(rset.getInt("id"));
                 disciplina.setNome(rset.getString("disciplina"));
 
-                Curso curso = cursoDAO.find(rset.getInt("curso"));
+                Curso curso = cursoService.getById(rset.getInt("curso"));
                 disciplina.setCurso(curso);
 
                 disciplina.setCargaHoraria(rset.getDouble("carga_horaria"));

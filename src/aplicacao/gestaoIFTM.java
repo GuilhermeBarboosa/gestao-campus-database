@@ -5,26 +5,10 @@
  */
 package aplicacao;
 
-import controllers.AtividadeController;
-import controllers.CampusController;
-import controllers.ComissaoController;
-import controllers.CursoController;
-import controllers.DisciplinaController;
-import controllers.EncerrarComissaoController;
-import controllers.OfertaDisciplinaController;
-import controllers.OrientacaoController;
-import controllers.RelatorioController;
-import controllers.ReuniaoController;
-import controllers.ReuniaoPresenteController;
-import controllers.ServidorController;
-import controllers.UserComumController;
-import controllers.VinculoServidorComissaoController;
-import dao.ServidorDAO;
-import java.sql.SQLException;
-import java.util.List;
-import view.Gui;
-
+import controller.*;
 import model.Servidor;
+import service.LoginService;
+import view.Gui;
 
 public class gestaoIFTM {
 
@@ -36,34 +20,29 @@ public class gestaoIFTM {
     public final OrientacaoController orientacaoController = new OrientacaoController();
     public final AtividadeController atividadeController = new AtividadeController();
     public final ComissaoController comissaoController = new ComissaoController();
-    public final VinculoServidorComissaoController vinculoServiComi = new VinculoServidorComissaoController();
+    public final VinculoServidorComissaoController vinculoServiComissaoController = new VinculoServidorComissaoController();
     public final UserComumController userComController = new UserComumController();
     public final ReuniaoController reuniaoController = new ReuniaoController();
     public final ReuniaoPresenteController reuniaoPresenteController = new ReuniaoPresenteController();
     public final EncerrarComissaoController encerrarComissaoController = new EncerrarComissaoController();
     public final RelatorioController relatorioController = new RelatorioController();
-
-    ServidorDAO servidorDAO = new ServidorDAO();
-    int opcCrud;
-    boolean sair = false;
-    int auxLoc;
-    int locServ;
+    LoginService loginService = new LoginService();
     Servidor servidorLogin;
     Gui GUI = new Gui();
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new gestaoIFTM();
     }
 
-    private gestaoIFTM() throws Exception {
+    private gestaoIFTM() {
         principal();
     }
 
-    private void principal() throws Exception {
+    private void principal() {
         try {
             do {
                 String[] loginSenha = GUI.login();
-                servidorLogin = login(loginSenha[0], loginSenha[1]);
+                servidorLogin = loginService.login(loginSenha[0], loginSenha[1]);
                 if (servidorLogin != null) {
                     if (servidorLogin.getPerfil() == 1) {
                         sistemaAdm();
@@ -114,7 +93,7 @@ public class gestaoIFTM {
                     comissaoController.menu();
                     break;
                 case 9:
-                    vinculoServiComi.menu();
+                    vinculoServiComissaoController.menu();
                     break;
                 case 10:
                     reuniaoController.menu();
@@ -123,7 +102,7 @@ public class gestaoIFTM {
                     reuniaoPresenteController.menu();
                     break;
                 case 12:
-                    relatorioController.gerarRelat();
+                    relatorioController.gerarRelatorio();
                     break;
                 case 13:
                     encerrarComissaoController.menu();
@@ -135,19 +114,5 @@ public class gestaoIFTM {
         principal();
     }
 
-    public Servidor login(String login, String senha) throws SQLException, Exception {;
-        Servidor responseLogin = new Servidor();
-        
-        List<Servidor> vetServidor = servidorDAO.read();
-
-        for (Servidor servidor : vetServidor) {
-            if (servidor.getLogin().equals(login) && servidor.getSenha().equals(senha)) {
-                responseLogin = servidor;
-                return responseLogin;
-            }
-        }
-
-        return null;
-    }
 
 }

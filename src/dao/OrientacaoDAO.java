@@ -5,16 +5,18 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
+import model.Orientacao;
+import model.Servidor;
+import service.ServidorService;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Orientacao;
-import model.Servidor;
 
 /**
  *
@@ -22,7 +24,7 @@ import model.Servidor;
  */
 public class OrientacaoDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final ServidorService servidorService = new ServidorService();
 
     public void create(Orientacao orientacao) throws Exception {
         String sql = "INSERT INTO orientacoes (tipo, servidor, aluno, horas_semanais, dt_inicio, dt_termino, cadastrado) VALUES (?,?,?,?,?,?,?)";
@@ -92,7 +94,7 @@ public class OrientacaoDAO {
                 orientacao.setId(rset.getInt("id"));
                 orientacao.setTipo(rset.getString("tipo"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 orientacao.setServidor(servidor);
 
                 orientacao.setNomeAluno(rset.getString("aluno"));
@@ -177,7 +179,7 @@ public class OrientacaoDAO {
         }
     }
 
-    public void delete(int idOrientacao) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM orientacoes WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -187,7 +189,7 @@ public class OrientacaoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idOrientacao);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -203,8 +205,8 @@ public class OrientacaoDAO {
         }
     }
 
-    public Orientacao find(int idOrientacao) throws Exception {
-        String sql = "SELECT * FROM orientacoes WHERE id = '" + idOrientacao + "'";
+    public Orientacao getById(int id) throws Exception {
+        String sql = "SELECT * FROM orientacoes WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -225,7 +227,7 @@ public class OrientacaoDAO {
                 orientacao.setId(rset.getInt("id"));
                 orientacao.setTipo(rset.getString("tipo"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 orientacao.setServidor(servidor);
 
                 orientacao.setNomeAluno(rset.getString("aluno"));

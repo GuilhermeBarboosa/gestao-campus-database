@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Atividade;
 import model.Servidor;
+import service.ServidorService;
 
 /**
  *
@@ -22,7 +23,7 @@ import model.Servidor;
  */
 public class AtividadeDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
+    private final ServidorService servidorService = new ServidorService();
 
     public void create(Atividade atividade) throws Exception {
         String sql = "INSERT INTO atividades (atividade, servidor, horas_semanais, dt_inicio, dt_termino,"
@@ -91,7 +92,7 @@ public class AtividadeDAO {
                 atividade.setId(rset.getInt("a.id"));
                 atividade.setDescricao(rset.getString("a.atividade"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("a.servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("a.servidor"));
                 atividade.setServidor(servidor);
 
                 atividade.setHorasSemanais(rset.getDouble("a.horas_semanais"));
@@ -132,7 +133,7 @@ public class AtividadeDAO {
         return vetResult;
     }
 
-    public void update(Atividade altAtividade) throws Exception {;
+    public void update(Atividade atividade) throws Exception {;
         String sql = "UPDATE atividades SET atividade=?, servidor=?, horas_semanais=?, "
                 + "dt_inicio=?, dt_termino=?, modificado=?"
                 + "where id = ?";
@@ -145,20 +146,20 @@ public class AtividadeDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altAtividade.getDescricao());
-            pstm.setInt(2, altAtividade.getServidor().getId());
-            pstm.setDouble(3, altAtividade.getHorasSemanais());
+            pstm.setString(1, atividade.getDescricao());
+            pstm.setInt(2, atividade.getServidor().getId());
+            pstm.setDouble(3, atividade.getHorasSemanais());
 
-            Date date = Date.valueOf(altAtividade.getDtInicio());
+            Date date = Date.valueOf(atividade.getDtInicio());
             pstm.setDate(4, date);
 
-            date = Date.valueOf(altAtividade.getDtTermino());
+            date = Date.valueOf(atividade.getDtTermino());
             pstm.setDate(5, date);
 
-            date = Date.valueOf(altAtividade.getDtModificacao());
+            date = Date.valueOf(atividade.getDtModificacao());
             pstm.setDate(6, date);
 
-            pstm.setInt(7, altAtividade.getId());
+            pstm.setInt(7, atividade.getId());
 
             pstm.execute();
 
@@ -200,8 +201,8 @@ public class AtividadeDAO {
         }
     }
 
-    public Atividade find(int idAtividades) throws Exception {
-        String sql = "SELECT * FROM atividades WHERE id = '" + idAtividades + "'";
+    public Atividade getById(int id) throws Exception {
+        String sql = "SELECT * FROM atividades WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -222,7 +223,7 @@ public class AtividadeDAO {
                 atividade.setId(rset.getInt("id"));
                 atividade.setDescricao(rset.getString("atividade"));
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 atividade.setServidor(servidor);
 
                 atividade.setHorasSemanais(rset.getDouble("horas_semanais"));

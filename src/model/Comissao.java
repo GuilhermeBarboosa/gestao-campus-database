@@ -85,21 +85,6 @@ public class Comissao {
         this.dtModificacao = dtModificacao;
     }
 
-    @Override
-    public String toString() {
-        String aux = "";
-        aux += "ID: " + this.id + "\n";
-        aux += "Comissao: " + this.nameComissao + "\n";
-        aux += "Horas semanais: " + this.horasSemanais + "\n";
-        aux += "Data de inicio: " + this.dtInicio + "\n";
-        aux += "Data de termino: " + this.dtTermino + "\n";
-        aux += "Estado: " + this.estado + "\n";
-        aux += "Data de criação: " + this.dtCriacao + "\n";
-       if(this.dtModificacao != null){
-           aux += "Data de modificacao: " + this.dtModificacao;
-       }
-       return aux;
-    }
     
     
 }

@@ -5,27 +5,25 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import model.Comissao;
 import model.Servidor;
 import model.Vinculo;
+import service.ComissaoService;
+import service.ServidorService;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
  * @author Gui
  */
 public class VinculoDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
+    private final ServidorService servidorService = new ServidorService();
+    private final ComissaoService comissaoService = new ComissaoService();
 
     public void create(Vinculo vinculo) throws Exception {
         String sql = "INSERT INTO vinculos (servidor, comissao, papel, dt_entrada, dt_saida, cadastrado) VALUES (?,?,?,?,?,?)";
@@ -93,10 +91,10 @@ public class VinculoDAO {
 
                 vinculo.setId(rset.getInt("v.id"));
 
-                Comissao comissao = comissaoDAO.find(rset.getInt("v.comissao"));
+                Comissao comissao = comissaoService.getById(rset.getInt("v.comissao"));
                 vinculo.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("v.servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("v.servidor"));
                 vinculo.setServidor(servidor);
 
                 vinculo.setPapel(rset.getString("v.papel"));
@@ -137,7 +135,8 @@ public class VinculoDAO {
         return vetResult;
     }
 
-    public void update(Vinculo altVinculo) throws Exception {;
+    public void update(Vinculo vinculo) throws Exception {
+        ;
         String sql = "UPDATE vinculos SET servidor=?, comissao=?, papel=?, "
                 + "dt_entrada=?, dt_saida=?, modificado=?"
                 + "where id = ?";
@@ -150,20 +149,20 @@ public class VinculoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, altVinculo.getServidor().getId());
-            pstm.setInt(2, altVinculo.getComissao().getId());
-            pstm.setString(3, altVinculo.getPapel());
+            pstm.setInt(1, vinculo.getServidor().getId());
+            pstm.setInt(2, vinculo.getComissao().getId());
+            pstm.setString(3, vinculo.getPapel());
 
-            Date date = Date.valueOf(altVinculo.getDtEntrada());
+            Date date = Date.valueOf(vinculo.getDtEntrada());
             pstm.setDate(4, date);
 
-            date = Date.valueOf(altVinculo.getDtSaida());
+            date = Date.valueOf(vinculo.getDtSaida());
             pstm.setDate(5, date);
 
-            date = Date.valueOf(altVinculo.getDtModificacao());
+            date = Date.valueOf(vinculo.getDtModificacao());
             pstm.setDate(6, date);
 
-            pstm.setInt(7, altVinculo.getId());
+            pstm.setInt(7, vinculo.getId());
 
             pstm.execute();
 
@@ -179,7 +178,7 @@ public class VinculoDAO {
         }
     }
 
-    public void delete(int idVinculo) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM vinculos WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -189,7 +188,7 @@ public class VinculoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idVinculo);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -205,8 +204,8 @@ public class VinculoDAO {
         }
     }
 
-    public Vinculo find(int idVinculo) throws Exception {
-        String sql = "SELECT * FROM vinculos WHERE id = '" + idVinculo + "'";
+    public Vinculo getById(int id) throws Exception {
+        String sql = "SELECT * FROM vinculos WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -225,10 +224,10 @@ public class VinculoDAO {
                 Vinculo vinculo = new Vinculo();
 
                 vinculo.setId(rset.getInt("id"));
-                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
+                Comissao comissao = comissaoService.getById(rset.getInt("comissao"));
                 vinculo.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor"));
                 vinculo.setServidor(servidor);
                 vinculo.setPapel(rset.getString("papel"));
 

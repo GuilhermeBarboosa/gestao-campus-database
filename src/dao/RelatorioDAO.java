@@ -5,31 +5,27 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.*;
+import service.CampusService;
+import service.ComissaoService;
+import service.OfertaService;
+import service.ServidorService;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Campus;
-import model.Comissao;
-import model.Oferta;
-import model.Reuniao;
-import model.Servidor;
 
 /**
- *
  * @author Usuario
  */
 public class RelatorioDAO {
 
-    private final ServidorDAO servidorDAO = new ServidorDAO();
-    private final ComissaoDAO comissaoDAO = new ComissaoDAO();
-    private final CampusDAO campusDAO = new CampusDAO();
-    private final OfertaDAO ofertaDAO = new OfertaDAO();
+    private final ServidorService servidorService = new ServidorService();
+    private final ComissaoService comissaoService = new ComissaoService();
+    private final CampusService campusService = new CampusService();
+    private final OfertaService ofertaService = new OfertaService();
 
     public List<Reuniao> relatorioData(LocalDate dtIncial, LocalDate dtFinal) throws SQLException {
         String sql = "SELECT * FROM reunioes WHERE dt_reuniao BETWEEN ? AND ?;";
@@ -58,10 +54,10 @@ public class RelatorioDAO {
 
                 reuniao.setId(rset.getInt("id"));
 
-                Comissao comissao = comissaoDAO.find(rset.getInt("comissao"));
+                Comissao comissao = comissaoService.getById(rset.getInt("comissao"));
                 reuniao.setComissao(comissao);
 
-                Servidor servidor = servidorDAO.find(rset.getInt("servidor_secre"));
+                Servidor servidor = servidorService.getById(rset.getInt("servidor_secre"));
                 reuniao.setServidorSecre(servidor);
 
                 reuniao.setConteudoAta(rset.getString("conteudo_ata"));
@@ -103,9 +99,9 @@ public class RelatorioDAO {
     public List<Oferta> relatorioAulas(int idCampus) throws SQLException, Exception {
 
         List<Oferta> vetResult = new ArrayList<>();
-        Campus campus = campusDAO.find(idCampus);
+        Campus campus = campusService.getById(idCampus);
 
-        List<Oferta> ofertaVet = ofertaDAO.read();
+        List<Oferta> ofertaVet = ofertaService.read();
 
         for (Oferta oferta : ofertaVet) {
             if (oferta.getCurso().getCampus().getId() == campus.getId()) {

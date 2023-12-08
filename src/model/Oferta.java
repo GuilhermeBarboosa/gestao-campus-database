@@ -8,7 +8,6 @@ package model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Usuario
  */
 public class Oferta {
@@ -95,32 +94,4 @@ public class Oferta {
         this.dtMoficacao = dtMoficacao;
     }
 
-//    @Override
-//    public String toString() {
-//
-//        String aux = "";
-//        aux += "ID: " + this.id + "\n";
-//
-//        if (curso != null) {
-//            aux += "Curso: " + curso.getNome() + "\n";
-//        }
-//
-//        if (disciplina != null) {
-//            aux += "Disciplina: " + disciplina.getNome() + "\n";
-//        }
-//
-//        if (servidor != null) {
-//            aux += "Professor: " + servidor.getNome() + "\n";
-//        }
-//
-//        aux += "Ano: " + this.ano + "\n";
-//        aux += "Semestre: " + this.semestre + "\n";
-//        aux += "Aula Semanais: " + this.aulaSemanais + "\n";
-//        aux += "Data de criação: " + this.dtCriacao+ "\n";
-//        if (this.getDtMoficacao() != null) {
-//            aux += "Aula Semanais: " + this.dtMoficacao + "\n";
-//        }
-//        aux += "\n\n";
-//        return aux;
-//    }
 }

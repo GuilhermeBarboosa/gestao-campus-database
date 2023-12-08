@@ -8,7 +8,6 @@ package model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Usuario
  */
 public class Curso {
@@ -37,7 +36,7 @@ public class Curso {
     public void setCampus(Campus campus) {
         this.campus = campus;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -69,7 +68,7 @@ public class Curso {
     public void setAnoTermino(int anoTermino) {
         this.anoTermino = anoTermino;
     }
-  
+
     public LocalDate getDtCriacao() {
         return dtCriacao;
     }
@@ -85,24 +84,4 @@ public class Curso {
     public void setDtModificacao(LocalDate dtModificacao) {
         this.dtModificacao = dtModificacao;
     }
-
-//    @Override
-//    public String toString() {
-//        String stringResponse = "";
-//        stringResponse += "ID: " + this.id + "\n";
-//        stringResponse += "Nome: " + this.nome + "\n";
-//        if (campus != null) {
-//          stringResponse += "Campus:" + campus.getNome()+ "\n";
-//        }
-//        stringResponse += "Estado: " + this.estado + "\n";
-//        stringResponse += "Ano de inicio: " + this.anoInicio + "\n";
-//        stringResponse += "Ano de termino: " + this.anoTermino + "\n";
-//        stringResponse += "Data de criação: " + this.dtCriacao + "\n";
-//        if (this.getDtModificacao() != null) {
-//            stringResponse += "Data de modificação: " + this.dtModificacao + "\n";
-//        }
-//        stringResponse += "\n\n";
-//        return stringResponse;
-//    }
-
 }

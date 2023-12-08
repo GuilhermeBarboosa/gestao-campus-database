@@ -19,68 +19,50 @@ public class CampusView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Scanner ler = new Scanner(System.in);
-    static int id = 1;
 
-    public Campus criarCampus() {
+    public Campus create() {
         try {
-            Campus campus = new Campus();
-            campus.setId(id);
-            id++;
-            System.out.println("Nome: ");
-            campus.setNome(ler.nextLine());
-            System.out.println("Abreviacao:  ");
-            campus.setAbreviacao(ler.nextLine());
-            System.out.println("Duração de aula: ");
-            campus.setDuracaoAula(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de criação do Campus: ");
-            campus.setDtCriacaoCamp(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Cidade: ");
-            campus.setCidade(ler.nextLine());
-            System.out.println("Bairro: ");
-            campus.setBairro(ler.nextLine());
-            System.out.println("Rua: ");
-            campus.setRua(ler.nextLine());
-            System.out.println("Cep: ");
-            campus.setCep(ler.nextLine());
-            campus.setDtCriacao(LocalDate.now());
-            return campus;
+            return inputInfoCampus(new Campus());
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Campus modifCampus(Campus campusAlt) {
+    public Campus update(Campus campus) {
         try {
-            System.out.println("Nome: ");
-            campusAlt.setNome(ler.nextLine());
-            System.out.println("Abreviacao:  ");
-            campusAlt.setAbreviacao(ler.nextLine());
-            System.out.println("Duração de aula: ");
-            campusAlt.setDuracaoAula(Double.parseDouble(ler.nextLine()));
-            System.out.println("Data de criação do Campus: ");
-            campusAlt.setDtCriacaoCamp(LocalDate.parse(ler.nextLine(), formatter));
-            System.out.println("Cidade: ");
-            campusAlt.setCidade(ler.nextLine());
-            System.out.println("Bairro: ");
-            campusAlt.setBairro(ler.nextLine());
-            System.out.println("Rua: ");
-            campusAlt.setRua(ler.nextLine());
-            System.out.println("Cep: ");
-            campusAlt.setCep(ler.nextLine());
-            campusAlt.setDtModificacao(LocalDate.now());
-            return campusAlt;
+            return inputInfoCampus(campus);
         } catch (Exception e) {
             return null;
         }
 
     }
 
+    private Campus inputInfoCampus(Campus campus) {
+        System.out.println("Nome: ");
+        campus.setNome(ler.nextLine());
+        System.out.println("Abreviacao:  ");
+        campus.setAbreviacao(ler.nextLine());
+        System.out.println("Duração de aula: ");
+        campus.setDuracaoAula(Double.parseDouble(ler.nextLine()));
+        System.out.println("Data de criação do Campus: ");
+        campus.setDtCriacaoCamp(LocalDate.parse(ler.nextLine(), formatter));
+        System.out.println("Cidade: ");
+        campus.setCidade(ler.nextLine());
+        System.out.println("Bairro: ");
+        campus.setBairro(ler.nextLine());
+        System.out.println("Rua: ");
+        campus.setRua(ler.nextLine());
+        System.out.println("Cep: ");
+        campus.setCep(ler.nextLine());
+        campus.setDtCriacao(LocalDate.now());
+        return campus;
+    }
     /////////////////////////////////////////////////////
-    public void mostrarTodosCampos(List<Campus> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printAll(List<Campus> listCampus) {
+        if (listCampus.size() == 0) {
             System.out.println("Não há campus cadastrados");
         } else {
-            for (Campus campus : vetResult) {
+            for (Campus campus : listCampus) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + campus.getId());
                 System.out.println("NOME: " + campus.getNome());
@@ -100,11 +82,11 @@ public class CampusView {
         }
     }
 
-    public void mostrarIdTodosCampos(List<Campus> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printId(List<Campus> listCampus) {
+        if (listCampus.size() == 0) {
             System.out.println("Não há campus cadastrados");
         } else {
-            for (Campus campus : vetResult) {
+            for (Campus campus : listCampus) {
                 System.out.println("--------------------------------------");
                 System.out.println("ID: " + campus.getId());
                 System.out.println("NOME: " + campus.getNome());

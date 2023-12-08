@@ -8,7 +8,6 @@ package model;
 import java.time.LocalDate;
 
 /**
- *
  * @author Usuario
  */
 public class Reuniao {
@@ -44,7 +43,7 @@ public class Reuniao {
     public void setServidorSecre(Servidor servidorSecre) {
         this.servidorSecre = servidorSecre;
     }
-    
+
     public LocalDate getDtReuniao() {
         return dtReuniao;
     }
@@ -60,7 +59,7 @@ public class Reuniao {
     public void setConteudoAta(String conteudoAta) {
         this.conteudoAta = conteudoAta;
     }
-    
+
     public LocalDate getDtCriacao() {
         return dtCriacao;
     }
@@ -77,29 +76,5 @@ public class Reuniao {
         this.dtModificacao = dtModificacao;
     }
 
-//    @Override
-//    public String toString() {
-//        String aux = "";
-//
-//        aux += "ID: " + this.id + "\n";
-//
-//        if (comissao != null) {
-//            aux += "Comissao: " + comissao.getNameComissao() + "\n";
-//        }
-//
-//        aux += "Data de reunião: " + this.dtReuniao + "\n";
-//        aux += "Conteudo da ata: " + this.conteudoAta + "\n";
-//
-//        if (servidorSecre != null) {
-//            aux += "Servidor: " + servidorSecre.getNome() + "\n";
-//        }
-//
-//        aux += "Data de criação: " + this.dtCriacao + "\n";
-//        if (this.getDtModificacao() != null) {
-//            aux += "Data de modificação: " + this.dtModificacao + "\n";
-//        }
-//        aux += "\n\n";
-//        return aux;
-//    }
 
 }

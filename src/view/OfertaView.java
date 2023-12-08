@@ -5,145 +5,101 @@
  */
 package view;
 
-import dao.CursoDAO;
-import dao.DisciplinaDAO;
-import dao.ServidorDAO;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Scanner;
 import model.Curso;
 import model.Disciplina;
 import model.Oferta;
 import model.Servidor;
+import service.CursoService;
+import service.DisciplinaService;
+import service.ServidorService;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Scanner;
 
 /**
- *
  * @author Gui
  */
 public class OfertaView {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-    ServidorView servV = new ServidorView();
-    CursoView cursoV = new CursoView();
-    DisciplinaView disciplinaV = new DisciplinaView();
+    ServidorService servidorService = new ServidorService();
+    CursoService cursoService = new CursoService();
+    DisciplinaService disciplinaService = new DisciplinaService();
+    ServidorView servidorView = new ServidorView();
+    CursoView cursoView = new CursoView();
+    DisciplinaView disciplinaView = new DisciplinaView();
 
     Scanner ler = new Scanner(System.in);
-    int id = 0;
 
-    public Oferta criarOferta(ServidorDAO servidorDAO, CursoDAO cursoDAO, DisciplinaDAO disciplinaDAO) {
-
+    public Oferta create() {
         try {
-
-            Oferta of = new Oferta();
-            of.setId(id);
-            id++;
-
-            List<Servidor> servidorVet = servidorDAO.read();
-
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum servidores cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-            System.out.println("Escolha pelo id um servidor:");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            of.setServidor(servidor);
-
-            List<Curso> cursoVet = cursoDAO.read();
-
-            if (cursoVet.size() == 0) {
-                System.out.println("Nenhum curso cadastrado...");
-                return null;
-            } else {
-                cursoV.mostrarIdCurso(cursoVet);
-            }
-            System.out.println("Escolha pelo id um curso:");
-            Curso curso = cursoDAO.find(Integer.parseInt(ler.nextLine()));
-            of.setCurso(curso);
-
-            List<Disciplina> disciplinaVet = disciplinaDAO.read();
-            if (disciplinaVet.size() == 0) {
-                System.out.println("Nenhum disciplina cadastrado...");
-                return null;
-            } else {
-                disciplinaV.mostrarIdTodasDisciplinas(disciplinaVet);
-            }
-            System.out.println("Escolha pelo id uma disciplina:");
-            Disciplina disciplina = disciplinaDAO.find(Integer.parseInt(ler.nextLine()));
-            of.setDisciplina(disciplina);
-
-            System.out.println("Ano: ");
-            of.setAno(Integer.parseInt(ler.nextLine()));
-            System.out.println("Semestre: ");
-            of.setSemestre(Integer.parseInt(ler.nextLine()));
-            System.out.println("Aulas Semanais: ");
-            of.setAulaSemanais(Integer.parseInt(ler.nextLine()));
-            of.setDtCriacao(LocalDate.now());
-            return of;
+            return inputInfoOferta(new Oferta());
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Oferta modifOferta(Oferta ofertaAlt, ServidorDAO servidorDAO, CursoDAO cursoDAO, DisciplinaDAO disciplinaDAO) {
+    public Oferta update(Oferta oferta) {
         try {
-
-            List<Servidor> servidorVet = servidorDAO.read();
-
-            if (servidorVet.size() == 0) {
-                System.out.println("Nenhum servidores cadastrado...");
-                return null;
-            } else {
-                servV.mostrarIdServidores(servidorVet);
-            }
-            System.out.println("Escolha pelo id um servidor:");
-            Servidor servidor = servidorDAO.find(Integer.parseInt(ler.nextLine()));
-            ofertaAlt.setServidor(servidor);
-
-            List<Curso> cursoVet = cursoDAO.read();
-
-            if (cursoVet.size() == 0) {
-                System.out.println("Nenhum curso cadastrado...");
-                return null;
-            } else {
-                cursoV.mostrarIdCurso(cursoVet);
-            }
-            System.out.println("Escolha pelo id um curso:");
-            Curso curso = cursoDAO.find(Integer.parseInt(ler.nextLine()));
-            ofertaAlt.setCurso(curso);
-
-            List<Disciplina> disciplinaVet = disciplinaDAO.read();
-            if (disciplinaVet.size() == 0) {
-                System.out.println("Nenhum disciplina cadastrado...");
-                return null;
-            } else {
-                disciplinaV.mostrarIdTodasDisciplinas(disciplinaVet);
-            }
-            System.out.println("Escolha pelo id uma disciplina:");
-            Disciplina disciplina = disciplinaDAO.find(Integer.parseInt(ler.nextLine()));
-            ofertaAlt.setDisciplina(disciplina);
-
-            System.out.println("Ano: ");
-            ofertaAlt.setAno(Integer.parseInt(ler.nextLine()));
-            System.out.println("Semestre: ");
-            ofertaAlt.setSemestre(Integer.parseInt(ler.nextLine()));
-            System.out.println("Aulas Semanais: ");
-            ofertaAlt.setAulaSemanais(Integer.parseInt(ler.nextLine()));
-            ofertaAlt.setDtMoficacao(LocalDate.now());
-            return ofertaAlt;
+            return inputInfoOferta(oferta);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public void mostrarTodasOfertas(List<Oferta> vetResult) {
-        if (vetResult.size() == 0) {
+    private Oferta inputInfoOferta(Oferta oferta) throws Exception {
+        List<Servidor> listServidor = servidorService.read();
+
+        if (listServidor.size() == 0) {
+            System.out.println("Nenhum servidores cadastrado...");
+            return null;
+        } else {
+            servidorView.printId(listServidor);
+        }
+        System.out.println("Escolha pelo id um servidor:");
+        Servidor servidor = servidorService.getById(Integer.parseInt(ler.nextLine()));
+        oferta.setServidor(servidor);
+
+        List<Curso> cursoVet = cursoService.read();
+
+        if (cursoVet.size() == 0) {
+            System.out.println("Nenhum curso cadastrado...");
+            return null;
+        } else {
+            cursoView.printId(cursoVet);
+        }
+        System.out.println("Escolha pelo id um curso:");
+        Curso curso = cursoService.getById(Integer.parseInt(ler.nextLine()));
+        oferta.setCurso(curso);
+
+        List<Disciplina> disciplinaVet = disciplinaService.read();
+        if (disciplinaVet.size() == 0) {
+            System.out.println("Nenhum disciplina cadastrado...");
+            return null;
+        } else {
+            disciplinaView.printId(disciplinaVet);
+        }
+        System.out.println("Escolha pelo id uma disciplina:");
+        Disciplina disciplina = disciplinaService.getById(Integer.parseInt(ler.nextLine()));
+        oferta.setDisciplina(disciplina);
+
+        System.out.println("Ano: ");
+        oferta.setAno(Integer.parseInt(ler.nextLine()));
+        System.out.println("Semestre: ");
+        oferta.setSemestre(Integer.parseInt(ler.nextLine()));
+        System.out.println("Aulas Semanais: ");
+        oferta.setAulaSemanais(Integer.parseInt(ler.nextLine()));
+        oferta.setDtCriacao(LocalDate.now());
+        return oferta;
+    }
+
+    public void printAll(List<Oferta> listOferta) {
+        if (listOferta.size() == 0) {
             System.out.println("Não há ofertas cadastradas");
         } else {
-            for (Oferta oferta : vetResult) {
+            for (Oferta oferta : listOferta) {
                 System.out.println("-----------------------------------");
                 System.out.println("ID: " + oferta.getId());
                 System.out.println("CURSO: " + oferta.getCurso().getNome());
@@ -161,11 +117,11 @@ public class OfertaView {
         }
     }
 
-    public void mostrarIdTodasOfertas(List<Oferta> vetResult) {
-        if (vetResult.size() == 0) {
+    public void printId(List<Oferta> listOferta) {
+        if (listOferta.size() == 0) {
             System.out.println("Não há ofertas cadastradas");
         } else {
-            for (Oferta oferta : vetResult) {
+            for (Oferta oferta : listOferta) {
                 System.out.println("-----------------------------------");
                 System.out.println("ID: " + oferta.getId());
                 System.out.println("CURSO: " + oferta.getCurso().getNome());

@@ -15,7 +15,7 @@ import java.sql.Connection;
 public class ConnectionFactory {
 
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "vertrigo";
     
     //TROCAR PORTA DA CONEXAO 3006 ou 3008
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/gestao";

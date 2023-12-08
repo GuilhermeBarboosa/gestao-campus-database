@@ -5,19 +5,15 @@
  */
 package dao;
 
-import java.sql.PreparedStatement;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.Comissao;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import model.Comissao;
 
 /**
- *
  * @author Gui
  */
 public class ComissaoDAO {
@@ -129,7 +125,8 @@ public class ComissaoDAO {
         return vetResult;
     }
 
-    public void update(Comissao altComissao) throws Exception {;
+    public void update(Comissao comissao) throws Exception {
+        ;
         String sql = "UPDATE comissoes SET comissao=?, horas_semanais=?, dt_inicio=?, "
                 + "dt_termino=?, estado=?, modificado=?"
                 + "where id = ?";
@@ -142,21 +139,21 @@ public class ComissaoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setString(1, altComissao.getNameComissao());
-            pstm.setDouble(2, altComissao.getHorasSemanais());
+            pstm.setString(1, comissao.getNameComissao());
+            pstm.setDouble(2, comissao.getHorasSemanais());
 
-            Date date = Date.valueOf(altComissao.getDtInicio());
+            Date date = Date.valueOf(comissao.getDtInicio());
             pstm.setDate(3, date);
 
-            date = Date.valueOf(altComissao.getDtTermino());
+            date = Date.valueOf(comissao.getDtTermino());
             pstm.setDate(4, date);
 
-            pstm.setString(5, altComissao.getEstado());
+            pstm.setString(5, comissao.getEstado());
 
-            date = Date.valueOf(altComissao.getDtModificacao());
+            date = Date.valueOf(comissao.getDtModificacao());
             pstm.setDate(6, date);
 
-            pstm.setInt(7, altComissao.getId());
+            pstm.setInt(7, comissao.getId());
 
             pstm.execute();
 
@@ -172,7 +169,7 @@ public class ComissaoDAO {
         }
     }
 
-    public void delete(int idComissao) throws Exception {
+    public void delete(int id) throws Exception {
         String sql = "DELETE FROM comissoes WHERE id = ?";
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -182,7 +179,7 @@ public class ComissaoDAO {
 
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
-            pstm.setInt(1, idComissao);
+            pstm.setInt(1, id);
 
             pstm.execute();
         } catch (Exception e) {
@@ -198,8 +195,8 @@ public class ComissaoDAO {
         }
     }
 
-    public Comissao find(int idComissao) throws Exception {
-        String sql = "SELECT * FROM comissoes WHERE id = '" + idComissao + "'";
+    public Comissao getById(int id) throws Exception {
+        String sql = "SELECT * FROM comissoes WHERE id = '" + id + "'";
 
         Connection conn = null;
         PreparedStatement pstm = null;
